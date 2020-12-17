@@ -18,13 +18,18 @@
 // LiverAnalysis Logic includes
 #include "vtkSlicerLiverAnalysisLogic.h"
 
+// LiverAnalysis MRML includes
+#include "vtkMRMLMarkupsBezierSurfaceNode.h"
+
 // MRML includes
 #include <vtkMRMLScene.h>
+#include <vtkMRMLSelectionNode.h>
 
 // VTK includes
 #include <vtkIntArray.h>
 #include <vtkNew.h>
 #include <vtkObjectFactory.h>
+#include <vtkSmartPointer.h>
 
 // STD includes
 #include <cassert>
@@ -34,6 +39,7 @@ vtkStandardNewMacro(vtkSlicerLiverAnalysisLogic);
 
 //----------------------------------------------------------------------------
 vtkSlicerLiverAnalysisLogic::vtkSlicerLiverAnalysisLogic()
+  :vtkSlicerMarkupsLogic()
 {
 }
 
@@ -48,36 +54,37 @@ void vtkSlicerLiverAnalysisLogic::PrintSelf(ostream& os, vtkIndent indent)
   this->Superclass::PrintSelf(os, indent);
 }
 
-//---------------------------------------------------------------------------
-void vtkSlicerLiverAnalysisLogic::SetMRMLSceneInternal(vtkMRMLScene * newScene)
-{
-  vtkNew<vtkIntArray> events;
-  events->InsertNextValue(vtkMRMLScene::NodeAddedEvent);
-  events->InsertNextValue(vtkMRMLScene::NodeRemovedEvent);
-  events->InsertNextValue(vtkMRMLScene::EndBatchProcessEvent);
-  this->SetAndObserveMRMLSceneEventsInternal(newScene, events.GetPointer());
-}
-
 //-----------------------------------------------------------------------------
 void vtkSlicerLiverAnalysisLogic::RegisterNodes()
 {
-  assert(this->GetMRMLScene() != 0);
+  assert(this->GetMRMLScene() != nullptr);
+
+  vtkMRMLScene *scene = this->GetMRMLScene();
+
+  // MRML Nodes
+  scene->RegisterNodeClass(vtkSmartPointer<vtkMRMLMarkupsBezierSurfaceNode>::New());
 }
 
-//---------------------------------------------------------------------------
-void vtkSlicerLiverAnalysisLogic::UpdateFromMRMLScene()
+//-----------------------------------------------------------------------------
+void vtkSlicerLiverAnalysisLogic::ObserveMRMLScene()
 {
-  assert(this->GetMRMLScene() != 0);
-}
+  if (!this->GetMRMLScene())
+    {
+    return;
+    }
+  // add known markup types to the selection node
+  vtkMRMLSelectionNode *selectionNode = vtkMRMLSelectionNode::SafeDownCast(this->GetMRMLScene()->GetNodeByID(this->GetSelectionNodeID().c_str()));
+  if (selectionNode)
+    {
+    // got into batch process mode so that an update on the mouse mode tool
+    // bar is triggered when leave it
+    this->GetMRMLScene()->StartState(vtkMRMLScene::BatchProcessState);
 
-//---------------------------------------------------------------------------
-void vtkSlicerLiverAnalysisLogic
-::OnMRMLSceneNodeAdded(vtkMRMLNode* vtkNotUsed(node))
-{
-}
+    selectionNode->AddNewPlaceNodeClassNameToList("vtkMRMLMarkupsBezierSurfaceNode", ":/Icons/MarkupsPlaneMouseModePlace.png", "BezierSurface");
 
-//---------------------------------------------------------------------------
-void vtkSlicerLiverAnalysisLogic
-::OnMRMLSceneNodeRemoved(vtkMRMLNode* vtkNotUsed(node))
-{
+    // trigger an update on the mouse mode toolbar
+    this->GetMRMLScene()->EndState(vtkMRMLScene::BatchProcessState);
+    }
+
+ this->Superclass::ObserveMRMLScene();
 }

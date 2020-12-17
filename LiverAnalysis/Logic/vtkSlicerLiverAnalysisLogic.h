@@ -25,22 +25,15 @@
 #define __vtkSlicerLiverAnalysisLogic_h
 
 // Slicer includes
-#include "vtkSlicerModuleLogic.h"
-
-// MRML includes
-
-// STD includes
-#include <cstdlib>
+#include "vtkSlicerMarkupsLogic.h"
 
 #include "vtkSlicerLiverAnalysisModuleLogicExport.h"
 
-
 /// \ingroup Slicer_QtModules_ExtensionTemplate
 class VTK_SLICER_LIVERANALYSIS_MODULE_LOGIC_EXPORT vtkSlicerLiverAnalysisLogic :
-  public vtkSlicerModuleLogic
+  public vtkSlicerMarkupsLogic
 {
 public:
-
   static vtkSlicerLiverAnalysisLogic *New();
   vtkTypeMacro(vtkSlicerLiverAnalysisLogic, vtkSlicerModuleLogic);
   void PrintSelf(ostream& os, vtkIndent indent);
@@ -49,14 +42,11 @@ protected:
   vtkSlicerLiverAnalysisLogic();
   virtual ~vtkSlicerLiverAnalysisLogic();
 
-  virtual void SetMRMLSceneInternal(vtkMRMLScene* newScene);
   /// Register MRML Node classes to Scene. Gets called automatically when the MRMLScene is attached to this logic class.
-  virtual void RegisterNodes();
-  virtual void UpdateFromMRMLScene();
-  virtual void OnMRMLSceneNodeAdded(vtkMRMLNode* node);
-  virtual void OnMRMLSceneNodeRemoved(vtkMRMLNode* node);
-private:
+  virtual void RegisterNodes() override;
+  virtual void ObserveMRMLScene() override;
 
+private:
   vtkSlicerLiverAnalysisLogic(const vtkSlicerLiverAnalysisLogic&); // Not implemented
   void operator=(const vtkSlicerLiverAnalysisLogic&); // Not implemented
 };
