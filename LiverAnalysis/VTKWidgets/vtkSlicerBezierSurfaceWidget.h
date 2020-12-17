@@ -29,14 +29,15 @@
 #ifndef vtkSlicerBezierSurfaceWidget_h
 #define vtkSlicerBezierSurfaceWidget_h
 
-#include "vtkSlicerMarkupsModuleVTKWidgetsExport.h"
+#include "vtkSlicerLiverAnalysisModuleVTKWidgetsExport.h"
 #include "vtkSlicerMarkupsWidget.h"
 
 class vtkSlicerMarkupsWidgetRepresentation;
 class vtkPolyData;
 class vtkIdList;
 
-class VTK_SLICER_MARKUPS_MODULE_VTKWIDGETS_EXPORT vtkSlicerBezierSurfaceWidget : public vtkSlicerMarkupsWidget
+class VTK_SLICER_LIVERANALYSIS_MODULE_VTKWIDGETS_EXPORT vtkSlicerBezierSurfaceWidget :
+public vtkSlicerMarkupsWidget
 {
 public:
   /// Instantiate this class.
@@ -44,6 +45,8 @@ public:
 
   /// Standard methods for a VTK class.
   vtkTypeMacro(vtkSlicerBezierSurfaceWidget,vtkSlicerMarkupsWidget);
+
+  vtkSlicerMarkupsWidget* CreateInstance() const override;
 
   /// Widget states
   enum

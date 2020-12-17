@@ -45,6 +45,12 @@ vtkSlicerBezierSurfaceWidget::vtkSlicerBezierSurfaceWidget()
 vtkSlicerBezierSurfaceWidget::~vtkSlicerBezierSurfaceWidget() = default;
 
 //----------------------------------------------------------------------
+vtkSlicerMarkupsWidget* vtkSlicerBezierSurfaceWidget::CreateInstance() const
+{
+  return vtkSlicerBezierSurfaceWidget::New();
+}
+
+//----------------------------------------------------------------------
 void vtkSlicerBezierSurfaceWidget::CreateDefaultRepresentation(
   vtkMRMLMarkupsDisplayNode* markupsDisplayNode, vtkMRMLAbstractViewNode* viewNode, vtkRenderer* renderer)
 {
