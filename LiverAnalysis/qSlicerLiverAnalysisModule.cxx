@@ -26,6 +26,10 @@
 #include "qSlicerLiverAnalysisModule.h"
 #include "qSlicerLiverAnalysisModuleWidget.h"
 
+// Subject hierarchy
+#include "qSlicerSubjectHierarchyPluginHandler.h"
+#include "qSlicerSubjectHierarchyLiverAnalysisPlugin.h"
+
 // DisplayableManager initialization
 #include <vtkAutoInit.h>
 VTK_MODULE_INIT(vtkSlicerLiverAnalysisModuleMRMLDisplayableManager)
@@ -108,6 +112,9 @@ void qSlicerLiverAnalysisModule::setup()
   // Register displayable managers (same displayable manager handles both slice and 3D views)
   vtkMRMLSliceViewDisplayableManagerFactory::GetInstance()->RegisterDisplayableManager("vtkMRMLLiverAnalysisMarkupsDisplayableManager");
   vtkMRMLThreeDViewDisplayableManagerFactory::GetInstance()->RegisterDisplayableManager("vtkMRMLLiverAnalysisMarkupsDisplayableManager");
+
+  // Register subject hierarchy
+  qSlicerSubjectHierarchyPluginHandler::instance()->registerPlugin(new qSlicerSubjectHierarchyLiverAnalysisPlugin());
 
 }
 
