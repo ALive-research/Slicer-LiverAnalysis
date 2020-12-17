@@ -18,9 +18,18 @@
 // LiverAnalysis Logic includes
 #include <vtkSlicerLiverAnalysisLogic.h>
 
+// MRML includes
+#include <vtkMRMLThreeDViewDisplayableManagerFactory.h>
+#include <vtkMRMLSliceViewDisplayableManagerFactory.h>
+
 // LiverAnalysis includes
 #include "qSlicerLiverAnalysisModule.h"
 #include "qSlicerLiverAnalysisModuleWidget.h"
+
+// DisplayableManager initialization
+#include <vtkAutoInit.h>
+VTK_MODULE_INIT(vtkSlicerLiverAnalysisModuleMRMLDisplayableManager)
+
 
 //-----------------------------------------------------------------------------
 /// \ingroup Slicer_QtModules_ExtensionTemplate
@@ -95,6 +104,11 @@ QStringList qSlicerLiverAnalysisModule::dependencies() const
 void qSlicerLiverAnalysisModule::setup()
 {
   this->Superclass::setup();
+
+  // Register displayable managers (same displayable manager handles both slice and 3D views)
+  vtkMRMLSliceViewDisplayableManagerFactory::GetInstance()->RegisterDisplayableManager("vtkMRMLLiverAnalysisMarkupsDisplayableManager");
+  vtkMRMLThreeDViewDisplayableManagerFactory::GetInstance()->RegisterDisplayableManager("vtkMRMLLiverAnalysisMarkupsDisplayableManager");
+
 }
 
 //-----------------------------------------------------------------------------
