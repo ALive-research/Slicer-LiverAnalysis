@@ -21,6 +21,9 @@
 // MRML includes
 #include <vtkMRMLThreeDViewDisplayableManagerFactory.h>
 #include <vtkMRMLSliceViewDisplayableManagerFactory.h>
+#include <vtkMRMLMarkupsRegistrationFactory.h>
+#include "vtkMRMLMarkupsBezierSurfaceNode.h"
+#include "vtkSlicerBezierSurfaceWidget.h"
 
 // LiverAnalysis includes
 #include "qSlicerLiverAnalysisModule.h"
@@ -29,10 +32,6 @@
 // Subject hierarchy
 #include "qSlicerSubjectHierarchyPluginHandler.h"
 #include "qSlicerSubjectHierarchyLiverAnalysisPlugin.h"
-
-// DisplayableManager initialization
-#include <vtkAutoInit.h>
-VTK_MODULE_INIT(vtkSlicerLiverAnalysisModuleMRMLDisplayableManager)
 
 
 //-----------------------------------------------------------------------------
@@ -109,9 +108,9 @@ void qSlicerLiverAnalysisModule::setup()
 {
   this->Superclass::setup();
 
-  // Register displayable managers (same displayable manager handles both slice and 3D views)
-  vtkMRMLSliceViewDisplayableManagerFactory::GetInstance()->RegisterDisplayableManager("vtkMRMLLiverAnalysisMarkupsDisplayableManager");
-  vtkMRMLThreeDViewDisplayableManagerFactory::GetInstance()->RegisterDisplayableManager("vtkMRMLLiverAnalysisMarkupsDisplayableManager");
+   vtkMRMLMarkupsRegistrationFactory::GetInstance()->RegisterMarkup(
+     vtkMRMLMarkupsBezierSurfaceNode::New(), vtkSlicerBezierSurfaceWidget::New(),
+     ":/Icons/MarkupsBezierSurface.png");
 
   // Register subject hierarchy
   qSlicerSubjectHierarchyPluginHandler::instance()->registerPlugin(new qSlicerSubjectHierarchyLiverAnalysisPlugin());
