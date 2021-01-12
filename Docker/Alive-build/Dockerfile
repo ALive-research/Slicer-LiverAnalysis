@@ -6,7 +6,7 @@ FROM slicer/slicer-base:latest
 RUN \
 	# Checkout latest
 		cd /usr/src && \
-		git clone git://github.com/ALive-research/Slicer.git && \
+		git clone https://github.com/ALive-research/Slicer.git && \
 		cd Slicer && \
 		#git pull && \
 		# Make sure we have a version that actually builds
@@ -20,7 +20,7 @@ RUN \
 		
 	# Build Alive plugin
 	cd /usr/src && \
-	git clone git://github.com/ALive-research/Slicer-LiverAnalysis.git && \
+	git clone https://github.com/ALive-research/Slicer-LiverAnalysis.git && \
 	mkdir Slicer-LiverAnalysis-Build && \
 	cd Slicer-LiverAnalysis-Build && \
 	cmake -DCMAKE_BUILD_TYPE:STRING=Release -DSlicer_DIR:PATH=/usr/src/Slicer-build/Slicer-build ../Slicer-LiverAnalysis && \
