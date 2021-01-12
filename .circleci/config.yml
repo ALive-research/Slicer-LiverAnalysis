@@ -1,0 +1,38 @@
+version: 2.1
+jobs:
+	build:
+        working_directory: /usr/src/Slicer-LiverAnalysis
+		docker:
+			- image: olevs/slicer-alive-build
+        steps:
+            - checkout
+            - run: 
+                name: Update 3D Slicer
+                command: |
+                    cd /usr/src/Slicer
+                    git checkout .
+                    git pull
+            - run:
+                name: Build 3D Slicer
+                environment:
+                    BUILD_TOOL_FLAGS: "-j3"
+                command: |
+                    ../Slicer-build/BuildSlicer.sh
+            - run:
+                name: Update LiverAnalysis plugin
+                command: |
+                    cd /usr/src/Slicer-LiverAnalysis
+                    git checkout .
+                    git pull
+            - run:
+                name: Build LiverAnalysis plugin
+                environment:
+                    BUILD_TOOL_FLAGS: "-j3"
+                command: |
+                    cd /usr/src/Slicer-LiverAnalysis
+                    make
+            - run: 
+                name: Run LiverAnalysis plugin tests
+                command: |
+                    cd /usr/src/Slicer-LiverAnalysis-Build
+                    ctest
