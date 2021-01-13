@@ -27,13 +27,14 @@ jobs:
       #- run:
       #    name: Update LiverAnalysis extension
       #    command: |
+      #      git clone https://github.com/ALive-research/Slicer-LiverAnalysis.git
       #      cd /usr/src/Slicer-LiverAnalysis
       #      git checkout .
       #      git pull
       
       - run:
           name: Configure LiverAnalysis extension
-          command:
+          command: |
             mkdir /usr/src/Slicer-LiverAnalysis-Build
             cd /usr/src/Slicer-LiverAnalysis-Build
             cmake -DCMAKE_BUILD_TYPE:STRING=Release -DSlicer_DIR:PATH=/usr/src/Slicer-build/Slicer-build ../Slicer-LiverAnalysis
