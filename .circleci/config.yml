@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: /usr/src/Slicer-LiverAnalysis
     docker:
-      - image: aliveresearch/slicer-build
+      - image: olevs/slicer-build-opengl
     steps:
       - checkout
       # Rely on the Slicer version in the Docker image
@@ -50,8 +50,8 @@ jobs:
             
       # Most Slicer tests don't run without X
       # Either create a Docker image with X support, or only create tests that don't need X
-      #- run:
-      #    name: Run LiverAnalysis plugin tests
-      #    command: |
-      #      cd /usr/src/Slicer-LiverAnalysis-Build
-      #      ctest
+      - run:
+          name: Run LiverAnalysis plugin tests
+          command: |
+            cd /usr/src/Slicer-LiverAnalysis-Build
+            ctest
