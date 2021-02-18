@@ -50,10 +50,10 @@ jobs:
             
       # Most Slicer tests don't run without X
       # Either create a Docker image with X support, or only create tests that don't need X
-      #- run:
-      #    name: Run X virtual framebuffer
-      #    command: Xvfb :0 -screen 0 640x480x8
-      #    background: true
+      - run:
+          name: Run X virtual framebuffer
+          command: Xvfb :99 -screen 0 640x480x8 -nolisten tcp
+          background: true
       - run:
           name: Run LiverAnalysis plugin tests
           command: |
