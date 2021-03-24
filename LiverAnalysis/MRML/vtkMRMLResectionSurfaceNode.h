@@ -37,7 +37,7 @@
 #define __vtkMRMLResectionSurfaceNode_h
 
 // This module includes.
-#include "vtkSlicerResectionPlanningModuleMRMLExport.h"
+#include "vtkSlicerLiverAnalysisModuleMRMLExport.h"
 
 // MRML includes
 #include <vtkMRMLModelNode.h>
@@ -56,13 +56,13 @@ class vtkPoints;
 //------------------------------------------------------------------------------
 
 /**
- * \ingroup ResectionPlanning
+ * \ingroup LiverAnalysis
  *
  * \brief This class represents the data model employed for resection. It
  * contains all the information related to the resection like its relationship
  * to other elements in the MRML scene.
  */
-class VTK_SLICER_RESECTIONPLANNING_MODULE_MRML_EXPORT
+class VTK_SLICER_LIVERANALYSIS_MODULE_MRML_EXPORT
 vtkMRMLResectionSurfaceNode: public vtkMRMLModelNode
 {
  public:

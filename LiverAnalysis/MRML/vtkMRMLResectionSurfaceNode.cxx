@@ -35,8 +35,8 @@
 
 // This module includes
 #include "vtkMRMLResectionSurfaceNode.h"
-#include "vtkMRMLResectionSurfaceDisplayNode.h"
-#include "ResectionPlanningModuleDefaultValues.h"
+//#include "vtkMRMLResectionSurfaceDisplayNode.h"
+//#include "ResectionPlanningModuleDefaultValues.h"
 
 // MRML includes
 #include <vtkMRMLModelNode.h>
@@ -52,7 +52,7 @@ vtkMRMLNodeNewMacro(vtkMRMLResectionSurfaceNode);
 
 //------------------------------------------------------------------------------
 vtkMRMLResectionSurfaceNode::vtkMRMLResectionSurfaceNode()
-  :ResectionMargin(DEFAULT_RESECTION_MARGIN)
+//  :ResectionMargin(DEFAULT_RESECTION_MARGIN)
 {
 
   // Initialization of control points
@@ -92,10 +92,10 @@ vtkMRMLResectionSurfaceDisplayNode*
 vtkMRMLResectionSurfaceNode::GetResectionSurfaceDisplayNode()
 {
   vtkMRMLDisplayNode *displayNode = this->GetDisplayNode();
-  if (displayNode && displayNode->IsA("vtkMRMLResectionSurfaceDisplayNode"))
-    {
-    return vtkMRMLResectionSurfaceDisplayNode::SafeDownCast(displayNode);
-    }
+ // if (displayNode && displayNode->IsA("vtkMRMLResectionSurfaceDisplayNode"))
+ //   {
+ //   return vtkMRMLResectionSurfaceDisplayNode::SafeDownCast(displayNode);
+ //   }
   return NULL;
 }
 
