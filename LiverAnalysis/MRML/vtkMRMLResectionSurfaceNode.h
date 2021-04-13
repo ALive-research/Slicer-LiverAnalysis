@@ -65,7 +65,42 @@ class vtkPoints;
 class VTK_SLICER_LIVERANALYSIS_MODULE_MRML_EXPORT
 vtkMRMLResectionSurfaceNode: public vtkMRMLModelNode
 {
- public:
+
+public:
+    virtual const char* GetIcon()  {return ":/Icons/MarkupsGeneric.png";}
+    virtual const char* GetAddIcon()  {return ":/Icons/MarkupsGenericMouseModePlace.png";}
+    virtual const char* GetPlaceAddIcon()  {return ":/Icons/MarkupsGenericMouseModePlaceAdd.png";}
+
+    virtual vtkMRMLNode* CreateNodeInstance() override;
+    /// Get node XML tag name (like Volume, Model)
+    ///
+    virtual const char* GetNodeTagName() override {return "MarkupResectionSurface";}
+
+    /// Get markup name
+    virtual const char* GetMarkupType()  {return "ResectionSurface";}
+
+    /// Get markup short name
+    virtual const char* GetDefaultNodeNamePrefix()  {return "RS";}
+
+    /// \sa vtkMRMLNode::CopyContent
+    vtkMRMLCopyContentDefaultMacro(vtkMRMLLiverMarkupsSlicingContourNode);
+
+    vtkPolyData* GetTargetOrgan() const {return this->TargetOrgan;}
+    void SetTargetOrgan(vtkPolyData* targetOrgan) {this->TargetOrgan = targetOrgan;}
+
+//  protected:
+//    vtkMRMLLiverMarkupsSlicingContourNode();
+//    ~vtkMRMLLiverMarkupsSlicingContourNode() override;
+//    vtkMRMLLiverMarkupsSlicingContourNode(const vtkMRMLLiverMarkupsSlicingContourNode&);
+//    void operator=(const vtkMRMLLiverMarkupsSlicingContourNode&);
+
+  private:
+    vtkPolyData *TargetOrgan = nullptr;
+
+
+
+
+public:
 
   /**
    * Standard vtk object instantiation method.
@@ -89,7 +124,7 @@ vtkMRMLResectionSurfaceNode: public vtkMRMLModelNode
    *
    * @return a pointer to the new created vtkMRMLNode.
    */
-  virtual vtkMRMLNode *CreateNodeInstance();
+//  virtual vtkMRMLNode *CreateNodeInstance();
 
   /**
    * Get the tag name of the node.
@@ -97,7 +132,7 @@ vtkMRMLResectionSurfaceNode: public vtkMRMLModelNode
    *
    * @return string with the tag name of the node.
    */
-  virtual const char* GetNodeTagName() {return "ResectionSurface";}
+//  virtual const char* GetNodeTagName() {return "ResectionSurface";}
 
   /**
    * Get the icon associated to the node.
@@ -105,7 +140,7 @@ vtkMRMLResectionSurfaceNode: public vtkMRMLModelNode
    *
    * @return string pointing to the resource where the icon is located.
    */
-  virtual const char* GetIcon() {return "";}
+//  virtual const char* GetIcon() {return "";}
 
   /**
    * Get the display node associated

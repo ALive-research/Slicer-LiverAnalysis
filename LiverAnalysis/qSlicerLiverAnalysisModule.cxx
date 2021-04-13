@@ -15,6 +15,20 @@
 
 ==============================================================================*/
 
+// Qt includes
+#include <QDebug>
+
+// Liver Markups Logic includes
+//#include "vtkSlicerLiverMarkupsLogic.h"
+#include "vtkSlicerMarkupsWidget.h"
+
+#include "qSlicerCoreApplication.h"
+#include "MRML/vtkMRMLResectionSurfaceNode.h"
+
+// Markups Logic includes
+#include <vtkSlicerMarkupsLogic.h>
+#include <qSlicerModuleManager.h>
+
 // LiverAnalysis Logic includes
 #include <vtkSlicerLiverAnalysisLogic.h>
 
@@ -95,6 +109,38 @@ QStringList qSlicerLiverAnalysisModule::dependencies() const
 void qSlicerLiverAnalysisModule::setup()
 {
   this->Superclass::setup();
+    vtkSlicerApplicationLogic* appLogic = this->appLogic();
+    if (!appLogic)
+      {
+      qCritical() << Q_FUNC_INFO << " : invalid application logic.";
+      return;
+      }
+
+    vtkSlicerMarkupsLogic* markupsLogic =
+      vtkSlicerMarkupsLogic::SafeDownCast(appLogic->GetModuleLogic("Markups"));
+    if (!markupsLogic)
+      {
+      qCritical() << Q_FUNC_INFO << " : invalid markups logic.";
+      return;
+      }
+
+    // Register markups
+//    markupsLogic->RegisterMarkupsNode(vtkMRMLResectionSurfaceNode::New(),
+//                                      vtkSlicerMarkupsWidget::New());
+
+    qSlicerModuleManager* moduleManager = qSlicerCoreApplication::application()->moduleManager();
+    if (!moduleManager)
+      {
+      return;
+      }
+
+    qSlicerAbstractCoreModule* markupsModule = moduleManager->module("Markups");
+    if(!markupsModule)
+      {
+      qCritical() << Q_FUNC_INFO << ": Could not get the Markups module.";
+      return;
+      }
+
 }
 
 //-----------------------------------------------------------------------------
