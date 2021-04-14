@@ -20,7 +20,7 @@
 
 // Liver Markups Logic includes
 //#include "vtkSlicerLiverMarkupsLogic.h"
-#include "vtkSlicerMarkupsWidget.h"
+#include "vtkResectionSurfaceWidget.h"
 
 #include "qSlicerCoreApplication.h"
 #include "MRML/vtkMRMLResectionSurfaceNode.h"
@@ -96,13 +96,13 @@ QIcon qSlicerLiverAnalysisModule::icon() const
 //-----------------------------------------------------------------------------
 QStringList qSlicerLiverAnalysisModule::categories() const
 {
-  return QStringList() << "Examples";
+  return QStringList() << "Liver";
 }
 
 //-----------------------------------------------------------------------------
 QStringList qSlicerLiverAnalysisModule::dependencies() const
 {
-  return QStringList();
+  return QStringList() << "Markups";
 }
 
 //-----------------------------------------------------------------------------
@@ -125,8 +125,8 @@ void qSlicerLiverAnalysisModule::setup()
       }
 
     // Register markups
-//    markupsLogic->RegisterMarkupsNode(vtkMRMLResectionSurfaceNode::New(),
-//                                      vtkSlicerMarkupsWidget::New());
+    markupsLogic->RegisterMarkupsNode(vtkMRMLResectionSurfaceNode::New(),
+        vtkResectionSurfaceWidget::New());
 
     qSlicerModuleManager* moduleManager = qSlicerCoreApplication::application()->moduleManager();
     if (!moduleManager)

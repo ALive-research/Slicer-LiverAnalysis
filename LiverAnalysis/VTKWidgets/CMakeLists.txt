@@ -23,12 +23,15 @@ set(${KIT}_EXPORT_DIRECTIVE "VTK_SLICER_${MODULE_NAME_UPPER}_MODULE_VTKWIDGETS_E
 set(${KIT}_SRCS
   vtkBezierSurfaceSource.h
   vtkBezierSurfaceSource.cxx
+  vtkResectionSurfaceWidget.h
+  vtkResectionSurfaceWidget.cxx
   )
 
 set(${KIT}_TARGET_LIBRARIES
   ${VTK_LIBRARIES}
   #vtkSlicer${MODULE_NAME}ModuleVTKWidgets
   #vtkSlicerMarkupsModuleVTKWidgets
+  vtkSlicerMarkupsModuleVTKWidgets
   )
 
 #-----------------------------------------------------------------------------

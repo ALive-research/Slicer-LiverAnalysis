@@ -40,7 +40,8 @@
 #include "vtkSlicerLiverAnalysisModuleMRMLExport.h"
 
 // MRML includes
-#include <vtkMRMLModelNode.h>
+//#include <vtkMRMLModelNode.h>
+#include <vtkMRMLMarkupsNode.h>
 
 // VTK includes
 #include <vtkNew.h>
@@ -63,7 +64,8 @@ class vtkPoints;
  * to other elements in the MRML scene.
  */
 class VTK_SLICER_LIVERANALYSIS_MODULE_MRML_EXPORT
-vtkMRMLResectionSurfaceNode: public vtkMRMLModelNode
+    //vtkMRMLResectionSurfaceNode: public vtkMRMLModelNode
+    vtkMRMLResectionSurfaceNode : public vtkMRMLMarkupsNode
 {
 
 public:
@@ -109,7 +111,8 @@ public:
    */
   static vtkMRMLResectionSurfaceNode *New();
 
-  vtkTypeMacro(vtkMRMLResectionSurfaceNode, vtkMRMLModelNode);
+  //vtkTypeMacro(vtkMRMLResectionSurfaceNode, vtkMRMLModelNode);
+  vtkTypeMacro(vtkMRMLResectionSurfaceNode, vtkMRMLMarkupsNode);
 
   /**
    * Standard print object information method.
