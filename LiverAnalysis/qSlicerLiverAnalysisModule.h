@@ -18,6 +18,8 @@
 #ifndef __qSlicerLiverAnalysisModule_h
 #define __qSlicerLiverAnalysisModule_h
 
+#include <vtkSmartPointer.h>
+
 // Slicer includes
 #include "qSlicerLoadableModule.h"
 
@@ -64,6 +66,9 @@ protected:
 
 protected:
   QScopedPointer<qSlicerLiverAnalysisModulePrivate> d_ptr;
+
+  vtkSmartPointer<class vtkMRMLResectionSurfaceNode> resectionSurfaceNode;
+  vtkSmartPointer<class vtkResectionSurfaceWidget> resectionSurfaceWidget;
 
 private:
   Q_DECLARE_PRIVATE(qSlicerLiverAnalysisModule);

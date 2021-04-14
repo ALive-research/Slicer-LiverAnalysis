@@ -125,8 +125,8 @@ void qSlicerLiverAnalysisModule::setup()
       }
 
     // Register markups
-    vtkSmartPointer<vtkMRMLResectionSurfaceNode> resectionSurfaceNode = vtkSmartPointer<vtkMRMLResectionSurfaceNode>::New();
-    vtkSmartPointer<vtkResectionSurfaceWidget> resectionSurfaceWidget = vtkSmartPointer<vtkResectionSurfaceWidget>::New();
+    resectionSurfaceNode = vtkSmartPointer<vtkMRMLResectionSurfaceNode>::New();
+    resectionSurfaceWidget = vtkSmartPointer<vtkResectionSurfaceWidget>::New();
     markupsLogic->RegisterMarkupsNode(resectionSurfaceNode, resectionSurfaceWidget);
 
     qSlicerModuleManager* moduleManager = qSlicerCoreApplication::application()->moduleManager();
