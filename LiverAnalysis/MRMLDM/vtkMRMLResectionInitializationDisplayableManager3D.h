@@ -37,7 +37,7 @@
 #define __vtkMRMLResectionInitializationDisplayableManager3D_h
 
 // This module includes
-#include "vtkSlicerLiverAnalysisModuleMRMLDisplayAbleManagerExport.h"
+#include "vtkSlicerLiverAnalysisModuleMRMLDisplayableManagerExport.h"
 
 // MRML includes
 #include <vtkMRMLAbstractThreeDViewDisplayableManager.h>
