@@ -25,6 +25,10 @@ set(${KIT}_SRCS
   vtkBezierSurfaceSource.cxx
   vtkResectionSurfaceWidget.h
   vtkResectionSurfaceWidget.cxx
+  vtkBezierSurfaceWidget.h
+  vtkBezierSurfaceWidget.cxx
+  vtkLineWidget3.h
+  vtkLineWidget3.cxx
   )
 
 set(${KIT}_TARGET_LIBRARIES

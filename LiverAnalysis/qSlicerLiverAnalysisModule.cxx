@@ -36,6 +36,11 @@
 #include "qSlicerLiverAnalysisModule.h"
 #include "qSlicerLiverAnalysisModuleWidget.h"
 
+// MRMLDisplayableManager includes
+#include <vtkMRMLThreeDViewDisplayableManagerFactory.h>
+#include <vtkMRMLSliceViewDisplayableManagerFactory.h>
+#include "vtkMRMLResectionInitializationDisplayableManager3D.h"
+
 //-----------------------------------------------------------------------------
 /// \ingroup Slicer_QtModules_ExtensionTemplate
 class qSlicerLiverAnalysisModulePrivate
@@ -109,6 +114,21 @@ QStringList qSlicerLiverAnalysisModule::dependencies() const
 void qSlicerLiverAnalysisModule::setup()
 {
   this->Superclass::setup();
+
+
+  //TODO: Register vtkMRMLResectionInitializationDisplayableManager3D
+  //Commented out code don't work yet
+
+  // Use the displayable manager class to make sure the the containing library is loaded
+  //vtkSmartPointer<vtkMRMLResectionInitializationDisplayableManager3D> displayableManager3D = vtkSmartPointer<vtkMRMLResectionInitializationDisplayableManager3D>::New();
+
+  //vtkMRMLThreeDViewDisplayableManagerFactory::GetInstance()->GlobalWarningDisplayOn();
+  // Register displayable managers 3D
+  //vtkMRMLThreeDViewDisplayableManagerFactory::GetInstance()->
+  //    RegisterDisplayableManager("vtkMRMLResectionDisplayableManager3D");
+  //vtkMRMLThreeDViewDisplayableManagerFactory::GetInstance()->
+  //    RegisterDisplayableManager("vtkMRMLResectionInitializationDisplayableManager3D");
+
     vtkSlicerApplicationLogic* appLogic = this->appLogic();
     if (!appLogic)
       {

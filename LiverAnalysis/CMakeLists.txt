@@ -6,9 +6,10 @@ set(MODULE_TITLE ${MODULE_NAME})
 string(TOUPPER ${MODULE_NAME} MODULE_NAME_UPPER)
 
 #-----------------------------------------------------------------------------
+add_subdirectory(VTKWidgets)
 add_subdirectory(Widgets)
 add_subdirectory(MRML)
-add_subdirectory(VTKWidgets)
+add_subdirectory(MRMLDM)
 add_subdirectory(Logic)
 
 #-----------------------------------------------------------------------------
@@ -20,6 +21,8 @@ set(MODULE_INCLUDE_DIRECTORIES
   ${CMAKE_CURRENT_BINARY_DIR}/Logic
   ${CMAKE_CURRENT_SOURCE_DIR}/Widgets
   ${CMAKE_CURRENT_BINARY_DIR}/Widgets
+  ${CMAKE_CURRENT_BINARY_DIR}/MRMLDM
+  ${CMAKE_CURRENT_SOURCE_DIR}/MRMLDM
   )
 
 set(MODULE_SRCS
@@ -43,6 +46,7 @@ set(MODULE_TARGET_LIBRARIES
   qSlicer${MODULE_NAME}ModuleWidgets
   vtkSlicer${MODULE_NAME}ModuleMRML
   vtkSlicer${MODULE_NAME}ModuleVTKWidgets
+  vtkSlicer${MODULE_NAME}ModuleMRMLDisplayableManager
   vtkSlicerMarkupsModuleMRML
   vtkSlicerMarkupsModuleVTKWidgets
   vtkSlicerMarkupsModuleLogic
