@@ -21,12 +21,6 @@ set(${KIT}_EXPORT_DIRECTIVE "VTK_SLICER_${MODULE_NAME_UPPER}_MODULE_VTKWIDGETS_E
 #  )
 
 set(${KIT}_SRCS
-  vtkBezierSurfaceSource.h
-  vtkBezierSurfaceSource.cxx
-  vtkResectionSurfaceWidget.h
-  vtkResectionSurfaceWidget.cxx
-  vtkBezierSurfaceWidget.h
-  vtkBezierSurfaceWidget.cxx
   vtkLineWidget3.h
   vtkLineWidget3.cxx
   )

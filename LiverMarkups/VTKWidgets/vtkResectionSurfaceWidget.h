@@ -39,11 +39,11 @@
 #ifndef __vtkResectionSurfaceWidget_h_
 #define __vtkResectionSurfaceWidget_h_
 
-#include "vtkSlicerLiverAnalysisModuleVTKWidgetsExport.h"
+#include "vtkSlicerLiverMarkupsModuleVTKWidgetsExport.h"
 
 #include <vtkSlicerMarkupsWidget.h>
 
-class VTK_SLICER_LIVERANALYSIS_MODULE_VTKWIDGETS_EXPORT vtkResectionSurfaceWidget
+class VTK_SLICER_LIVERMARKUPS_MODULE_VTKWIDGETS_EXPORT vtkResectionSurfaceWidget
 : public vtkSlicerMarkupsWidget
 {
 public:

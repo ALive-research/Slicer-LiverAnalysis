@@ -18,6 +18,14 @@ set(${KIT}_SRCS
   vtkSlicerSlicingContourRepresentation3D.cxx
   vtkSlicerSlicingContourRepresentation2D.h
   vtkSlicerSlicingContourRepresentation2D.cxx
+  vtkBezierSurfaceSource.h
+  vtkBezierSurfaceSource.cxx
+  vtkResectionSurfaceWidget.h
+  vtkResectionSurfaceWidget.cxx
+  vtkBezierSurfaceWidget.h
+  vtkBezierSurfaceWidget.cxx
+#  vtkLineWidget3.h
+#  vtkLineWidget3.cxx
   )
 
 set(${KIT}_TARGET_LIBRARIES

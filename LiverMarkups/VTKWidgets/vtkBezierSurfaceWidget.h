@@ -36,7 +36,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef vtkBezierSurfaceWidget_h
 #define vtkBezierSurfaceWidget_h
 
-#include "vtkSlicerLiverAnalysisModuleVTKWidgetsExport.h"
+#include "vtkSlicerLiverMarkupsModuleVTKWidgetsExport.h"
 
 #include <vtk3DWidget.h>
 #include <vtkSmartPointer.h>
@@ -71,7 +71,7 @@ class vtkPolyDataNormals;
  * SetControlPolygonProperty(), SetSelectedControlPolygonProperty() and
  * SetBezierSurfaceProperty().
  */
-class VTK_SLICER_LIVERANALYSIS_MODULE_VTKWIDGETS_EXPORT vtkBezierSurfaceWidget: public vtk3DWidget
+class VTK_SLICER_LIVERMARKUPS_MODULE_VTKWIDGETS_EXPORT vtkBezierSurfaceWidget: public vtk3DWidget
 {
  public:
 

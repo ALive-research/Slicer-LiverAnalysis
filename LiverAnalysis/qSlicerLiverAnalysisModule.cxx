@@ -20,7 +20,6 @@
 
 // Liver Markups Logic includes
 //#include "vtkSlicerLiverMarkupsLogic.h"
-#include "vtkResectionSurfaceWidget.h"
 
 #include "qSlicerCoreApplication.h"
 #include "vtkMRMLResectionSurfaceNode.h"
@@ -145,9 +144,10 @@ void qSlicerLiverAnalysisModule::setup()
       }
 
     // Register markups
-    resectionSurfaceNode = vtkSmartPointer<vtkMRMLResectionSurfaceNode>::New();
-    resectionSurfaceWidget = vtkSmartPointer<vtkResectionSurfaceWidget>::New();
-    markupsLogic->RegisterMarkupsNode(resectionSurfaceNode, resectionSurfaceWidget);
+    // Registration of markups moved to the LiverMarkups module
+//    resectionSurfaceNode = vtkSmartPointer<vtkMRMLResectionSurfaceNode>::New();
+//    resectionSurfaceWidget = vtkSmartPointer<vtkResectionSurfaceWidget>::New();
+//    markupsLogic->RegisterMarkupsNode(resectionSurfaceNode, resectionSurfaceWidget);
 
     qSlicerModuleManager* moduleManager = qSlicerCoreApplication::application()->moduleManager();
     if (!moduleManager)
