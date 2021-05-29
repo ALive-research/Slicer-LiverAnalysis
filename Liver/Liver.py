@@ -469,6 +469,9 @@ class LiverTest(ScriptedLoadableModuleTest):
     self.delayDisplay('Loaded test data set')
 
     slicingContourMarkupNode = slicer.mrmlScene.AddNewNodeByClass("vtkMRMLLiverMarkupsSlicingContourNode")
+    slicingContourMarkupNode.AddControlPoint(vtk.vtkVector3d(205, 11, 153))
+    slicingContourMarkupNode.AddControlPoint(vtk.vtkVector3d(-92, 11, 94))
+    slicingContourMarkupNode.SetTarget(inputModel)
 
     # inputScalarRange = inputVolume.GetImageData().GetScalarRange()
     # self.assertEqual(inputScalarRange[0], 0)
