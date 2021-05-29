@@ -1,3 +1,42 @@
+# ==============================================================================
+#
+#  Distributed under the OSI-approved BSD 3-Clause License.
+#
+#   Copyright (c) Oslo University Hospital. All rights reserved.
+#
+#   Redistribution and use in source and binary forms, with or without
+#   modification, are permitted provided that the following conditions
+#   are met:
+#
+#   * Redistributions of source code must retain the above copyright
+#     notice, this list of conditions and the following disclaimer.
+#
+#   * Redistributions in binary form must reproduce the above copyright
+#     notice, this list of conditions and the following disclaimer in the
+#     documentation and/or other materials provided with the distribution.
+#
+#   * Neither the name of Oslo University Hospital nor the names
+#     of Contributors may be used to endorse or promote products derived
+#     from this software without specific prior written permission.
+#
+#   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+#   "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+#   LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+#   A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+#   HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+#   SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+#   LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+#   DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+#   THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+#   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+#   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
+#   This file was originally developed by Rafael Palomar (The Intervention Centre,
+#   Oslo University Hospital) and was supported by The Research Council of Norway
+#   through the ALive project (grant nr. 311393).
+#
+# ==============================================================================
+
 import os
 import unittest
 import logging
@@ -17,19 +56,18 @@ class Liver(ScriptedLoadableModule):
 
   def __init__(self, parent):
     ScriptedLoadableModule.__init__(self, parent)
-    self.parent.title = "Liver"  # TODO: make this more human readable by adding spaces
-    self.parent.categories = ["Examples"]  # TODO: set categories (folders where the module shows up in the module selector)
-    self.parent.dependencies = []  # TODO: add here list of module names that this module requires
-    self.parent.contributors = ["John Doe (AnyWare Corp.)"]  # TODO: replace with "Firstname Lastname (Organization)"
-    # TODO: update with short description of the module and a link to online module documentation
+    self.parent.title = "Liver"
+    self.parent.categories = [""]
+    self.parent.dependencies = []
+    self.parent.contributors = ["Rafael Palomar (Oslo University Hospital / NTNU)"]
+
     self.parent.helpText = """
-This is an example of scripted loadable module bundled in an extension.
-See more information in <a href="https://github.com/organization/projectname#Liver">module documentation</a>.
-"""
-    # TODO: replace with organization, grant and thanks
-    self.parent.acknowledgementText = """
-This file was originally developed by Jean-Christophe Fillion-Robin, Kitware Inc., Andras Lasso, PerkLab,
-and Steve Pieper, Isomics, Inc. and was partially funded by NIH grant 3P41RR013218-12S1.
+    This module offers tools for making liver resection plans in 3D liver models.
+""
+    This file was originally developed by Rafael Palomar, Oslo University
+    Hospital/NTNU, Ole Vegard Solberg, SINTEF and Geir Arne Tangen, SINTEF. This
+    work was funded by The Research Council of Norway through the project ALive
+    (grant nr. 311393).
 """
 
     # Additional initialization step after application startup is complete
@@ -43,46 +81,20 @@ def registerSampleData():
   """
   Add data sets to Sample Data module.
   """
-  # It is always recommended to provide sample data for users to make it easy to try the module,
-  # but if no sample data is available then this method (and associated startupCompeted signal connection) can be removed.
+  import SampleData
+  iconsPath = os.path.join(os.path.dirname(__file__), 'Resources/Icons')
 
-  # import SampleData
-  # iconsPath = os.path.join(os.path.dirname(__file__), 'Resources/Icons')
-
-  # # To ensure that the source code repository remains small (can be downloaded and installed quickly)
-  # # it is recommended to store data sets that are larger than a few MB in a Github release.
-
-  # # Liver1
-  # SampleData.SampleDataLogic.registerCustomSampleDataSource(
-  #   # Category and sample name displayed in Sample Data module
-  #   category='Liver',
-  #   sampleName='Liver1',
-  #   # Thumbnail should have size of approximately 260x280 pixels and stored in Resources/Icons folder.
-  #   # It can be created by Screen Capture module, "Capture all views" option enabled, "Number of images" set to "Single".
-  #   thumbnailFileName=os.path.join(iconsPath, 'Liver1.png'),
-  #   # Download URL and target file name
-  #   uris="https://github.com/Slicer/SlicerTestingData/releases/download/SHA256/998cb522173839c78657f4bc0ea907cea09fd04e44601f17c82ea27927937b95",
-  #   fileNames='Liver1.nrrd',
-  #   # Checksum to ensure file integrity. Can be computed by this command:
-  #   #  import hashlib; print(hashlib.sha256(open(filename, "rb").read()).hexdigest())
-  #   checksums = 'SHA256:998cb522173839c78657f4bc0ea907cea09fd04e44601f17c82ea27927937b95',
-  #   # This node name will be used when the data set is loaded
-  #   nodeNames='Liver1'
-  # )
-
-  # # Liver2
-  # SampleData.SampleDataLogic.registerCustomSampleDataSource(
-  #   # Category and sample name displayed in Sample Data module
-  #   category='Liver',
-  #   sampleName='Liver2',
-  #   thumbnailFileName=os.path.join(iconsPath, 'Liver2.png'),
-  #   # Download URL and target file name
-  #   uris="https://github.com/Slicer/SlicerTestingData/releases/download/SHA256/1a64f3f422eb3d1c9b093d1a18da354b13bcf307907c66317e2463ee530b7a97",
-  #   fileNames='Liver2.nrrd',
-  #   checksums = 'SHA256:1a64f3f422eb3d1c9b093d1a18da354b13bcf307907c66317e2463ee530b7a97',
-  #   # This node name will be used when the data set is loaded
-  #   nodeNames='Liver2'
-  # )
+  # Liver Parenchyma 3D Model dataset
+  SampleData.SampleDataLogic.registerCustomSampleDataSource(
+    category='Liver',
+    sampleName='LiverParenchymaModel01',
+    thumbnailFileName=os.path.join(iconsPath, 'LiverParenchyma01.png'),
+    uris="https://github.com/ALive-Research/ALiveResearchTestingData/releases/download/SHA256/f385d2b93d87a871b7f16e31cb7db6a83cf4d95b13882c2d995af174bfc320c6",
+    fileNames='LiverParenchymaModel.vtk',
+    checksums = 'SHA256:f385d2b93d87a871b7f16e31cb7db6a83cf4d95b13882c2d995af174bfc320c6',
+    nodeNames='LiverParenchyma',
+    loadFileType='ModelFile'
+  )
   pass
 
 #
@@ -90,9 +102,6 @@ def registerSampleData():
 #
 
 class LiverWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
-  """Uses ScriptedLoadableModuleWidget base class, available at:
-  https://github.com/Slicer/Slicer/blob/master/Base/Python/slicer/ScriptedLoadableModule.py
-  """
 
   def __init__(self, parent=None):
     """
@@ -426,8 +435,6 @@ class LiverLogic(ScriptedLoadableModuleLogic):
       print("Same model")
 
 
-
-
 #
 # LiverTest
 #
@@ -451,25 +458,17 @@ class LiverTest(ScriptedLoadableModuleTest):
     self.test_Liver1()
 
   def test_Liver1(self):
-    # """ Ideally you should have several levels of tests.  At the lowest level
-    # tests should exercise the functionality of the logic with different inputs
-    # (both valid and invalid).  At higher levels your tests should emulate the
-    # way the user would interact with your code and confirm that it still works
-    # the way you intended.
-    # One of the most important features of the tests is that it should alert other
-    # developers when their changes will have an impact on the behavior of your
-    # module.  For example, if a developer removes a feature that you depend on,
-    # your test should break so they know that the feature is needed.
-    # """
 
-    # self.delayDisplay("Starting the test")
+    self.delayDisplay("Starting the test")
 
     # # Get/create input data
 
-    # import SampleData
-    # registerSampleData()
-    # inputVolume = SampleData.downloadSample('Liver1')
-    # self.delayDisplay('Loaded test data set')
+    import SampleData
+    registerSampleData()
+    inputModel = SampleData.downloadSample('LiverParenchymaModel01')
+    self.delayDisplay('Loaded test data set')
+
+    slicingContourMarkupNode = slicer.mrmlScene.AddNewNodeByClass("vtkMRMLLiverMarkupsSlicingContourNode")
 
     # inputScalarRange = inputVolume.GetImageData().GetScalarRange()
     # self.assertEqual(inputScalarRange[0], 0)
@@ -478,9 +477,9 @@ class LiverTest(ScriptedLoadableModuleTest):
     # outputVolume = slicer.mrmlScene.AddNewNodeByClass("vtkMRMLScalarVolumeNode")
     # threshold = 100
 
-    # # Test the module logic
+    # Test the module logic
 
-    # logic = LiverLogic()
+    logic = LiverLogic()
 
     # # Test algorithm with non-inverted threshold
     # logic.process(inputVolume, outputVolume, threshold, True)
@@ -494,6 +493,6 @@ class LiverTest(ScriptedLoadableModuleTest):
     # self.assertEqual(outputScalarRange[0], inputScalarRange[0])
     # self.assertEqual(outputScalarRange[1], inputScalarRange[1])
 
-    # self.delayDisplay('Test passed')
+    self.delayDisplay('Test passed')
 
     pass
