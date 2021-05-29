@@ -36,6 +36,7 @@
   through the ALive project (grant nr. 311393).
 
 ==============================================================================*/
+
 #ifndef __vtkslicerslicingcontourwidgetrepresentation3d_h_
 #define __vtkslicerslicingcontourwidgetrepresentation3d_h_
 

@@ -110,7 +110,9 @@ QString qSlicerLiverMarkupsModule::acknowledgementText() const
 QStringList qSlicerLiverMarkupsModule::contributors() const
 {
   QStringList moduleContributors;
-  moduleContributors << QString("Rafael Palomar (Oslo University Hospital / NTNU)");
+  moduleContributors << QString("Rafael Palomar (Oslo University Hospital / NTNU) ");
+  moduleContributors << QString("Ole Vegard Solberg (SINTEF) ");
+  moduleContributors << QString("Geir Arne Tangen (SINTEF) ");
   return moduleContributors;
 }
 
@@ -192,7 +194,7 @@ QStringList qSlicerLiverMarkupsModule::associatedNodeTypes() const
 //-----------------------------------------------------------------------------
 void qSlicerLiverMarkupsModule::setMRMLScene(vtkMRMLScene* scene)
 {
-  this->Superclass::setMRMLScene(scene);
+  Superclass::setMRMLScene(scene);
   vtkSlicerLiverMarkupsLogic* logic =
     vtkSlicerLiverMarkupsLogic::SafeDownCast(this->logic());
   if (!logic)
