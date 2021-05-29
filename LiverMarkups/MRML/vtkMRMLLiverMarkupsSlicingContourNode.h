@@ -40,9 +40,14 @@
 #ifndef __vtkmrmllivermarkupsslicingcontournode_h_
 #define __vtkmrmllivermarkupsslicingcontournode_h_
 
-#include <vtkMRMLMarkupsLineNode.h>
-
 #include "vtkSlicerLiverMarkupsModuleMRMLExport.h"
+
+// MRML includes
+#include <vtkMRMLMarkupsLineNode.h>
+#include <vtkMRMLModelNode.h>
+
+//VTK includes
+#include <vtkWeakPointer.h>
 
 //-----------------------------------------------------------------------------
 class VTK_SLICER_LIVERMARKUPS_MODULE_MRML_EXPORT vtkMRMLLiverMarkupsSlicingContourNode
@@ -74,8 +79,8 @@ public:
   /// \sa vtkMRMLNode::CopyContent
   vtkMRMLCopyContentDefaultMacro(vtkMRMLLiverMarkupsSlicingContourNode);
 
-  vtkPolyData* GetTargetOrgan() const {return this->TargetOrgan;}
-  void SetTargetOrgan(vtkPolyData* targetOrgan) {this->TargetOrgan = targetOrgan;}
+  vtkMRMLModelNode* GetTarget() const {return this->Target;}
+  void SetTarget(vtkMRMLModelNode* target) {this->Target = target;}
 
 protected:
   vtkMRMLLiverMarkupsSlicingContourNode();
@@ -84,7 +89,8 @@ protected:
   void operator=(const vtkMRMLLiverMarkupsSlicingContourNode&);
 
 private:
-  vtkPolyData *TargetOrgan = nullptr;
+ vtkWeakPointer<vtkMRMLModelNode> Target;
+
 };
 
 #endif //__vtkmrmllivermarkupsslicingcontournode_h_

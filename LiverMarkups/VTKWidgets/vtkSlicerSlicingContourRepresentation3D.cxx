@@ -212,7 +212,16 @@ void vtkSlicerSlicingContourRepresentation3D::UpdateFromMRML(vtkMRMLNode* caller
    return;
    }
 
- this->TargetOrgan = liverMarkupsSlicingContourNode->GetTargetOrgan();
+ if (!liverMarkupsSlicingContourNode->GetTarget())
+   {
+   return;
+
+   }
+ this->TargetOrgan = liverMarkupsSlicingContourNode->GetTarget()->GetPolyData();
+ if (!this->TargetOrgan)
+   {
+   return;
+   }
  this->Cutter->SetInputData(this->TargetOrgan);
 }
 

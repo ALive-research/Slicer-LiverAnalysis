@@ -48,7 +48,7 @@ vtkMRMLNodeNewMacro(vtkMRMLLiverMarkupsSlicingContourNode);
 
 //--------------------------------------------------------------------------------
 vtkMRMLLiverMarkupsSlicingContourNode::vtkMRMLLiverMarkupsSlicingContourNode()
-  :Superclass()
+  :Superclass(), Target(nullptr)
 {
 }
 
