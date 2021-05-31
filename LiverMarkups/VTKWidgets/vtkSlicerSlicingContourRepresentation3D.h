@@ -44,13 +44,14 @@
 
 // Markups VTKWidgets includes
 #include "vtkSlicerLineRepresentation3D.h"
+#include "vtkSlicerShaderHelper.h"
+
+// MRML includes
+#include <vtkMRMLModelNode.h>
 
 // VTK includes
 #include <vtkWeakPointer.h>
 
-//------------------------------------------------------------------------------
-class vtkCutter;
-class vtkPlane;
 
 //------------------------------------------------------------------------------
 class VTK_SLICER_LIVERMARKUPS_MODULE_VTKWIDGETS_EXPORT vtkSlicerSlicingContourRepresentation3D
@@ -59,33 +60,17 @@ class VTK_SLICER_LIVERMARKUPS_MODULE_VTKWIDGETS_EXPORT vtkSlicerSlicingContourRe
 public:
   static vtkSlicerSlicingContourRepresentation3D* New();
   vtkTypeMacro(vtkSlicerSlicingContourRepresentation3D, vtkSlicerLineRepresentation3D);
-  void PrintSelf(ostream& os, vtkIndent indent);
+  void PrintSelf(ostream& os, vtkIndent indent) override;
 
-  void UpdateFromMRML(vtkMRMLNode* caller, unsigned long event, void* callData=nullptr);
-
-  void GetActors(vtkPropCollection*) override;
-  void ReleaseGraphicsResources(vtkWindow*) override;
-  int RenderOverlay(vtkViewport* viewport) override;
-  int RenderOpaqueGeometry(vtkViewport* viewport) override;
-  int RenderTranslucentPolygonalGeometry(vtkViewport* viewport) override;
-  vtkTypeBool HasTranslucentPolygonalGeometry() override;
+  void UpdateFromMRML(vtkMRMLNode* caller, unsigned long event, void* callData=nullptr) override;
 
 protected:
   vtkSlicerSlicingContourRepresentation3D();
   ~vtkSlicerSlicingContourRepresentation3D() override;
 
-  vtkSmartPointer<vtkCutter> Cutter;
-  vtkSmartPointer<vtkPolyDataMapper> ContourMapper;
-  vtkSmartPointer<vtkActor> ContourActor;
-  vtkSmartPointer<vtkPolyData> MiddlePoint;
-  vtkSmartPointer<vtkPolyDataMapper> MiddlePointMapper;
-  vtkSmartPointer<vtkActor> MiddlePointActor;
-  vtkWeakPointer<vtkPolyData> TargetOrgan;
-  vtkSmartPointer<vtkSphereSource> MiddlePointSource;
-  vtkSmartPointer<vtkPlane> SlicingPlane;
-
-  void BuildMiddlePoint();
-  void BuildSlicingPlane();
+private:
+  vtkWeakPointer<vtkMRMLModelNode> Target;
+  vtkNew<vtkSlicerShaderHelper> ShaderHelper;
 
 private:
   vtkSlicerSlicingContourRepresentation3D(const vtkSlicerSlicingContourRepresentation3D&) = delete;

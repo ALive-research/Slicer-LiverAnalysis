@@ -141,7 +141,7 @@ class LiverWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
     self.addObserver(slicer.mrmlScene, slicer.mrmlScene.EndCloseEvent, self.onSceneEndClose)
 
     # This connection listens for new node added.
-    self.addObserver(slicer.mrmlScene, slicer.mrmlScene.NodeAddedEvent, self.onSceneNodeAdded)
+    #self.addObserver(slicer.mrmlScene, slicer.mrmlScene.NodeAddedEvent, self.onSceneNodeAdded)
 
     # These connections ensure that whenever user changes some settings on the GUI, that is saved in the MRML scene
     # (in the selected parameter node).
@@ -188,16 +188,6 @@ class LiverWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
     # If this module is shown while the scene is closed then recreate a new parameter node immediately
     if self.parent.isEntered:
       self.initializeParameterNode()
-
-  def onSceneNodeAdded(self, caller, event):
-    """
-    Called after a node gets added to the MRML scene
-    """
-    markupsLineNodes = slicer.util.getNodesByClass("vtkMRMLMarkupsLineNode")
-    if len(markupsLineNodes) > 0:
-      self.logic.setMarkupsLineNode(markupsLineNodes[-1])
-
-  #TODO: create onSceneNodeRemoved to remove observers of the node in case it is the node removed
 
   def initializeParameterNode(self):
     """
@@ -303,136 +293,13 @@ class LiverLogic(ScriptedLoadableModuleLogic):
     """
     pass
 
-  def setMarkupsLineNode(self, markupsLineNode):
-    """
-    Sets the internal markups line node
-    """
-    self._markupsLineNode = markupsLineNode
-    self._markupsLineNode.AddObserver(vtk.vtkCommand.ModifiedEvent, self.onLineNodeModified)
-
-  @vtk.calldata_type(vtk.VTK_OBJECT)
-  def onLineNodeModified(self, caller, event):
-    """
-    Acts on line modified
-    """
-
-    if self._markupsLineDisplayNode is None:
-      self._markupsLineDisplayNode = self._markupsLineNode.GetDisplayNode()
-      self._markupsLineDisplayNode.SetSnapMode(slicer.vtkMRMLMarkupsDisplayNode.SnapModeUnconstrained)
-
-    if self._actor is not None:
-
-      # Compute the normal of the plane
-      linePoints = vtk.vtkPoints()
-      self._markupsLineNode.GetControlPointPositionsWorld(linePoints)
-      if linePoints.GetNumberOfPoints() == 0:
-        return
-
-      mapper = self._actor.GetMapper()
-      VBOs = mapper.GetVBOs()
-      vVBO = VBOs.GetVBO("vertexMC")
-      scale = np.asarray(vVBO.GetScale())
-
-      p0 = np.asarray(linePoints.GetPoint(0),dtype=float)
-      p1 = np.asarray(linePoints.GetPoint(1),dtype=float)
-      pm = (p0 + p1) / 2.0 * scale
-      pm = np.append(pm, 1.0)
-      normal = (p0 - p1) / np.linalg.norm(p0 - p1)
-      normal = np.append(normal, 1.0)
-
-      renderer = slicer.app.layoutManager().threeDWidget(0).threeDView().renderWindow().GetRenderers().GetFirstRenderer()
-      camera = renderer.GetActiveCamera()
-
-      # Get the modelview matrix
-      modelView = camera.GetModelViewTransformMatrix()
-
-      # Compute a normals matrix
-      anorm = vtk.vtkMatrix4x4()
-      for i in range(3):
-        for j in range(3):
-          anorm.SetElement(i,j,modelView.GetElement(i,j))
-
-      fragmentUniforms = self._actor.GetShaderProperty().GetFragmentCustomUniforms()
-      fragmentUniforms.SetUniform4f("planePositionMC", pm)
-      fragmentUniforms.SetUniform4f("planeNormalMC", normal)
-
 
   def parameterNodeChanged(self,parameterNode):
     """
     Called when the parameter node has changed
     """
+    pass
 
-    # If the node has changed
-    modelNode = parameterNode.GetNodeReference("LiverModel")
-    if self._currentSelectedModelNode is not modelNode:
-
-      lm = slicer.app.layoutManager()
-
-      for v in range(lm.threeDViewCount):
-        td = lm.threeDWidget(v)
-        ms = vtk.vtkCollection()
-        td.getDisplayableManagers(ms)
-
-        for i in range(ms.GetNumberOfItems()):
-
-          m = ms.GetItemAsObject(i)
-          if m.GetClassName() == "vtkMRMLModelDisplayableManager":
-
-            self._actor = m.GetActorByID(modelNode.GetDisplayNode().GetID())
-
-            shaderProperty  = self._actor.GetShaderProperty()
-
-            shaderProperty.AddVertexShaderReplacement(
-              "//VTK::PositionVC::Dec",
-              True,
-              "//VTK::PositionVC::Dec\n"
-              "out vec4 vertexMCVSOutput;\n",
-              False
-            )
-
-            shaderProperty.AddVertexShaderReplacement(
-              "//VTK::PositionVC::Impl",
-              True,
-              "//VTK::PositionVC::Impl\n"
-              "vertexMCVSOutput = vertexMC;\n",
-              False
-            )
-
-            shaderProperty.AddFragmentShaderReplacement(
-              "//VTK::PositionVC::Dec",
-              True,
-              "//VTK::PositionVC::Dec\n"
-              "in vec4 vertexMCVSOutput;\n"
-              "vec4 fragPositionMC = vertexMCVSOutput;\n",
-              False
-            )
-
-            shaderProperty.AddFragmentShaderReplacement(
-              "//VTK::Color::Impl",
-              True,
-              "//VTK::Color::Impl\n"
-              "  vec3 color1 = vec3(0.0, 1.0 ,0.0);\n"
-              "  vec3 color2 = vec3(0.0, 0.0 ,1.0);\n"
-              "  vec3 w = -(planePositionMC.xyz*fragPositionMC.w - fragPositionMC.xyz);\n"
-              "  float dist = (planeNormalMC.x * w.x + planeNormalMC.y * w.y + planeNormalMC.z * w.z) / sqrt( pow(planeNormalMC.x,2) + pow(planeNormalMC.y,2)+ pow(planeNormalMC.z,2));\n"
-              "  if(abs(dist) < 0.05){\n"
-              "     ambientColor = ambientIntensity * color1;\n"
-              "     diffuseColor = diffuseIntensity * color1;\n"
-              "  }\n"
-              "  else{\n"
-              "     ambientColor = ambientIntensity * color2;\n"
-              "     diffuseColor = diffuseIntensity * color2;\n"
-              "  }\n" ,
-              False
-            )
-
-            fragmentUniforms = self._actor.GetShaderProperty().GetFragmentCustomUniforms()
-            fragmentUniforms.SetUniform4f("planePositionMC", [0.0,0,0,0.0])
-            fragmentUniforms.SetUniform4f("planeNormalMC", ([1,0,0,1]/np.linalg.norm([1.0, 0.0, 0.0])).tolist())
-
-    else:
-
-      print("Same model")
 
 
 #
@@ -465,20 +332,14 @@ class LiverTest(ScriptedLoadableModuleTest):
 
     import SampleData
     registerSampleData()
-    inputModel = SampleData.downloadSample('LiverParenchymaModel01')
+    inputModelNode = SampleData.downloadSample('LiverParenchymaModel01')
     self.delayDisplay('Loaded test data set')
 
     slicingContourMarkupNode = slicer.mrmlScene.AddNewNodeByClass("vtkMRMLLiverMarkupsSlicingContourNode")
     slicingContourMarkupNode.AddControlPoint(vtk.vtkVector3d(205, 11, 153))
     slicingContourMarkupNode.AddControlPoint(vtk.vtkVector3d(-92, 11, 94))
-    slicingContourMarkupNode.SetTarget(inputModel)
+    slicingContourMarkupNode.SetTarget(inputModelNode)
 
-    # inputScalarRange = inputVolume.GetImageData().GetScalarRange()
-    # self.assertEqual(inputScalarRange[0], 0)
-    # self.assertEqual(inputScalarRange[1], 695)
-
-    # outputVolume = slicer.mrmlScene.AddNewNodeByClass("vtkMRMLScalarVolumeNode")
-    # threshold = 100
 
     # Test the module logic
 

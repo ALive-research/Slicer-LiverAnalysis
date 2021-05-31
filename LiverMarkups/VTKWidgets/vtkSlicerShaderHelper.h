@@ -37,64 +37,55 @@
 
 ==============================================================================*/
 
-#ifndef __vtkmrmllivermarkupsslicingcontournode_h_
-#define __vtkmrmllivermarkupsslicingcontournode_h_
+#ifndef vtkslicershaderhelper_h_
+#define vtkslicershaderhelper_h_
 
-#include "vtkSlicerLiverMarkupsModuleMRMLExport.h"
+#include "vtkSlicerLiverMarkupsModuleVTKWidgetsExport.h"
 
 // MRML includes
-#include <vtkMRMLMarkupsLineNode.h>
 #include <vtkMRMLModelNode.h>
 
-//VTK includes
+// VTK includes
+#include <vtkActor.h>
+#include <vtkCollection.h>
+#include <vtkObject.h>
 #include <vtkWeakPointer.h>
 
-//-----------------------------------------------------------------------------
-class VTK_SLICER_LIVERMARKUPS_MODULE_MRML_EXPORT vtkMRMLLiverMarkupsSlicingContourNode
-: public vtkMRMLMarkupsLineNode
+//------------------------------------------------------------------------------
+class vtkCollection;
+class vtkMRMLModelNode;
+class vtkShaderProperty;
+
+//------------------------------------------------------------------------------
+class VTK_SLICER_LIVERMARKUPS_MODULE_VTKWIDGETS_EXPORT vtkSlicerShaderHelper
+: public vtkObject
 {
 public:
-  static vtkMRMLLiverMarkupsSlicingContourNode* New();
-  vtkTypeMacro(vtkMRMLLiverMarkupsSlicingContourNode, vtkMRMLMarkupsLineNode);
+  static vtkSlicerShaderHelper* New();
+  vtkTypeMacro(vtkSlicerShaderHelper, vtkObject);
   void PrintSelf(ostream& os, vtkIndent indent) override;
 
-  //--------------------------------------------------------------------------------
-  // MRMLNode methods
-  //--------------------------------------------------------------------------------
-  const char* GetIcon() override {return ":/Icons/MarkupsGeneric.png";}
-  const char* GetAddIcon() override {return ":/Icons/MarkupsGenericMouseModePlace.png";}
-  const char* GetPlaceAddIcon() override {return ":/Icons/MarkupsGenericMouseModePlaceAdd.png";}
-
-  vtkMRMLNode* CreateNodeInstance() override;
-
-  /// Get node XML tag name (like Volume, Model)
-  ///
-  const char* GetNodeTagName() override {return "MarkupsSlicingContour";}
-
-  /// Get markup name
-  const char* GetMarkupType() override {return "SlicingContour";}
-
-  /// Get markup short name
-  const char* GetDefaultNodeNamePrefix() override {return "SC";}
-
-  /// \sa vtkMRMLNode::CopyContent
-  vtkMRMLCopyContentDefaultMacro(vtkMRMLLiverMarkupsSlicingContourNode);
-
-  vtkMRMLModelNode* GetTarget() const {return this->Target;}
-  void SetTarget(vtkMRMLModelNode* target) {this->Target = target; this->Modified();}
+  void SetTargetModelNode(vtkMRMLModelNode* modelNode){this->TargetModelNode = modelNode;}
+  vtkMRMLModelNode* GetTargetModelNode(){return this->TargetModelNode;}
+  vtkCollection* GetTargetModelVertexVBOs(){return this->TargetModelVertexVBOs;}
+  vtkCollection* GetTargetActors(){return this->TargetModelActors;}
+  void AttachContourShader();
 
 protected:
-  vtkMRMLLiverMarkupsSlicingContourNode();
-  ~vtkMRMLLiverMarkupsSlicingContourNode() override = default;
+  vtkWeakPointer<vtkMRMLModelNode> TargetModelNode;
+  vtkNew<vtkCollection> TargetModelVertexVBOs;
+  vtkNew<vtkCollection> TargetModelActors;
+
+protected:
+  vtkSlicerShaderHelper();
+  ~vtkSlicerShaderHelper() = default;
 
 private:
- vtkWeakPointer<vtkMRMLModelNode> Target;
+  void getShaderProperties(vtkCollection* propertiesCollection);
 
 private:
- vtkMRMLLiverMarkupsSlicingContourNode(const vtkMRMLLiverMarkupsSlicingContourNode&);
- void operator=(const vtkMRMLLiverMarkupsSlicingContourNode&);
-
-
+  vtkSlicerShaderHelper(const vtkSlicerShaderHelper&) = delete;
+  void operator=(const vtkSlicerShaderHelper&) = delete;
 };
 
-#endif //__vtkmrmllivermarkupsslicingcontournode_h_
+#endif // vtkslicershaderhelper_h_

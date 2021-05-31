@@ -55,7 +55,7 @@ public:
                                   vtkRenderer* renderer) override;
 
   /// Create instance of the markups widget
-  virtual vtkSlicerMarkupsWidget* CreateInstance() const;
+  vtkSlicerMarkupsWidget* CreateInstance() const override;
 
 protected:
   vtkSlicerSlicingContourWidget();

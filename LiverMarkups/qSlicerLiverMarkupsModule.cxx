@@ -155,8 +155,10 @@ void qSlicerLiverMarkupsModule::setup()
    }
 
  // Register markups
- markupsLogic->RegisterMarkupsNode(vtkMRMLLiverMarkupsSlicingContourNode::New(),
-                                   vtkSlicerSlicingContourWidget::New());
+ vtkNew<vtkMRMLLiverMarkupsSlicingContourNode> slicingContourNode;
+ vtkNew<vtkSlicerSlicingContourWidget> slicingContourWidget;
+ markupsLogic->RegisterMarkupsNode(slicingContourNode, slicingContourWidget);
+
 
  qSlicerModuleManager* moduleManager = qSlicerCoreApplication::application()->moduleManager();
  if (!moduleManager)

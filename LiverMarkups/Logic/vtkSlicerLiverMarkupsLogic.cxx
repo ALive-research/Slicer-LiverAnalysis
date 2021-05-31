@@ -135,14 +135,13 @@ void vtkSlicerLiverMarkupsLogic::OnMRMLSceneNodeAdded(vtkMRMLNode* node)
 {
   Superclass::OnMRMLSceneNodeAdded(node);
 
-  vtkMRMLMarkupsNode* markupsNode =
-    vtkMRMLMarkupsNode::SafeDownCast(node);
+  auto markupsNode = vtkMRMLLiverMarkupsSlicingContourNode::SafeDownCast(node);
   if (!markupsNode)
     {
     return;
     }
 
-  vtkMRMLMarkupsDisplayNode* displayNode =
-    vtkMRMLMarkupsDisplayNode::SafeDownCast(markupsNode->GetDisplayNode());
-  displayNode->SetTextScale(0.0);
+  auto displayNode = vtkMRMLMarkupsDisplayNode::SafeDownCast(markupsNode->GetDisplayNode());
+  displayNode->PropertiesLabelVisibilityOff();
+  displayNode->SetSnapMode(vtkMRMLMarkupsDisplayNode::SnapModeUnconstrained);
 }

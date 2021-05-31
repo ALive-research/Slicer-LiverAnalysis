@@ -39,6 +39,9 @@
 
 #include "vtkMRMLLiverMarkupsSlicingContourNode.h"
 
+// MRML includes
+#include <vtkMRMLScene.h>
+
 // VTK includes
 #include <vtkNew.h>
 #include <vtkObjectFactory.h>
@@ -51,9 +54,6 @@ vtkMRMLLiverMarkupsSlicingContourNode::vtkMRMLLiverMarkupsSlicingContourNode()
   :Superclass(), Target(nullptr)
 {
 }
-
-//--------------------------------------------------------------------------------
-vtkMRMLLiverMarkupsSlicingContourNode::~vtkMRMLLiverMarkupsSlicingContourNode()=default;
 
 //----------------------------------------------------------------------------
 void vtkMRMLLiverMarkupsSlicingContourNode::PrintSelf(ostream& os, vtkIndent indent)
