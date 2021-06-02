@@ -40,6 +40,7 @@
 
 // Liver Markups MRML includes
 #include "vtkMRMLLiverMarkupsSlicingContourNode.h"
+#include "vtkMRMLLiverMarkupsResectionSurfaceNode.h"
 
 // MRML includes
 #include <vtkMRMLScene.h>
@@ -83,6 +84,7 @@ void vtkSlicerLiverMarkupsLogic::RegisterNodes()
 
   // Nodes
   scene->RegisterNodeClass(vtkSmartPointer<vtkMRMLLiverMarkupsSlicingContourNode>::New());
+  scene->RegisterNodeClass(vtkSmartPointer<vtkMRMLLiverMarkupsResectionSurfaceNode>::New());
 }
 
 //---------------------------------------------------------------------------
@@ -118,10 +120,15 @@ void vtkSlicerLiverMarkupsLogic::ObserveMRMLScene()
     this->GetMRMLScene()->StartState(vtkMRMLScene::BatchProcessState);
 
     auto slicingContourNode = vtkSmartPointer<vtkMRMLLiverMarkupsSlicingContourNode>::New();
+    auto resectionSurfaceNode = vtkSmartPointer<vtkMRMLLiverMarkupsResectionSurfaceNode>::New();
 
     selectionNode->AddNewPlaceNodeClassNameToList(slicingContourNode->GetClassName(),
                                                   slicingContourNode->GetAddIcon(),
                                                   slicingContourNode->GetMarkupType());
+
+    selectionNode->AddNewPlaceNodeClassNameToList(resectionSurfaceNode->GetClassName(),
+                                                  resectionSurfaceNode->GetAddIcon(),
+                                                  resectionSurfaceNode->GetMarkupType());
 
     // trigger an update on the mouse mode toolbar
     this->GetMRMLScene()->EndState(vtkMRMLScene::BatchProcessState);
@@ -145,4 +152,6 @@ void vtkSlicerLiverMarkupsLogic::OnMRMLSceneNodeAdded(vtkMRMLNode* node)
   vtkMRMLMarkupsDisplayNode* displayNode =
     vtkMRMLMarkupsDisplayNode::SafeDownCast(markupsNode->GetDisplayNode());
   displayNode->SetTextScale(0.0);
+  // Flere parametre som må settes for displaynode?
+  // Egne parametre for hver modul?
 }

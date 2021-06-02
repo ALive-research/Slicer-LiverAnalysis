@@ -33,11 +33,11 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   =========================================================================*/
 
-#ifndef __vtkMRMLResectionSurfaceNode_h
-#define __vtkMRMLResectionSurfaceNode_h
+#ifndef __vtkMRMLLiverMarkupsResectionSurfaceNode_h
+#define __vtkMRMLLiverMarkupsResectionSurfaceNode_h
 
 // This module includes.
-#include "vtkSlicerLiverAnalysisModuleMRMLExport.h"
+#include "vtkSlicerLiverMarkupsModuleMRMLExport.h"
 
 // MRML includes
 //#include <vtkMRMLModelNode.h>
@@ -63,9 +63,9 @@ class vtkPoints;
  * contains all the information related to the resection like its relationship
  * to other elements in the MRML scene.
  */
-class VTK_SLICER_LIVERANALYSIS_MODULE_MRML_EXPORT
+class VTK_SLICER_LIVERMARKUPS_MODULE_MRML_EXPORT
     //vtkMRMLResectionSurfaceNode: public vtkMRMLModelNode
-    vtkMRMLResectionSurfaceNode : public vtkMRMLMarkupsNode
+    vtkMRMLLiverMarkupsResectionSurfaceNode : public vtkMRMLMarkupsNode
 {
 
 public:
@@ -109,10 +109,10 @@ public:
    *
    * @return a pointer to a newly created vtkMRMLResectionSurfaceNode.
    */
-  static vtkMRMLResectionSurfaceNode *New();
+  static vtkMRMLLiverMarkupsResectionSurfaceNode *New();
 
   //vtkTypeMacro(vtkMRMLResectionSurfaceNode, vtkMRMLModelNode);
-  vtkTypeMacro(vtkMRMLResectionSurfaceNode, vtkMRMLMarkupsNode);
+  vtkTypeMacro(vtkMRMLLiverMarkupsResectionSurfaceNode, vtkMRMLMarkupsNode);
 
   /**
    * Standard print object information method.
@@ -206,11 +206,11 @@ public:
   vtkMRMLModelNode *GetTargetParenchyma() const;
 
  protected:
-  vtkMRMLResectionSurfaceNode();
-  ~vtkMRMLResectionSurfaceNode();
+  vtkMRMLLiverMarkupsResectionSurfaceNode();
+  ~vtkMRMLLiverMarkupsResectionSurfaceNode();
 
-  vtkMRMLResectionSurfaceNode(const vtkMRMLResectionSurfaceNode&);
-  void operator=(const vtkMRMLResectionSurfaceNode&);
+  vtkMRMLLiverMarkupsResectionSurfaceNode(const vtkMRMLLiverMarkupsResectionSurfaceNode&);
+  void operator=(const vtkMRMLLiverMarkupsResectionSurfaceNode&);
 
   vtkNew<vtkCollection> TargetTumors;
   vtkNew<vtkPoints> ControlPoints;

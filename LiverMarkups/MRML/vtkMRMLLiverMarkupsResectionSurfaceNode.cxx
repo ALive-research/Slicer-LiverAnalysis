@@ -34,7 +34,7 @@
   =========================================================================*/
 
 // This module includes
-#include "vtkMRMLResectionSurfaceNode.h"
+#include "vtkMRMLLiverMarkupsResectionSurfaceNode.h"
 //#include "vtkMRMLResectionSurfaceDisplayNode.h"
 //#include "ResectionPlanningModuleDefaultValues.h"
 
@@ -48,10 +48,10 @@
 #include <vtkCommand.h>
 
 //------------------------------------------------------------------------------
-vtkMRMLNodeNewMacro(vtkMRMLResectionSurfaceNode);
+vtkMRMLNodeNewMacro(vtkMRMLLiverMarkupsResectionSurfaceNode);
 
 //------------------------------------------------------------------------------
-vtkMRMLResectionSurfaceNode::vtkMRMLResectionSurfaceNode()
+vtkMRMLLiverMarkupsResectionSurfaceNode::vtkMRMLLiverMarkupsResectionSurfaceNode()
 //  :ResectionMargin(DEFAULT_RESECTION_MARGIN)
 {
 
@@ -75,13 +75,13 @@ vtkMRMLResectionSurfaceNode::vtkMRMLResectionSurfaceNode()
 }
 
 //------------------------------------------------------------------------------
-vtkMRMLResectionSurfaceNode::~vtkMRMLResectionSurfaceNode()
+vtkMRMLLiverMarkupsResectionSurfaceNode::~vtkMRMLLiverMarkupsResectionSurfaceNode()
 {
 
 }
 
 //------------------------------------------------------------------------------
-void vtkMRMLResectionSurfaceNode::PrintSelf(ostream &vtkNotUsed(os),
+void vtkMRMLLiverMarkupsResectionSurfaceNode::PrintSelf(ostream &vtkNotUsed(os),
                                             vtkIndent vtkNotUsed(nIndent))
 {
 
@@ -89,7 +89,7 @@ void vtkMRMLResectionSurfaceNode::PrintSelf(ostream &vtkNotUsed(os),
 
 //------------------------------------------------------------------------------
 vtkMRMLResectionSurfaceDisplayNode*
-vtkMRMLResectionSurfaceNode::GetResectionSurfaceDisplayNode()
+vtkMRMLLiverMarkupsResectionSurfaceNode::GetResectionSurfaceDisplayNode()
 {
   vtkMRMLDisplayNode *displayNode = this->GetDisplayNode();
  // if (displayNode && displayNode->IsA("vtkMRMLResectionSurfaceDisplayNode"))
@@ -100,7 +100,7 @@ vtkMRMLResectionSurfaceNode::GetResectionSurfaceDisplayNode()
 }
 
 //------------------------------------------------------------------------------
-void vtkMRMLResectionSurfaceNode::AddTargetTumor(vtkMRMLModelNode *tumorNode)
+void vtkMRMLLiverMarkupsResectionSurfaceNode::AddTargetTumor(vtkMRMLModelNode *tumorNode)
 {
   if (!tumorNode)
     {
@@ -117,7 +117,7 @@ void vtkMRMLResectionSurfaceNode::AddTargetTumor(vtkMRMLModelNode *tumorNode)
 }
 
 //------------------------------------------------------------------------------
-void vtkMRMLResectionSurfaceNode::RemoveTargetTumor(vtkMRMLModelNode *tumorNode)
+void vtkMRMLLiverMarkupsResectionSurfaceNode::RemoveTargetTumor(vtkMRMLModelNode *tumorNode)
 {
   if (!tumorNode)
     {
@@ -134,13 +134,13 @@ void vtkMRMLResectionSurfaceNode::RemoveTargetTumor(vtkMRMLModelNode *tumorNode)
 }
 
 //------------------------------------------------------------------------------
-int vtkMRMLResectionSurfaceNode::GetNumberOfTargetTumors() const
+int vtkMRMLLiverMarkupsResectionSurfaceNode::GetNumberOfTargetTumors() const
 {
   return this->TargetTumors->GetNumberOfItems();
 }
 
 //------------------------------------------------------------------------------
-void vtkMRMLResectionSurfaceNode::SetControlPoints(vtkPoints *points)
+void vtkMRMLLiverMarkupsResectionSurfaceNode::SetControlPoints(vtkPoints *points)
 {
   if (!points)
     {
@@ -153,14 +153,14 @@ void vtkMRMLResectionSurfaceNode::SetControlPoints(vtkPoints *points)
 }
 
 //------------------------------------------------------------------------------
-void vtkMRMLResectionSurfaceNode::SetTargetParenchyma(vtkMRMLModelNode *node)
+void vtkMRMLLiverMarkupsResectionSurfaceNode::SetTargetParenchyma(vtkMRMLModelNode *node)
 {
   this->TargetParenchyma = node;
   this->InvokeEvent(vtkCommand::ModifiedEvent);
 }
 
 //------------------------------------------------------------------------------
-vtkMRMLModelNode* vtkMRMLResectionSurfaceNode::GetTargetParenchyma() const
+vtkMRMLModelNode* vtkMRMLLiverMarkupsResectionSurfaceNode::GetTargetParenchyma() const
 {
   return this->TargetParenchyma;
 }

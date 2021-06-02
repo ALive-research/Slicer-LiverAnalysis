@@ -10,8 +10,6 @@ set(${KIT}_INCLUDE_DIRECTORIES
   )
 
 set(${KIT}_SRCS
-  vtkMRMLResectionSurfaceNode.h
-  vtkMRMLResectionSurfaceNode.cxx
   vtkMRMLResectionInitializationNode.h
   vtkMRMLResectionInitializationNode.cxx
   vtkMRMLResectionInitializationDisplayNode.h

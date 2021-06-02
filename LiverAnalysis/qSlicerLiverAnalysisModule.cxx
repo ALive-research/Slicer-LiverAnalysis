@@ -22,7 +22,7 @@
 //#include "vtkSlicerLiverMarkupsLogic.h"
 
 #include "qSlicerCoreApplication.h"
-#include "vtkMRMLResectionSurfaceNode.h"
+//#include "vtkMRMLResectionSurfaceNode.h"
 
 // Markups Logic includes
 #include <vtkSlicerMarkupsLogic.h>

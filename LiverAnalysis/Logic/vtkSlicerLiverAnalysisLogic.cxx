@@ -17,7 +17,7 @@
 
 // LiverAnalysis Logic includes
 #include "vtkSlicerLiverAnalysisLogic.h"
-#include "vtkMRMLResectionSurfaceNode.h"
+#include "vtkMRMLLiverMarkupsResectionSurfaceNode.h"
 
 // MRML includes
 #include <vtkMRMLScene.h>
@@ -69,7 +69,8 @@ void vtkSlicerLiverAnalysisLogic::RegisterNodes()
      vtkMRMLScene *scene = this->GetMRMLScene();
 
      // Nodes
-     scene->RegisterNodeClass(vtkSmartPointer<vtkMRMLResectionSurfaceNode>::New());}
+//     scene->RegisterNodeClass(vtkSmartPointer<vtkMRMLResectionSurfaceNode>::New());
+}
 
 //---------------------------------------------------------------------------
 void vtkSlicerLiverAnalysisLogic::UpdateFromMRMLScene()
