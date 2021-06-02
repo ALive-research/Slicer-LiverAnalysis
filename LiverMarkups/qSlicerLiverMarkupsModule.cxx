@@ -55,7 +55,7 @@
 
 // Liver Markups VTKWidgets includes
 #include <vtkSlicerSlicingContourWidget.h>
-#include <vtkResectionSurfaceWidget.h>
+#include <vtkSlicerResectionSurfaceWidget.h>
 
 #include <qSlicerModuleManager.h>
 #include <qSlicerCoreApplication.h>
@@ -159,7 +159,7 @@ void qSlicerLiverMarkupsModule::setup()
                                    vtkSlicerSlicingContourWidget::New());
 
  markupsLogic->RegisterMarkupsNode(vtkMRMLLiverMarkupsResectionSurfaceNode::New(),
-                                   vtkResectionSurfaceWidget::New());
+                                   vtkSlicerResectionSurfaceWidget::New());
 
 
  qSlicerModuleManager* moduleManager = qSlicerCoreApplication::application()->moduleManager();

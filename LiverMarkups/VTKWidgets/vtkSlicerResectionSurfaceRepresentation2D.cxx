@@ -37,65 +37,22 @@
 
   ==============================================================================*/
 
-#include "vtkResectionSurfaceWidget.h"
-
-// Liver Markups VTKWidgets include
-//#include "vtkSlicerSlicingContourRepresentation3D.h"
-
-// VTK includes
-#include <vtkObjectFactory.h>
-
-// Markups VTKWidgets includes
-#include <vtkSlicerLineRepresentation2D.h>
-#include <vtkSlicerLineRepresentation3D.h>
+#include "vtkSlicerResectionSurfaceRepresentation2D.h"
 
 //------------------------------------------------------------------------------
-vtkStandardNewMacro(vtkResectionSurfaceWidget);
+vtkStandardNewMacro(vtkSlicerResectionSurfaceRepresentation2D);
 
 //------------------------------------------------------------------------------
-vtkResectionSurfaceWidget::vtkResectionSurfaceWidget()
+vtkSlicerResectionSurfaceRepresentation2D::vtkSlicerResectionSurfaceRepresentation2D()
 {
 
 }
 
 //------------------------------------------------------------------------------
-vtkResectionSurfaceWidget::~vtkResectionSurfaceWidget() = default;
+vtkSlicerResectionSurfaceRepresentation2D::~vtkSlicerResectionSurfaceRepresentation2D() = default;
 
 //------------------------------------------------------------------------------
-void vtkResectionSurfaceWidget::CreateDefaultRepresentation(vtkMRMLMarkupsDisplayNode* markupsDisplayNode,
-                                                                vtkMRMLAbstractViewNode* viewNode,
-                                                                vtkRenderer* renderer)
+void vtkSlicerResectionSurfaceRepresentation2D::PrintSelf(ostream& os, vtkIndent indent)
 {
-  vtkSmartPointer<vtkSlicerMarkupsWidgetRepresentation> rep = nullptr;
-  if (vtkMRMLSliceNode::SafeDownCast(viewNode))
-    {
-    rep = vtkSmartPointer<vtkSlicerLineRepresentation2D>::New();
-    }
-  else
-    {
-    //rep = vtkSmartPointer<vtkSlicerSlicingContourRepresentation3D>::New();
-      rep = vtkSmartPointer<vtkSlicerLineRepresentation3D>::New();
-    }
-  this->SetRenderer(renderer);
-  this->SetRepresentation(rep);
-  rep->SetViewNode(viewNode);
-  rep->SetMarkupsDisplayNode(markupsDisplayNode);
-  rep->UpdateFromMRML(nullptr, 0); // full update
-  
-}
-
-//------------------------------------------------------------------------------
-vtkSlicerMarkupsWidget* vtkResectionSurfaceWidget::CreateInstance() const
-{
-  vtkObject* ret = vtkObjectFactory::CreateInstance("vtkSlcierSlicingContourWidget");
-  if(ret)
-    {
-    return static_cast<vtkResectionSurfaceWidget*>(ret);
-    }
-
-  vtkResectionSurfaceWidget* result = new vtkResectionSurfaceWidget;
-#ifdef VTK_HAS_INITIALIZE_OBJECT_BASE
-  result->InitializeObjectBase();
-#endif
-  return result;
+  Superclass::PrintSelf(os, indent);
 }
