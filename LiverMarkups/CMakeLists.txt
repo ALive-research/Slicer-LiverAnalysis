@@ -6,8 +6,9 @@ set(MODULE_TITLE ${MODULE_NAME})
 string(TOUPPER ${MODULE_NAME} MODULE_NAME_UPPER)
 
 #-----------------------------------------------------------------------------
-add_subdirectory(MRML)
 add_subdirectory(VTKWidgets)
+add_subdirectory(MRML)
+add_subdirectory(MRMLDM)
 add_subdirectory(Logic)
 
 #-----------------------------------------------------------------------------
