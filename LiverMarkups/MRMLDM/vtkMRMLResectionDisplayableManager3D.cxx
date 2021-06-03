@@ -44,6 +44,7 @@
 #include "vtkMRMLLiverMarkupsResectionSurfaceNode.h"
 
 #include "vtkMRMLDisplayNode.h"
+#include "vtkMRMLModelNode.h"
 
 // MRML includes
 #include <vtkMRMLScene.h>
@@ -122,12 +123,12 @@ SetAndObserveNode(vtkMRMLLiverMarkupsResectionSurfaceNode* resectionNode)
     return;
     }
 
-  /*vtkNew<vtkIntArray> nodeEvents;
+  vtkNew<vtkIntArray> nodeEvents;
   nodeEvents->InsertNextValue(vtkCommand::ModifiedEvent);
   nodeEvents->InsertNextValue(vtkMRMLDisplayableNode::DisplayModifiedEvent);
 
   vtkUnObserveMRMLNodeMacro(resectionNode);
-  vtkObserveMRMLNodeEventsMacro(resectionNode, nodeEvents.GetPointer());*/
+  vtkObserveMRMLNodeEventsMacro(resectionNode, nodeEvents.GetPointer());
 }
 
 
@@ -719,7 +720,7 @@ UpdateVisibility(vtkMRMLLiverMarkupsResectionSurfaceNode *node)
     vtkErrorMacro("Node resection node does not have a display node.");
     return;
     }
-
+*/
 
   // Bezier widget (show/hide accordingly)
   NodeWidgetIt widgetIt = this->NodeWidgetMap.find(node);
@@ -737,9 +738,9 @@ UpdateVisibility(vtkMRMLLiverMarkupsResectionSurfaceNode *node)
     }
 
   vtkBezierSurfaceWidget *widget = widgetIt->second;
-  widget->SetEnabled(resectionDisplayNode->GetVisibility() &&
+/*  widget->SetEnabled(resectionDisplayNode->GetVisibility() &&
                      resectionDisplayNode->GetWidgetVisibility());
-
+*/
   NodeParDistanceFilterIt parDistFiIt = this->NodeParDistanceFilterMap.find(node);
   if (parDistFiIt == this->NodeParDistanceFilterMap.end())
     {
@@ -768,7 +769,7 @@ UpdateVisibility(vtkMRMLLiverMarkupsResectionSurfaceNode *node)
     return;
     }
 
-  vtkHausdorffDistancePointSetFilter *distanceFilter = distFilIt->second;
+ /* vtkHausdorffDistancePointSetFilter *distanceFilter = distFilIt->second;
   if (!resectionDisplayNode->GetWidgetVisibility())
     {
     distanceFilter->SetInputConnection(0, clipper->GetOutputPort());
@@ -782,7 +783,7 @@ UpdateVisibility(vtkMRMLLiverMarkupsResectionSurfaceNode *node)
   distanceFilter->GetOutput(0)->GetPointData()->
     SetScalars(distanceFilter->GetOutput(0)->
                GetPointData()->GetArray("Distance"));
-
+  
   vtkProperty *prop = widget->GetBezierSurfaceProperty();
   prop->SetOpacity(resectionDisplayNode->GetOpacity());
 
@@ -810,7 +811,7 @@ UpdateVisibility(vtkMRMLLiverMarkupsResectionSurfaceNode *node)
     {
     this->GetRenderer()->RemoveActor(contourIt->second);
     }
-
+  
   NodeDistanceActorIt distanceIt = this->NodeDistanceActorMap.find(node);
   if (distanceIt == this->NodeDistanceActorMap.end())
     {
@@ -913,7 +914,7 @@ UpdateDistanceMap(vtkObject *caller,
       return;
       }
 
-    /*vtkSmartPointer<vtkCollection> nodes;
+    vtkSmartPointer<vtkCollection> nodes;
     nodes.TakeReference(self->GetMRMLScene()->
                         GetNodesByName("LRPJointTumorsModel"));
     vtkMRMLModelNode *jointTumorsModelNode =
@@ -922,7 +923,7 @@ UpdateDistanceMap(vtkObject *caller,
       {
       std::cerr << "No tumors model node found." << std::endl;
       return;
-      }*/
+      }
 
     NodeDistanceFilterIt distFilIt = self->NodeDistanceFilterMap.find(node);
     if (distFilIt == self->NodeDistanceFilterMap.end())
