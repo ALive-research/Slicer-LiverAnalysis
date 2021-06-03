@@ -57,7 +57,7 @@ class vtkPoints;
 //------------------------------------------------------------------------------
 
 /**
- * \ingroup LiverAnalysis
+ * \ingroup LiverMarkups
  *
  * \brief This class represents the data model employed for resection. It
  * contains all the information related to the resection like its relationship

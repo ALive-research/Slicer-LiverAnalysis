@@ -192,7 +192,8 @@ vtkMRMLAbstractLogic* qSlicerLiverMarkupsModule::createLogic()
 //-----------------------------------------------------------------------------
 QStringList qSlicerLiverMarkupsModule::associatedNodeTypes() const
 {
- return QStringList() << "vtkMRMLMarkupsSlicingContourNode";
+ return QStringList() << "vtkMRMLMarkupsSlicingContourNode"
+                      << "vtkMRMLMarkupsResectionSurfaceNode";
 }
 
 //-----------------------------------------------------------------------------
