@@ -15,21 +15,20 @@
 
 ==============================================================================*/
 
-#ifndef __qSlicerLiverAnalysisModule_h
-#define __qSlicerLiverAnalysisModule_h
-
-#include <vtkSmartPointer.h>
+#ifndef __qSlicerLiverMarkupsModule_h
+#define __qSlicerLiverMarkupsModule_h
 
 // Slicer includes
 #include "qSlicerLoadableModule.h"
 
-#include "qSlicerLiverAnalysisModuleExport.h"
+#include "qSlicerLiverMarkupsModuleExport.h"
 
-class qSlicerLiverAnalysisModulePrivate;
+class qSlicerLiverMarkupsModulePrivate;
+class vtkMRMLScene;
 
 /// \ingroup Slicer_QtModules_ExtensionTemplate
-class Q_SLICER_QTMODULES_LIVERANALYSIS_EXPORT
-qSlicerLiverAnalysisModule
+class Q_SLICER_QTMODULES_LIVERMARKUPS_EXPORT
+qSlicerLiverMarkupsModule
   : public qSlicerLoadableModule
 {
   Q_OBJECT
@@ -39,11 +38,12 @@ qSlicerLiverAnalysisModule
 public:
 
   typedef qSlicerLoadableModule Superclass;
-  explicit qSlicerLiverAnalysisModule(QObject *parent=0);
-  virtual ~qSlicerLiverAnalysisModule();
+  explicit qSlicerLiverMarkupsModule(QObject *parent=0);
+  virtual ~qSlicerLiverMarkupsModule();
 
   qSlicerGetTitleMacro(QTMODULE_TITLE);
 
+  virtual bool isHidden()const;
   virtual QString helpText()const;
   virtual QString acknowledgementText()const;
   virtual QStringList contributors()const;
@@ -52,6 +52,10 @@ public:
 
   virtual QStringList categories()const;
   virtual QStringList dependencies() const;
+  virtual QStringList associatedNodeTypes() const;
+
+  // Sets the MRML Scene
+  virtual void setMRMLScene(vtkMRMLScene* scene);
 
 protected:
 
@@ -65,14 +69,11 @@ protected:
   virtual vtkMRMLAbstractLogic* createLogic();
 
 protected:
-  QScopedPointer<qSlicerLiverAnalysisModulePrivate> d_ptr;
-
-  vtkSmartPointer<class vtkMRMLResectionSurfaceNode> resectionSurfaceNode;
-  vtkSmartPointer<class vtkResectionSurfaceWidget> resectionSurfaceWidget;
+  QScopedPointer<qSlicerLiverMarkupsModulePrivate> d_ptr;
 
 private:
-  Q_DECLARE_PRIVATE(qSlicerLiverAnalysisModule);
-  Q_DISABLE_COPY(qSlicerLiverAnalysisModule);
+  Q_DECLARE_PRIVATE(qSlicerLiverMarkupsModule);
+  Q_DISABLE_COPY(qSlicerLiverMarkupsModule);
 
 };
 

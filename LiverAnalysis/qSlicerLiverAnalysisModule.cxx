@@ -15,12 +15,30 @@
 
 ==============================================================================*/
 
+// Qt includes
+#include <QDebug>
+
+// Liver Markups Logic includes
+//#include "vtkSlicerLiverMarkupsLogic.h"
+
+#include "qSlicerCoreApplication.h"
+//#include "vtkMRMLResectionSurfaceNode.h"
+
+// Markups Logic includes
+#include <vtkSlicerMarkupsLogic.h>
+#include <qSlicerModuleManager.h>
+
 // LiverAnalysis Logic includes
 #include <vtkSlicerLiverAnalysisLogic.h>
 
 // LiverAnalysis includes
 #include "qSlicerLiverAnalysisModule.h"
 #include "qSlicerLiverAnalysisModuleWidget.h"
+
+// MRMLDisplayableManager includes
+#include <vtkMRMLThreeDViewDisplayableManagerFactory.h>
+#include <vtkMRMLSliceViewDisplayableManagerFactory.h>
+#include "vtkMRMLResectionInitializationDisplayableManager3D.h"
 
 //-----------------------------------------------------------------------------
 /// \ingroup Slicer_QtModules_ExtensionTemplate
@@ -82,19 +100,68 @@ QIcon qSlicerLiverAnalysisModule::icon() const
 //-----------------------------------------------------------------------------
 QStringList qSlicerLiverAnalysisModule::categories() const
 {
-  return QStringList() << "Examples";
+  return QStringList() << "Liver";
 }
 
 //-----------------------------------------------------------------------------
 QStringList qSlicerLiverAnalysisModule::dependencies() const
 {
-  return QStringList();
+  return QStringList() << "Markups";
 }
 
 //-----------------------------------------------------------------------------
 void qSlicerLiverAnalysisModule::setup()
 {
   this->Superclass::setup();
+
+
+  //TODO: Register vtkMRMLResectionInitializationDisplayableManager3D
+  //Commented out code don't work yet
+
+  // Use the displayable manager class to make sure the the containing library is loaded
+  //vtkSmartPointer<vtkMRMLResectionInitializationDisplayableManager3D> displayableManager3D = vtkSmartPointer<vtkMRMLResectionInitializationDisplayableManager3D>::New();
+
+  //vtkMRMLThreeDViewDisplayableManagerFactory::GetInstance()->GlobalWarningDisplayOn();
+  // Register displayable managers 3D
+  //vtkMRMLThreeDViewDisplayableManagerFactory::GetInstance()->
+  //    RegisterDisplayableManager("vtkMRMLResectionDisplayableManager3D");
+  //vtkMRMLThreeDViewDisplayableManagerFactory::GetInstance()->
+  //    RegisterDisplayableManager("vtkMRMLResectionInitializationDisplayableManager3D");
+
+    vtkSlicerApplicationLogic* appLogic = this->appLogic();
+    if (!appLogic)
+      {
+      qCritical() << Q_FUNC_INFO << " : invalid application logic.";
+      return;
+      }
+
+    vtkSlicerMarkupsLogic* markupsLogic =
+      vtkSlicerMarkupsLogic::SafeDownCast(appLogic->GetModuleLogic("Markups"));
+    if (!markupsLogic)
+      {
+      qCritical() << Q_FUNC_INFO << " : invalid markups logic.";
+      return;
+      }
+
+    // Register markups
+    // Registration of markups moved to the LiverMarkups module
+//    resectionSurfaceNode = vtkSmartPointer<vtkMRMLResectionSurfaceNode>::New();
+//    resectionSurfaceWidget = vtkSmartPointer<vtkResectionSurfaceWidget>::New();
+//    markupsLogic->RegisterMarkupsNode(resectionSurfaceNode, resectionSurfaceWidget);
+
+    qSlicerModuleManager* moduleManager = qSlicerCoreApplication::application()->moduleManager();
+    if (!moduleManager)
+      {
+      return;
+      }
+
+    qSlicerAbstractCoreModule* markupsModule = moduleManager->module("Markups");
+    if(!markupsModule)
+      {
+      qCritical() << Q_FUNC_INFO << ": Could not get the Markups module.";
+      return;
+      }
+
 }
 
 //-----------------------------------------------------------------------------
