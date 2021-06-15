@@ -65,6 +65,10 @@
 #include <vtkMRMLSliceViewDisplayableManagerFactory.h>
 #include <vtkMRMLResectionDisplayableManager3D.h>
 
+// DisplayableManager initialization
+#include <vtkAutoInit.h>
+VTK_MODULE_INIT(vtkSlicerLiverMarkupsModuleMRMLDisplayableManager)
+
 //-----------------------------------------------------------------------------
 /// \ingroup Slicer_QtModules_ExtensionTemplate
 class qSlicerLiverMarkupsModulePrivate
