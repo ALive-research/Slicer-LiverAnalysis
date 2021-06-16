@@ -121,7 +121,9 @@ QString qSlicerLiverMarkupsModule::acknowledgementText() const
 QStringList qSlicerLiverMarkupsModule::contributors() const
 {
   QStringList moduleContributors;
-  moduleContributors << QString("Rafael Palomar (Oslo University Hospital / NTNU)");
+  moduleContributors << QString("Rafael Palomar (Oslo University Hospital / NTNU)")
+                     << QString("Ole Vegard Solberg (SINTEF)")
+                     << QString("Geir Arne Tangen (SINTEF)");
   return moduleContributors;
 }
 
