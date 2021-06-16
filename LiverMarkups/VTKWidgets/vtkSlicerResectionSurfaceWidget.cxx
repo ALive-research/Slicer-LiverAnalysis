@@ -48,6 +48,7 @@
 // Markups VTKWidgets includes
 #include <vtkSlicerLineRepresentation2D.h>
 #include <vtkSlicerLineRepresentation3D.h>
+#include <vtkSlicerResectionSurfaceRepresentation3D.h>
 
 //------------------------------------------------------------------------------
 vtkStandardNewMacro(vtkSlicerResectionSurfaceWidget);
@@ -73,8 +74,7 @@ void vtkSlicerResectionSurfaceWidget::CreateDefaultRepresentation(vtkMRMLMarkups
     }
   else
     {
-    //rep = vtkSmartPointer<vtkSlicerSlicingContourRepresentation3D>::New();
-      rep = vtkSmartPointer<vtkSlicerLineRepresentation3D>::New();
+    rep = vtkSmartPointer<vtkSlicerResectionSurfaceRepresentation3D>::New();
     }
   this->SetRenderer(renderer);
   this->SetRepresentation(rep);
