@@ -56,10 +56,10 @@ vtkMRMLLiverMarkupsResectionSurfaceNode::vtkMRMLLiverMarkupsResectionSurfaceNode
 {
 
   // Initialization of control points
-  double startX = -0.5;
-  double startY = -0.5;
-  double endX = 0.5;
-  double endY = 0.5;
+  double startX = -100;
+  double startY = -100;
+  double endX = 100;
+  double endY = 100;
   double incX = (endX - startX)/4.0;
   double incY = (endY - startY)/4.0;
 
@@ -72,6 +72,7 @@ vtkMRMLLiverMarkupsResectionSurfaceNode::vtkMRMLLiverMarkupsResectionSurfaceNode
       this->ControlPoints->InsertNextPoint(point);
       }
     }
+  this->SetControlPointPositionsWorld(this->ControlPoints);
 }
 
 //------------------------------------------------------------------------------
@@ -149,6 +150,7 @@ void vtkMRMLLiverMarkupsResectionSurfaceNode::SetControlPoints(vtkPoints *points
     }
 
   this->ControlPoints->DeepCopy(points);
+  this->SetControlPointPositionsWorld(this->ControlPoints);
   this->Modified();
 }
 

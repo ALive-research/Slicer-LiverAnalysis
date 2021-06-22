@@ -155,7 +155,7 @@ void qSlicerLiverMarkupsModule::setup()
   // Use the displayable manager class to make sure the the containing library is loaded
   //vtkSmartPointer<vtkMRMLResectionDisplayableManager3D> displayableManager3D = vtkSmartPointer<vtkMRMLResectionDisplayableManager3D>::New();
   //vtkMRMLThreeDViewDisplayableManagerFactory::GetInstance()->GlobalWarningDisplayOn();
-  vtkMRMLThreeDViewDisplayableManagerFactory* factory
+  /*vtkMRMLThreeDViewDisplayableManagerFactory* factory
       = vtkMRMLThreeDViewDisplayableManagerFactory::GetInstance();
 
   QStringList displayableManagers;
@@ -165,7 +165,7 @@ void qSlicerLiverMarkupsModule::setup()
   {
       if (!factory->IsDisplayableManagerRegistered(displayableManager.toUtf8()))
           factory->RegisterDisplayableManager(displayableManager.toUtf8());
-  }
+  }*/
 
  vtkSlicerApplicationLogic* appLogic = this->appLogic();
  if (!appLogic)

@@ -50,13 +50,21 @@
 #include <vtkSlicerLineRepresentation3D.h>
 #include <vtkSlicerResectionSurfaceRepresentation3D.h>
 
+#include "vtkBezierSurfaceWidget.h"
+#include "vtkMRMLLiverMarkupsResectionSurfaceNode.h"
+
 //------------------------------------------------------------------------------
 vtkStandardNewMacro(vtkSlicerResectionSurfaceWidget);
 
 //------------------------------------------------------------------------------
 vtkSlicerResectionSurfaceWidget::vtkSlicerResectionSurfaceWidget()
 {
-
+    BezierSurfaceWidget = vtkSmartPointer<vtkBezierSurfaceWidget>::New();
+    //BezierSurfaceWidget->SetInteractor(this->GetInteractor());
+    //BezierSurfaceWidget->SetCurrentRenderer(this->GetRenderer());
+    BezierSurfaceWidget->SetHandleSizeFactor(0.8);
+    BezierSurfaceWidget->On();
+    BezierSurfaceWidget->ComputeNormalsOn();
 }
 
 //------------------------------------------------------------------------------
@@ -98,4 +106,20 @@ vtkSlicerMarkupsWidget* vtkSlicerResectionSurfaceWidget::CreateInstance() const
   result->InitializeObjectBase();
 #endif
   return result;
+}
+
+
+//-------------------------------------------------------------------------
+void vtkSlicerResectionSurfaceWidget::UpdateFromMRML(vtkMRMLNode* caller, unsigned long event, void* callData/*=nullptr*/)
+{
+    if (!this->WidgetRep)
+    {
+        return;
+    }
+
+    vtkMRMLLiverMarkupsResectionSurfaceNode* liverMarkupsResectionSurfaceNode =
+        vtkMRMLLiverMarkupsResectionSurfaceNode::SafeDownCast(caller);
+
+    //BezierSurfaceWidget->SetControlPoints(liverMarkupsResectionSurfaceNode->GetControlPoints());
+    this->WidgetRep->UpdateFromMRML(caller, event, callData);
 }

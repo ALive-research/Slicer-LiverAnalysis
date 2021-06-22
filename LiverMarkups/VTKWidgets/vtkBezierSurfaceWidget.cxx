@@ -227,18 +227,18 @@ void vtkBezierSurfaceWidget::SetControlPoints(vtkPoints *points)
   this->ValidPick = 1;
   this->SizeHandles();
   this->SizeControlPolygon();
-  this->Interactor->Render();
+  //this->Interactor->Render();
 }
 
 //------------------------------------------------------------------------------
 void vtkBezierSurfaceWidget::SetEnabled(int enabling)
 {
-  if (!this->Interactor)
+  /*if (!this->Interactor)
     {
     vtkErrorMacro(<<"The interactor must be set prior to "
                   <<"enabling/disabling widget");
     return;
-    }
+    }*/
 
   if (enabling)
     {
@@ -250,7 +250,7 @@ void vtkBezierSurfaceWidget::SetEnabled(int enabling)
       return;
       }
 
-    if (!this->CurrentRenderer)
+    /*if (!this->CurrentRenderer)
       {
       vtkRenderer *renderer =
         this->Interactor->FindPokedRenderer(
@@ -262,12 +262,12 @@ void vtkBezierSurfaceWidget::SetEnabled(int enabling)
         {
         return;
         }
-      }
+      }*/
 
     this->Enabled = 1;
 
     // Interaction observers
-    this->Interactor->AddObserver(vtkCommand::MouseMoveEvent,
+    /*this->Interactor->AddObserver(vtkCommand::MouseMoveEvent,
                                   this->EventCallbackCommand,
                                   this->Priority);
 
@@ -285,11 +285,11 @@ void vtkBezierSurfaceWidget::SetEnabled(int enabling)
 
     this->Interactor->AddObserver(vtkCommand::RightButtonReleaseEvent,
                                   this->EventCallbackCommand,
-                                  this->Priority);
+                                  this->Priority);*/
 
     // Add Control Polygon
     this->ControlPolygonActor->SetProperty(this->ControlPolygonProperty.GetPointer());
-    this->CurrentRenderer->AddActor(this->ControlPolygonActor.GetPointer());
+    //this->CurrentRenderer->AddActor(this->ControlPolygonActor.GetPointer());
 
     // Add Control Polygon Handles
     for(int i=0; i<this->HandleActorCollection->GetNumberOfItems(); i++)
@@ -299,13 +299,13 @@ void vtkBezierSurfaceWidget::SetEnabled(int enabling)
       if (handleActor)
         {
         handleActor->SetProperty(this->HandleProperty.GetPointer());
-        this->CurrentRenderer->AddActor(handleActor);
+        //this->CurrentRenderer->AddActor(handleActor);
         }
       }
 
     // Add Bézier Surface
     this->BezierSurfaceActor->SetProperty(this->BezierSurfaceProperty.GetPointer());
-    this->CurrentRenderer->AddActor(this->BezierSurfaceActor.GetPointer());
+    //this->CurrentRenderer->AddActor(this->BezierSurfaceActor.GetPointer());
 
     // Enable event
     this->InvokeEvent(vtkCommand::EnableEvent, NULL);
@@ -322,10 +322,10 @@ void vtkBezierSurfaceWidget::SetEnabled(int enabling)
     this->Enabled = 0;
 
     // Remove interaction callback
-    this->Interactor->RemoveObserver(this->EventCallbackCommand);
+    //this->Interactor->RemoveObserver(this->EventCallbackCommand);
 
     // Remove control polygon
-    this->CurrentRenderer->RemoveActor(this->ControlPolygonActor.GetPointer());
+    //this->CurrentRenderer->RemoveActor(this->ControlPolygonActor.GetPointer());
 
     // Remove handles
     for(int i =0; i<this->HandleActorCollection->GetNumberOfItems();++i)
@@ -334,19 +334,19 @@ void vtkBezierSurfaceWidget::SetEnabled(int enabling)
       vtkActor *handleActor = vtkActor::SafeDownCast(object);
       if (handleActor)
         {
-        this->CurrentRenderer->RemoveActor(handleActor);
+        //this->CurrentRenderer->RemoveActor(handleActor);
         }
       }
 
     // Remove Bézier surface
-    this->CurrentRenderer->RemoveActor(this->BezierSurfaceActor.GetPointer());
+    //this->CurrentRenderer->RemoveActor(this->BezierSurfaceActor.GetPointer());
 
     this->CurrentHandle = NULL;
     this->InvokeEvent(vtkCommand::DisableEvent, NULL);
-    this->SetCurrentRenderer(NULL);
+    //this->SetCurrentRenderer(NULL);
     }
 
-  this->Interactor->Render();
+  //this->Interactor->Render();
 }
 
 //------------------------------------------------------------------------------
@@ -628,7 +628,7 @@ void vtkBezierSurfaceWidget::HighlightControlPolygon(int highlight)
 //------------------------------------------------------------------------------
 void vtkBezierSurfaceWidget::OnLeftButtonDown()
 {
-  int X = this->Interactor->GetEventPosition()[0];
+  /*int X = this->Interactor->GetEventPosition()[0];
   int Y = this->Interactor->GetEventPosition()[1];
 
   if (!this->CurrentRenderer ||
@@ -676,7 +676,7 @@ void vtkBezierSurfaceWidget::OnLeftButtonDown()
   this->EventCallbackCommand->SetAbortFlag(1);
   this->StartInteraction();
   this->InvokeEvent(vtkCommand::StartInteractionEvent, NULL);
-  this->Interactor->Render();
+  this->Interactor->Render();*/
 }
 
 //-------------------------------------------------------------------------------
@@ -703,13 +703,13 @@ void vtkBezierSurfaceWidget::OnLeftButtonUp()
   this->EventCallbackCommand->SetAbortFlag(1);
   this->EndInteraction();
   this->InvokeEvent(vtkCommand::EndInteractionEvent, NULL);
-  this->Interactor->Render();
+  //this->Interactor->Render();
 }
 
 //------------------------------------------------------------------------------
 void vtkBezierSurfaceWidget::OnRightButtonDown()
 {
-  int X = this->Interactor->GetEventPosition()[0];
+  /*int X = this->Interactor->GetEventPosition()[0];
   int Y = this->Interactor->GetEventPosition()[1];
 
   if (!this->CurrentRenderer ||
@@ -756,7 +756,7 @@ void vtkBezierSurfaceWidget::OnRightButtonDown()
   this->EventCallbackCommand->SetAbortFlag(1);
   this->StartInteraction();
   this->InvokeEvent(vtkCommand::StartInteractionEvent, NULL);
-  this->Interactor->Render();
+  this->Interactor->Render();*/
 }
 
 //-------------------------------------------------------------------------------
@@ -783,13 +783,13 @@ void vtkBezierSurfaceWidget::OnRightButtonUp()
   this->EventCallbackCommand->SetAbortFlag(1);
   this->EndInteraction();
   this->InvokeEvent(vtkCommand::EndInteractionEvent, NULL);
-  this->Interactor->Render();
+  //this->Interactor->Render();
 }
 
 //------------------------------------------------------------------------------
 void vtkBezierSurfaceWidget::OnMouseMove()
 {
-  if (this->State == vtkBezierSurfaceWidget::Outside ||
+  /*if (this->State == vtkBezierSurfaceWidget::Outside ||
       this->State == vtkBezierSurfaceWidget::Start)
     {
     return;
@@ -840,7 +840,7 @@ void vtkBezierSurfaceWidget::OnMouseMove()
 
   this->EventCallbackCommand->SetAbortFlag(1);
   this->InvokeEvent(vtkCommand::InteractionEvent, NULL);
-  this->Interactor->Render();
+  this->Interactor->Render();*/
 }
 
 //------------------------------------------------------------------------------
@@ -1071,20 +1071,20 @@ void vtkBezierSurfaceWidget::PlaceWidget(double bds[6])
   this->SizeHandles();
   this->SizeControlPolygon();
 
-  if (this->Interactor)
+  /*if (this->Interactor)
     {
     this->Interactor->Render();
-    }
+    }*/
 }
 
 //------------------------------------------------------------------------------
 void vtkBezierSurfaceWidget::RegisterPickers()
 {
-  this->Interactor->GetPickingManager()
+  /*this->Interactor->GetPickingManager()
     ->AddPicker(this->HandlePicker.GetPointer(), this);
 
   this->Interactor->GetPickingManager()
-    ->AddPicker(this->ControlPolygonPicker.GetPointer(), this);
+    ->AddPicker(this->ControlPolygonPicker.GetPointer(), this);*/
 }
 
 //------------------------------------------------------------------------------
