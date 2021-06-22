@@ -151,8 +151,10 @@ class LiverWidget(ScriptedLoadableModuleWidget, VTKObservationMixin):
     self.initializeParameterNode()
 
     # Enable the use of FXAA (antialiasing)
-    renderer = slicer.app.layoutManager().threeDWidget(0).threeDView().renderWindow().GetRenderers().GetFirstRenderer()
-    renderer.UseFXAAOn()
+    if not slicer.app.commandOptions().noMainWindow:
+      renderer = slicer.app.layoutManager().threeDWidget(0).threeDView().renderWindow().GetRenderers().GetFirstRenderer()
+      renderer.UseFXAAOn()
+
 
   def cleanup(self):
     """
@@ -343,7 +345,7 @@ class LiverTest(ScriptedLoadableModuleTest):
 
     # Test the module logic
 
-    logic = LiverLogic()
+    #logic = LiverLogic()
 
     # # Test algorithm with non-inverted threshold
     # logic.process(inputVolume, outputVolume, threshold, True)
