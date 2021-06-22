@@ -90,6 +90,11 @@ public:
     vtkPolyData* GetTargetOrgan() const {return this->TargetOrgan;}
     void SetTargetOrgan(vtkPolyData* targetOrgan) {this->TargetOrgan = targetOrgan;}
 
+    /// Alternative method to propagate events generated in Display nodes
+    void ProcessMRMLEvents(vtkObject* /*caller*/,
+        unsigned long /*event*/,
+        void* /*callData*/) override;
+
 //  protected:
 //    vtkMRMLLiverMarkupsSlicingContourNode();
 //    ~vtkMRMLLiverMarkupsSlicingContourNode() override;

@@ -41,11 +41,14 @@
 // MRML includes
 #include <vtkMRMLModelNode.h>
 #include <vtkMRMLScene.h>
+#include "vtkMRMLLiverMarkupsSlicingContourNode.h"
 
 // VTK includes
 #include <vtkObjectFactory.h>
 #include <vtkPoints.h>
 #include <vtkCommand.h>
+
+#include <vtkEventBroker.h>
 
 //------------------------------------------------------------------------------
 vtkMRMLNodeNewMacro(vtkMRMLLiverMarkupsResectionSurfaceNode);
@@ -165,4 +168,49 @@ void vtkMRMLLiverMarkupsResectionSurfaceNode::SetTargetParenchyma(vtkMRMLModelNo
 vtkMRMLModelNode* vtkMRMLLiverMarkupsResectionSurfaceNode::GetTargetParenchyma() const
 {
   return this->TargetParenchyma;
+}
+
+//---------------------------------------------------------------------------
+void vtkMRMLLiverMarkupsResectionSurfaceNode::ProcessMRMLEvents(vtkObject* caller,
+    unsigned long event,
+    void* callData)
+{
+    if (!caller)
+    {
+        std::cout << "No caller?" << std::endl;
+        return;
+    }
+
+    //std::cout << "ProcessMRMLEvents: " << caller->GetClassName() << " " << event << std::endl;
+
+    vtkEventBroker* broker = vtkEventBroker::GetInstance();
+    if (!broker)
+        return;
+
+    if (!broker->GetObservationExist(this->GetScene(), vtkMRMLScene::NodeAddedEvent, this, this->MRMLCallbackCommand))
+        broker->AddObservation(this->GetScene(), vtkMRMLScene::NodeAddedEvent, this, this->MRMLCallbackCommand);
+
+    if (event == vtkMRMLScene::NodeAddedEvent)
+    {
+        vtkMRMLLiverMarkupsSlicingContourNode* node = reinterpret_cast<vtkMRMLLiverMarkupsSlicingContourNode*>(callData);
+        if (node)
+        {
+            //std::cout << "ProcessMRMLEvents got vtkMRMLLiverMarkupsSlicingContourNode" << std::endl;
+            if (!broker->GetObservationExist(node, vtkMRMLLiverMarkupsSlicingContourNode::DisplayModifiedEvent, this, this->MRMLCallbackCommand))
+                broker->AddObservation(node, vtkMRMLLiverMarkupsSlicingContourNode::DisplayModifiedEvent, this, this->MRMLCallbackCommand);
+        }
+    }
+    else if (event == vtkMRMLLiverMarkupsSlicingContourNode::DisplayModifiedEvent)
+    {
+        vtkMRMLLiverMarkupsSlicingContourNode* node = reinterpret_cast<vtkMRMLLiverMarkupsSlicingContourNode*>(caller);
+        if (node)
+        {
+            vtkPoints* points = node->GetCurvePoints();
+            if(points)
+                this->SetControlPoints(points);
+        }
+    }
+
+
+    Superclass::ProcessMRMLEvents(caller, event, callData);
 }
