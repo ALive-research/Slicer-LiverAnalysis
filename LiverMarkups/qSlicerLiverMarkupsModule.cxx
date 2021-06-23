@@ -67,7 +67,6 @@
 
 // DisplayableManager initialization
 #include <vtkAutoInit.h>
-
 #include <vtkMRMLScene.h>
 VTK_MODULE_INIT(vtkSlicerLiverMarkupsModuleMRMLDisplayableManager)
 
@@ -94,6 +93,7 @@ qSlicerLiverMarkupsModulePrivate::qSlicerLiverMarkupsModulePrivate()
 qSlicerLiverMarkupsModule::qSlicerLiverMarkupsModule(QObject* _parent)
   : Superclass(_parent)
   , d_ptr(new qSlicerLiverMarkupsModulePrivate)
+  , resectionSurfaceNode(nullptr)
 {
 }
 
@@ -230,8 +230,8 @@ QStringList qSlicerLiverMarkupsModule::associatedNodeTypes() const
 void qSlicerLiverMarkupsModule::setMRMLScene(vtkMRMLScene* scene)
 {
   this->Superclass::setMRMLScene(scene);
-  std::cout << "setMRMLScene" << std::endl;
-  this->mrmlScene()->AddNode(resectionSurfaceNode);
+  if(resectionSurfaceNode)
+    this->mrmlScene()->AddNode(resectionSurfaceNode);
   vtkSlicerLiverMarkupsLogic* logic =
     vtkSlicerLiverMarkupsLogic::SafeDownCast(this->logic());
   if (!logic)
