@@ -37,10 +37,10 @@
 
 ==============================================================================*/
 
-#ifndef __vtkmrmllivermarkupsslicingcontournode_h_
-#define __vtkmrmllivermarkupsslicingcontournode_h_
+#ifndef __vtkmrmlmarkupsslicingcontournode_h_
+#define __vtkmrmlmarkupsslicingcontournode_h_
 
-#include "vtkSlicerLiverMarkupsModuleMRMLExport.h"
+#include "vtkSlicerMarkupsModuleMRMLExport.h"
 
 // MRML includes
 #include <vtkMRMLMarkupsLineNode.h>
@@ -50,12 +50,12 @@
 #include <vtkWeakPointer.h>
 
 //-----------------------------------------------------------------------------
-class VTK_SLICER_LIVERMARKUPS_MODULE_MRML_EXPORT vtkMRMLLiverMarkupsSlicingContourNode
+class VTK_SLICER_MARKUPS_MODULE_MRML_EXPORT vtkMRMLMarkupsSlicingContourNode
 : public vtkMRMLMarkupsLineNode
 {
 public:
-  static vtkMRMLLiverMarkupsSlicingContourNode* New();
-  vtkTypeMacro(vtkMRMLLiverMarkupsSlicingContourNode, vtkMRMLMarkupsLineNode);
+  static vtkMRMLMarkupsSlicingContourNode* New();
+  vtkTypeMacro(vtkMRMLMarkupsSlicingContourNode, vtkMRMLMarkupsLineNode);
   void PrintSelf(ostream& os, vtkIndent indent) override;
 
   //--------------------------------------------------------------------------------
@@ -78,23 +78,23 @@ public:
   const char* GetDefaultNodeNamePrefix() override {return "SC";}
 
   /// \sa vtkMRMLNode::CopyContent
-  vtkMRMLCopyContentDefaultMacro(vtkMRMLLiverMarkupsSlicingContourNode);
+  vtkMRMLCopyContentDefaultMacro(vtkMRMLMarkupsSlicingContourNode);
 
   vtkMRMLModelNode* GetTarget() const {return this->Target;}
   void SetTarget(vtkMRMLModelNode* target) {this->Target = target; this->Modified();}
 
 protected:
-  vtkMRMLLiverMarkupsSlicingContourNode();
-  ~vtkMRMLLiverMarkupsSlicingContourNode() override = default;
+  vtkMRMLMarkupsSlicingContourNode();
+  ~vtkMRMLMarkupsSlicingContourNode() override = default;
 
 private:
  vtkWeakPointer<vtkMRMLModelNode> Target;
 
 private:
- vtkMRMLLiverMarkupsSlicingContourNode(const vtkMRMLLiverMarkupsSlicingContourNode&);
- void operator=(const vtkMRMLLiverMarkupsSlicingContourNode&);
+ vtkMRMLMarkupsSlicingContourNode(const vtkMRMLMarkupsSlicingContourNode&);
+ void operator=(const vtkMRMLMarkupsSlicingContourNode&);
 
 
 };
 
-#endif //__vtkmrmllivermarkupsslicingcontournode_h_
+#endif //__vtkmrmlmarkupsslicingcontournode_h_

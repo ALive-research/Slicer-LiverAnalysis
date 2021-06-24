@@ -37,7 +37,7 @@
 
 ==============================================================================*/
 
-#include "vtkMRMLLiverMarkupsSlicingContourNode.h"
+#include "vtkMRMLMarkupsSlicingContourNode.h"
 
 // MRML includes
 #include <vtkMRMLScene.h>
@@ -47,16 +47,16 @@
 #include <vtkObjectFactory.h>
 
 //--------------------------------------------------------------------------------
-vtkMRMLNodeNewMacro(vtkMRMLLiverMarkupsSlicingContourNode);
+vtkMRMLNodeNewMacro(vtkMRMLMarkupsSlicingContourNode);
 
 //--------------------------------------------------------------------------------
-vtkMRMLLiverMarkupsSlicingContourNode::vtkMRMLLiverMarkupsSlicingContourNode()
+vtkMRMLMarkupsSlicingContourNode::vtkMRMLMarkupsSlicingContourNode()
   :Superclass(), Target(nullptr)
 {
 }
 
 //----------------------------------------------------------------------------
-void vtkMRMLLiverMarkupsSlicingContourNode::PrintSelf(ostream& os, vtkIndent indent)
+void vtkMRMLMarkupsSlicingContourNode::PrintSelf(ostream& os, vtkIndent indent)
 {
   Superclass::PrintSelf(os,indent);
 }

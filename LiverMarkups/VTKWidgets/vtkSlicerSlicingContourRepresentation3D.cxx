@@ -39,7 +39,7 @@
 
 #include "vtkSlicerSlicingContourRepresentation3D.h"
 
-#include "vtkMRMLLiverMarkupsSlicingContourNode.h"
+#include "vtkMRMLMarkupsSlicingContourNode.h"
 
 // MRML includes
 #include <qMRMLThreeDWidget.h>
@@ -81,7 +81,7 @@ void vtkSlicerSlicingContourRepresentation3D::UpdateFromMRML(vtkMRMLNode* caller
  this->Superclass::UpdateFromMRML(caller, event, callData);
 
  auto liverMarkupsSlicingContourNode =
-   vtkMRMLLiverMarkupsSlicingContourNode::SafeDownCast(this->GetMarkupsNode());
+   vtkMRMLMarkupsSlicingContourNode::SafeDownCast(this->GetMarkupsNode());
  if (!liverMarkupsSlicingContourNode)
    {
    vtkWarningMacro("Invalid slicing contour node.");

@@ -38,7 +38,7 @@
 ==============================================================================*/
 
 #include "qSlicerLiverMarkupsModule.h"
-#include "MRML/vtkMRMLLiverMarkupsSlicingContourNode.h"
+#include "MRML/vtkMRMLMarkupsSlicingContourNode.h"
 
 // Qt includes
 #include <QDebug>
@@ -155,7 +155,7 @@ void qSlicerLiverMarkupsModule::setup()
    }
 
  // Register markups
- vtkNew<vtkMRMLLiverMarkupsSlicingContourNode> slicingContourNode;
+ vtkNew<vtkMRMLMarkupsSlicingContourNode> slicingContourNode;
  vtkNew<vtkSlicerSlicingContourWidget> slicingContourWidget;
  markupsLogic->RegisterMarkupsNode(slicingContourNode, slicingContourWidget);
 
