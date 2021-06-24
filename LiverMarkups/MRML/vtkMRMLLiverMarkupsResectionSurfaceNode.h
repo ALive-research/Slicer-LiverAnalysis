@@ -95,6 +95,8 @@ public:
         unsigned long /*event*/,
         void* /*callData*/) override;
 
+    void InitializeResectionSurface(vtkPoints* curve);
+
 //  protected:
 //    vtkMRMLLiverMarkupsSlicingContourNode();
 //    ~vtkMRMLLiverMarkupsSlicingContourNode() override;

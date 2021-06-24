@@ -47,6 +47,7 @@
 #include <vtkObjectFactory.h>
 #include <vtkPoints.h>
 #include <vtkCommand.h>
+#include <vtkPlaneSource.h>
 
 #include <vtkEventBroker.h>
 
@@ -193,6 +194,7 @@ void vtkMRMLLiverMarkupsResectionSurfaceNode::ProcessMRMLEvents(vtkObject* calle
     if (event == vtkMRMLScene::NodeAddedEvent)
     {
         vtkMRMLLiverMarkupsSlicingContourNode* node = reinterpret_cast<vtkMRMLLiverMarkupsSlicingContourNode*>(callData);
+        //When vtkMRMLLiverMarkupsSlicingContourNode is added, start listening to DisplayModifiedEvent
         if (node)
         {
             //std::cout << "ProcessMRMLEvents got vtkMRMLLiverMarkupsSlicingContourNode" << std::endl;
@@ -202,15 +204,153 @@ void vtkMRMLLiverMarkupsResectionSurfaceNode::ProcessMRMLEvents(vtkObject* calle
     }
     else if (event == vtkMRMLLiverMarkupsSlicingContourNode::DisplayModifiedEvent)
     {
-        vtkMRMLLiverMarkupsSlicingContourNode* node = reinterpret_cast<vtkMRMLLiverMarkupsSlicingContourNode*>(caller);
+        //std::cout << "ProcessMRMLEvents: " << caller->GetClassName() << " " << event << std::endl;
+        vtkMRMLLiverMarkupsSlicingContourNode* node = dynamic_cast<vtkMRMLLiverMarkupsSlicingContourNode*>(caller);
+        //When vtkMRMLLiverMarkupsSlicingContourNode is modified, update control points
         if (node)
         {
             vtkPoints* points = node->GetCurvePoints();
-            if(points)
-                this->SetControlPoints(points);
+            if (points)
+                this->InitializeResectionSurface(points);
         }
     }
 
 
     Superclass::ProcessMRMLEvents(caller, event, callData);
+}
+//------------------------------------------------------------------------------
+void vtkMRMLLiverMarkupsResectionSurfaceNode::InitializeResectionSurface(vtkPoints* curve)
+{
+    double point1[3];
+    double point2[3];
+    double midPoint[3];
+    double normal[3];
+
+    //initNode->GetPoint1(point1);
+    //initNode->GetPoint2(point2);
+    //vtkPoints* curve = contourNode->GetCurvePoints();
+    if (curve->GetNumberOfPoints() < 2)
+        return;
+    curve->GetPoint(0, point1);
+    curve->GetPoint(1, point2);
+
+    midPoint[0] = (point1[0] + point2[0]) / 2.0;
+    midPoint[1] = (point1[1] + point2[1]) / 2.0;
+    midPoint[2] = (point1[2] + point2[2]) / 2.0;
+
+    normal[0] = point2[0] - point1[0];
+    normal[1] = point2[1] - point1[1];
+    normal[2] = point2[2] - point1[2];
+
+    // Cut the parenchyma (generate contour).
+    /*vtkNew<vtkPlane> cuttingPlane;
+    cuttingPlane->SetOrigin(midPoint);
+    cuttingPlane->SetNormal(normal);
+    vtkNew<vtkCutter> cutter;
+    cutter->SetInputData(this->ParenchymaModelNode->GetPolyData());
+    cutter->SetCutFunction(cuttingPlane.GetPointer());
+    cutter->Update();
+
+    vtkPolyData* contour = cutter->GetOutput();
+
+    // Perform Principal Component Analysis
+    vtkNew<vtkDoubleArray> xArray;
+    xArray->SetNumberOfComponents(1);
+    xArray->SetName("x");
+    vtkNew<vtkDoubleArray> yArray;
+    yArray->SetNumberOfComponents(1);
+    yArray->SetName("y");
+    vtkNew<vtkDoubleArray> zArray;
+    zArray->SetNumberOfComponents(1);
+    zArray->SetName("z");
+
+    vtkNew<vtkCenterOfMass> centerOfMass;
+    centerOfMass->SetInputData(contour);
+    centerOfMass->Update();
+    double com[3] = { 0 };
+    centerOfMass->GetCenter(com);
+
+    for (unsigned int i = 0; i < contour->GetNumberOfPoints(); i++)
+    {
+        double point[3];
+        contour->GetPoint(i, point);
+        xArray->InsertNextValue(point[0]);
+        yArray->InsertNextValue(point[1]);
+        zArray->InsertNextValue(point[2]);
+    }
+
+    vtkNew<vtkTable> dataTable;
+    dataTable->AddColumn(xArray.GetPointer());
+    dataTable->AddColumn(yArray.GetPointer());
+    dataTable->AddColumn(zArray.GetPointer());
+
+    vtkNew<vtkPCAStatistics> pcaStatistics;
+    pcaStatistics->SetInputData(vtkStatisticsAlgorithm::INPUT_DATA,
+        dataTable.GetPointer());
+    pcaStatistics->SetColumnStatus("x", 1);
+    pcaStatistics->SetColumnStatus("y", 1);
+    pcaStatistics->SetColumnStatus("z", 1);
+    pcaStatistics->RequestSelectedColumns();
+    pcaStatistics->SetDeriveOption(true);
+    pcaStatistics->SetFixedBasisSize(3);
+    pcaStatistics->Update();
+
+    vtkNew<vtkDoubleArray> eigenvalues;
+    pcaStatistics->GetEigenvalues(eigenvalues.GetPointer());
+    vtkNew<vtkDoubleArray> eigenvector1;
+    pcaStatistics->GetEigenvector(0, eigenvector1.GetPointer());
+    vtkNew<vtkDoubleArray> eigenvector2;
+    pcaStatistics->GetEigenvector(1, eigenvector2.GetPointer());
+    vtkNew<vtkDoubleArray> eigenvector3;
+    pcaStatistics->GetEigenvector(2, eigenvector3.GetPointer());
+
+    double length1 = 4.0 * sqrt(pcaStatistics->GetEigenvalue(0, 0));
+    double length2 = 4.0 * sqrt(pcaStatistics->GetEigenvalue(0, 1));
+
+    double v1[3] =
+    {
+      eigenvector1->GetValue(0),
+      eigenvector1->GetValue(1),
+      eigenvector1->GetValue(2)
+    };
+
+    double v2[3] =
+    {
+      eigenvector2->GetValue(0),
+      eigenvector2->GetValue(1),
+      eigenvector2->GetValue(2)
+    };
+
+    double origin[3] =
+    {
+      com[0] - v1[0] * length1 / 2.0 - v2[0] * length2 / 2.0,
+      com[1] - v1[1] * length1 / 2.0 - v2[1] * length2 / 2.0,
+      com[2] - v1[2] * length1 / 2.0 - v2[2] * length2 / 2.0,
+    };
+
+    point1[0] = origin[0] + v1[0] * length1;
+    point1[1] = origin[1] + v1[1] * length1;
+    point1[2] = origin[2] + v1[2] * length1;
+
+    point2[0] = origin[0] + v2[0] * length2;
+    point2[1] = origin[1] + v2[1] * length2;
+    point2[2] = origin[2] + v2[2] * length2;*/
+
+    //Create bezier surface according to initial plane
+    vtkNew<vtkPlaneSource> planeSource;
+    //planeSource->SetOrigin(origin);
+    planeSource->SetOrigin(normal);
+    planeSource->SetPoint1(point1);
+    planeSource->SetPoint2(point2);
+    planeSource->SetXResolution(3);
+    planeSource->SetYResolution(3);
+    planeSource->Update();
+
+    vtkPoints* points = planeSource->GetOutput()->GetPoints();
+    if (!points)
+    {
+        std::cout << "No points from planeSource" << std::endl;
+        return;
+    }
+    this->SetControlPoints(points);
 }

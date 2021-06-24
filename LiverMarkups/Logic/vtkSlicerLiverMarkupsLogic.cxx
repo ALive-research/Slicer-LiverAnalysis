@@ -59,7 +59,9 @@
 vtkStandardNewMacro(vtkSlicerLiverMarkupsLogic);
 
 //---------------------------------------------------------------------------
-vtkSlicerLiverMarkupsLogic::vtkSlicerLiverMarkupsLogic()
+vtkSlicerLiverMarkupsLogic::vtkSlicerLiverMarkupsLogic() :
+    resectionSurfaceNode(nullptr)
+    , slicingContourNode(nullptr)
 {
 
 }
@@ -83,9 +85,12 @@ void vtkSlicerLiverMarkupsLogic::RegisterNodes()
   vtkMRMLScene *scene = this->GetMRMLScene();
 
   // Nodes
-  scene->RegisterNodeClass(vtkSmartPointer<vtkMRMLLiverMarkupsSlicingContourNode>::New());
-  scene->RegisterNodeClass(vtkSmartPointer<vtkMRMLLiverMarkupsResectionSurfaceNode>::New());
+  resectionSurfaceNode = vtkSmartPointer<vtkMRMLLiverMarkupsResectionSurfaceNode>::New();
+  slicingContourNode = vtkSmartPointer<vtkMRMLLiverMarkupsSlicingContourNode>::New();
+  scene->RegisterNodeClass(slicingContourNode);
+  scene->RegisterNodeClass(resectionSurfaceNode);
 }
+
 
 //---------------------------------------------------------------------------
 void vtkSlicerLiverMarkupsLogic::ObserveMRMLScene()
@@ -118,9 +123,6 @@ void vtkSlicerLiverMarkupsLogic::ObserveMRMLScene()
     // got into batch process mode so that an update on the mouse mode tool
     // bar is triggered when leave it
     this->GetMRMLScene()->StartState(vtkMRMLScene::BatchProcessState);
-
-    auto slicingContourNode = vtkSmartPointer<vtkMRMLLiverMarkupsSlicingContourNode>::New();
-    auto resectionSurfaceNode = vtkSmartPointer<vtkMRMLLiverMarkupsResectionSurfaceNode>::New();
 
     selectionNode->AddNewPlaceNodeClassNameToList(slicingContourNode->GetClassName(),
                                                   slicingContourNode->GetAddIcon(),
