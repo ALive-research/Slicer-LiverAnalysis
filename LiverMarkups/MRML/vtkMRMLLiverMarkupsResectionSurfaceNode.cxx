@@ -41,7 +41,7 @@
 // MRML includes
 #include <vtkMRMLModelNode.h>
 #include <vtkMRMLScene.h>
-#include "vtkMRMLLiverMarkupsSlicingContourNode.h"
+#include "vtkMRMLMarkupsSlicingContourNode.h"
 
 // VTK includes
 #include <vtkObjectFactory.h>
@@ -193,19 +193,19 @@ void vtkMRMLLiverMarkupsResectionSurfaceNode::ProcessMRMLEvents(vtkObject* calle
 
     if (event == vtkMRMLScene::NodeAddedEvent)
     {
-        vtkMRMLLiverMarkupsSlicingContourNode* node = reinterpret_cast<vtkMRMLLiverMarkupsSlicingContourNode*>(callData);
+        vtkMRMLMarkupsSlicingContourNode* node = reinterpret_cast<vtkMRMLMarkupsSlicingContourNode*>(callData);
         //When vtkMRMLLiverMarkupsSlicingContourNode is added, start listening to DisplayModifiedEvent
         if (node)
         {
             //std::cout << "ProcessMRMLEvents got vtkMRMLLiverMarkupsSlicingContourNode" << std::endl;
-            if (!broker->GetObservationExist(node, vtkMRMLLiverMarkupsSlicingContourNode::DisplayModifiedEvent, this, this->MRMLCallbackCommand))
-                broker->AddObservation(node, vtkMRMLLiverMarkupsSlicingContourNode::DisplayModifiedEvent, this, this->MRMLCallbackCommand);
+            if (!broker->GetObservationExist(node, vtkMRMLMarkupsSlicingContourNode::DisplayModifiedEvent, this, this->MRMLCallbackCommand))
+                broker->AddObservation(node, vtkMRMLMarkupsSlicingContourNode::DisplayModifiedEvent, this, this->MRMLCallbackCommand);
         }
     }
-    else if (event == vtkMRMLLiverMarkupsSlicingContourNode::DisplayModifiedEvent)
+    else if (event == vtkMRMLMarkupsSlicingContourNode::DisplayModifiedEvent)
     {
         //std::cout << "ProcessMRMLEvents: " << caller->GetClassName() << " " << event << std::endl;
-        vtkMRMLLiverMarkupsSlicingContourNode* node = dynamic_cast<vtkMRMLLiverMarkupsSlicingContourNode*>(caller);
+        vtkMRMLMarkupsSlicingContourNode* node = dynamic_cast<vtkMRMLMarkupsSlicingContourNode*>(caller);
         //When vtkMRMLLiverMarkupsSlicingContourNode is modified, update control points
         if (node)
         {

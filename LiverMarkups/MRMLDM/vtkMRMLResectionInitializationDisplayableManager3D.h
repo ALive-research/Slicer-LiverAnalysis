@@ -49,7 +49,7 @@
 #include <map>
 
 //------------------------------------------------------------------------------
-class vtkMRMLLiverMarkupsSlicingContourNode;
+class vtkMRMLMarkupsSlicingContourNode;
 class vtkCollection;
 class vtkLineWidget3;
 
@@ -107,7 +107,7 @@ public vtkMRMLAbstractThreeDViewDisplayableManager
    *
    * @param node pointer to the node to be observed.
    */
-  void SetAndObserveNode(vtkMRMLLiverMarkupsSlicingContourNode* node);
+  void SetAndObserveNode(vtkMRMLMarkupsSlicingContourNode* node);
 
   /**
    * Update manager based on the MRML node if UpdateFromMRMLRequested is true
@@ -150,7 +150,7 @@ public vtkMRMLAbstractThreeDViewDisplayableManager
    *
    * @return true if the widget was added, false otherwise.
    */
-  bool AddWidget(vtkMRMLLiverMarkupsSlicingContourNode *node);
+  bool AddWidget(vtkMRMLMarkupsSlicingContourNode *node);
 
   /**
    * Update MRML node according to the widget interaction
@@ -172,7 +172,7 @@ public vtkMRMLAbstractThreeDViewDisplayableManager
    * @param node pointer to a resection initialization node to update the
    * visibility from.
    */
-  void UpdateVisibility(vtkMRMLLiverMarkupsSlicingContourNode *node);
+  void UpdateVisibility(vtkMRMLMarkupsSlicingContourNode *node);
 
   /**
    * Update the line widget
@@ -180,7 +180,7 @@ public vtkMRMLAbstractThreeDViewDisplayableManager
    * @param node pointer to a resection initialization node to update the
    * visibility from.
    */
-  void UpdateLineWidget(vtkMRMLLiverMarkupsSlicingContourNode *node);
+  void UpdateLineWidget(vtkMRMLMarkupsSlicingContourNode *node);
 
 
  private:

@@ -41,7 +41,7 @@
 
 #include "vtkMRMLDisplayableNode.h"
 //Replaced vtkMRMLResectionInitializationNode with vtkMRMLLiverMarkupsSlicingContourNode
-#include "vtkMRMLLiverMarkupsSlicingContourNode.h"
+#include "vtkMRMLMarkupsSlicingContourNode.h"
 
 // MRML includes
 #include <vtkMRMLScene.h>
@@ -87,7 +87,7 @@ SetMRMLSceneInternal(vtkMRMLScene *newScene)
 
 //------------------------------------------------------------------------------
 void vtkMRMLResectionInitializationDisplayableManager3D::
-SetAndObserveNode(vtkMRMLLiverMarkupsSlicingContourNode *initializationNode)
+SetAndObserveNode(vtkMRMLMarkupsSlicingContourNode *initializationNode)
 {
   if (!initializationNode)
     {
@@ -108,8 +108,8 @@ ProcessMRMLNodesEvents(vtkObject *object,
                        unsigned long int eventId,
                        void *vtkNotUsed(data))
 {
-  vtkMRMLLiverMarkupsSlicingContourNode *node =
-    vtkMRMLLiverMarkupsSlicingContourNode::SafeDownCast(object);
+  vtkMRMLMarkupsSlicingContourNode *node =
+    vtkMRMLMarkupsSlicingContourNode::SafeDownCast(object);
 
   if (!node)
     {
@@ -183,8 +183,8 @@ OnMRMLSceneNodeAdded(vtkMRMLNode *node)
     return;
     }
 
-  vtkMRMLLiverMarkupsSlicingContourNode *initializationNode =
-    vtkMRMLLiverMarkupsSlicingContourNode::SafeDownCast(node);
+  vtkMRMLMarkupsSlicingContourNode *initializationNode =
+    vtkMRMLMarkupsSlicingContourNode::SafeDownCast(node);
   if (!initializationNode)
     {
     return;
@@ -226,8 +226,8 @@ OnMRMLSceneNodeRemoved(vtkMRMLNode *node)
     return;
     }
 
-  vtkMRMLLiverMarkupsSlicingContourNode *initializationNode =
-    vtkMRMLLiverMarkupsSlicingContourNode::SafeDownCast(node);
+  vtkMRMLMarkupsSlicingContourNode *initializationNode =
+    vtkMRMLMarkupsSlicingContourNode::SafeDownCast(node);
   if (!initializationNode)
     {
     vtkErrorMacro("Node is not a vtkMRMLLiverMarkupsSlicingContourNode");
@@ -247,7 +247,7 @@ OnMRMLSceneNodeRemoved(vtkMRMLNode *node)
 
 //------------------------------------------------------------------------------
 bool vtkMRMLResectionInitializationDisplayableManager3D::
-AddWidget(vtkMRMLLiverMarkupsSlicingContourNode *initializationNode)
+AddWidget(vtkMRMLMarkupsSlicingContourNode *initializationNode)
 {
   vtkDebugMacro("AddWidget: create widget.");
 
@@ -343,7 +343,7 @@ UpdateMRML(vtkObject *caller,
 
 //------------------------------------------------------------------------------
 void vtkMRMLResectionInitializationDisplayableManager3D::
-UpdateLineWidget(vtkMRMLLiverMarkupsSlicingContourNode *node)
+UpdateLineWidget(vtkMRMLMarkupsSlicingContourNode *node)
 {
   if (!node)
     {
@@ -362,7 +362,7 @@ UpdateLineWidget(vtkMRMLLiverMarkupsSlicingContourNode *node)
 
 //------------------------------------------------------------------------------
 void vtkMRMLResectionInitializationDisplayableManager3D::
-UpdateVisibility(vtkMRMLLiverMarkupsSlicingContourNode *node)
+UpdateVisibility(vtkMRMLMarkupsSlicingContourNode *node)
 {
   if (!node)
     {

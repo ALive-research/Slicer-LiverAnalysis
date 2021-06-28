@@ -38,8 +38,9 @@
 ==============================================================================*/
 
 #include "qSlicerLiverMarkupsModule.h"
-#include "MRML/vtkMRMLLiverMarkupsSlicingContourNode.h"
+//#include "MRML/vtkMRMLLiverMarkupsSlicingContourNode.h"
 #include "MRML/vtkMRMLLiverMarkupsResectionSurfaceNode.h"
+#include "MRML/vtkMRMLMarkupsSlicingContourNode.h"
 
 // Qt includes
 #include <QDebug>
@@ -123,9 +124,9 @@ QString qSlicerLiverMarkupsModule::acknowledgementText() const
 QStringList qSlicerLiverMarkupsModule::contributors() const
 {
   QStringList moduleContributors;
-  moduleContributors << QString("Rafael Palomar (Oslo University Hospital / NTNU)")
-                     << QString("Ole Vegard Solberg (SINTEF)")
-                     << QString("Geir Arne Tangen (SINTEF)");
+  moduleContributors << QString("Rafael Palomar (Oslo University Hospital / NTNU) ");
+  moduleContributors << QString("Ole Vegard Solberg (SINTEF) ");
+  moduleContributors << QString("Geir Arne Tangen (SINTEF) ");
   return moduleContributors;
 }
 
@@ -185,8 +186,10 @@ void qSlicerLiverMarkupsModule::setup()
    }
 
  // Register markups
- markupsLogic->RegisterMarkupsNode(vtkMRMLLiverMarkupsSlicingContourNode::New(),
-                                   vtkSlicerSlicingContourWidget::New());
+ vtkNew<vtkMRMLMarkupsSlicingContourNode> slicingContourNode;
+ vtkNew<vtkSlicerSlicingContourWidget> slicingContourWidget;
+ markupsLogic->RegisterMarkupsNode(slicingContourNode, slicingContourWidget);
+
 
  resectionSurfaceNode = vtkMRMLLiverMarkupsResectionSurfaceNode::New();
  markupsLogic->RegisterMarkupsNode(resectionSurfaceNode,

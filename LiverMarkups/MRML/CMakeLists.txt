@@ -8,10 +8,12 @@ set(${KIT}_INCLUDE_DIRECTORIES
   )
 
 set(${KIT}_SRCS
-  vtkMRMLLiverMarkupsSlicingContourNode.h
-  vtkMRMLLiverMarkupsSlicingContourNode.cxx
+#  vtkMRMLLiverMarkupsSlicingContourNode.h
+#  vtkMRMLLiverMarkupsSlicingContourNode.cxx
   vtkMRMLLiverMarkupsResectionSurfaceNode.h
   vtkMRMLLiverMarkupsResectionSurfaceNode.cxx
+  vtkMRMLMarkupsSlicingContourNode.h
+  vtkMRMLMarkupsSlicingContourNode.cxx
   )
 
 set(${KIT}_TARGET_LIBRARIES

@@ -30,6 +30,8 @@ set(${KIT}_SRCS
   vtkBezierSurfaceWidget.cxx
 #  vtkLineWidget3.h
 #  vtkLineWidget3.cxx
+  vtkSlicerShaderHelper.h
+  vtkSlicerShaderHelper.cxx
   )
 
 set(${KIT}_TARGET_LIBRARIES

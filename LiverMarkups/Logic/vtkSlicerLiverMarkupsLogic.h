@@ -45,7 +45,7 @@
 #include "vtkSlicerLiverMarkupsModuleLogicExport.h"
 
 class vtkMRMLLiverMarkupsResectionSurfaceNode;
-class vtkMRMLLiverMarkupsSlicingContourNode;
+class vtkMRMLMarkupsSlicingContourNode;
 
 class VTK_SLICER_LIVERMARKUPS_MODULE_LOGIC_EXPORT vtkSlicerLiverMarkupsLogic:
   public vtkSlicerMarkupsLogic
@@ -66,7 +66,7 @@ protected:
 
 private:
     vtkSmartPointer <vtkMRMLLiverMarkupsResectionSurfaceNode> resectionSurfaceNode;
-    vtkSmartPointer<vtkMRMLLiverMarkupsSlicingContourNode> slicingContourNode;
+    vtkSmartPointer<vtkMRMLMarkupsSlicingContourNode> slicingContourNode;
 
   vtkSlicerLiverMarkupsLogic(const vtkSlicerLiverMarkupsLogic&) = delete;
   void operator=(const vtkSlicerLiverMarkupsLogic&) = delete;

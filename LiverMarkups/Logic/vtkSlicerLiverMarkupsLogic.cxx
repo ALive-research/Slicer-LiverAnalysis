@@ -39,8 +39,8 @@
 #include "vtkSlicerLiverMarkupsLogic.h"
 
 // Liver Markups MRML includes
-#include "vtkMRMLLiverMarkupsSlicingContourNode.h"
 #include "vtkMRMLLiverMarkupsResectionSurfaceNode.h"
+#include "vtkMRMLMarkupsSlicingContourNode.h"
 
 // MRML includes
 #include <vtkMRMLScene.h>
@@ -86,7 +86,7 @@ void vtkSlicerLiverMarkupsLogic::RegisterNodes()
 
   // Nodes
   resectionSurfaceNode = vtkSmartPointer<vtkMRMLLiverMarkupsResectionSurfaceNode>::New();
-  slicingContourNode = vtkSmartPointer<vtkMRMLLiverMarkupsSlicingContourNode>::New();
+  slicingContourNode = vtkSmartPointer<vtkMRMLMarkupsSlicingContourNode>::New();
   scene->RegisterNodeClass(slicingContourNode);
   scene->RegisterNodeClass(resectionSurfaceNode);
 }
@@ -124,6 +124,8 @@ void vtkSlicerLiverMarkupsLogic::ObserveMRMLScene()
     // bar is triggered when leave it
     this->GetMRMLScene()->StartState(vtkMRMLScene::BatchProcessState);
 
+    auto slicingContourNode = vtkSmartPointer<vtkMRMLMarkupsSlicingContourNode>::New();
+
     selectionNode->AddNewPlaceNodeClassNameToList(slicingContourNode->GetClassName(),
                                                   slicingContourNode->GetAddIcon(),
                                                   slicingContourNode->GetMarkupType());
@@ -144,16 +146,18 @@ void vtkSlicerLiverMarkupsLogic::OnMRMLSceneNodeAdded(vtkMRMLNode* node)
 {
   Superclass::OnMRMLSceneNodeAdded(node);
 
-  vtkMRMLMarkupsNode* markupsNode =
-    vtkMRMLMarkupsNode::SafeDownCast(node);
+  auto markupsNode = vtkMRMLMarkupsSlicingContourNode::SafeDownCast(node);
   if (!markupsNode)
     {
     return;
     }
 
-  vtkMRMLMarkupsDisplayNode* displayNode =
-    vtkMRMLMarkupsDisplayNode::SafeDownCast(markupsNode->GetDisplayNode());
-  displayNode->SetTextScale(0.0);
+//  vtkMRMLMarkupsDisplayNode* displayNode =
+//    vtkMRMLMarkupsDisplayNode::SafeDownCast(markupsNode->GetDisplayNode());
+//  displayNode->SetTextScale(0.0);
   // Flere parametre som må settes for displaynode?
   // Egne parametre for hver modul?
+  auto displayNode = vtkMRMLMarkupsDisplayNode::SafeDownCast(markupsNode->GetDisplayNode());
+  displayNode->PropertiesLabelVisibilityOff();
+  displayNode->SetSnapMode(vtkMRMLMarkupsDisplayNode::SnapModeUnconstrained);
 }
