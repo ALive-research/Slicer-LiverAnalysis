@@ -233,8 +233,8 @@ QStringList qSlicerLiverMarkupsModule::associatedNodeTypes() const
 void qSlicerLiverMarkupsModule::setMRMLScene(vtkMRMLScene* scene)
 {
   this->Superclass::setMRMLScene(scene);
-//  if(resectionSurfaceNode)
-//    this->mrmlScene()->AddNode(resectionSurfaceNode);
+  if(resectionSurfaceNode)
+    this->mrmlScene()->AddNode(resectionSurfaceNode);
   vtkSlicerLiverMarkupsLogic* logic =
     vtkSlicerLiverMarkupsLogic::SafeDownCast(this->logic());
   if (!logic)

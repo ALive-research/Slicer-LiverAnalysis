@@ -224,7 +224,7 @@ void vtkSlicerResectionSurfaceRepresentation3D::UpdateFromMRML(vtkMRMLNode* call
 //------------------------------------------------------------------------------
 void vtkSlicerResectionSurfaceRepresentation3D::BuildBezierSurface()
 {
-    std::cout << "BuildBezierSurface" << std::endl;
+    //std::cout << "BuildBezierSurface" << std::endl;
     vtkMRMLLiverMarkupsResectionSurfaceNode* liverMarkupsResectionSurfaceNode =
         vtkMRMLLiverMarkupsResectionSurfaceNode::SafeDownCast(this->GetMarkupsNode());
     if (!liverMarkupsResectionSurfaceNode)
@@ -235,14 +235,28 @@ void vtkSlicerResectionSurfaceRepresentation3D::BuildBezierSurface()
     {
         return;
     }
-    std::cout << "Create the BezierSurface" << std::endl;
+    //std::cout << "Create the BezierSurface" << std::endl;
     this->BezierSurfaceSource->SetNumberOfControlPoints(
         liverMarkupsResectionSurfaceNode->GetNumberOfControlPoints() / 4, 
         liverMarkupsResectionSurfaceNode->GetNumberOfControlPoints() / 4);
     //this->BezierSurfaceSource->SetNumberOfControlPoints(4, 4);
-    this->BezierSurfaceSource->SetResolution(3, 3);
+    this->BezierSurfaceSource->SetResolution(10, 10);
     vtkSmartPointer<vtkPoints> points = liverMarkupsResectionSurfaceNode->GetControlPoints();
-    std::cout << "point 0: " << points->GetPoint(0)[0] << " " << points->GetPoint(0)[1] << points->GetPoint(0)[2] << std::endl;
+    vtkMRMLMarkupsNode* markupsNode = this->GetMarkupsNode();
+    std::vector< vtkMRMLMarkupsNode::ControlPoint* > *controlpoints = markupsNode->GetControlPoints();
+    //std::cout << "point 0: " << points->GetPoint(0)[0] << " " << points->GetPoint(0)[1] << points->GetPoint(0)[2] << std::endl;
+    //std::cout << "controlpoint 0: " << (*controlpoints)[0]->Position[0] << " " << (*controlpoints)[0]->Position[1] << (*controlpoints)[0]->Position[2] << std::endl;
+
+    //Quick hack to convert ControlPoints to vtkPoints
+    for (int i = 0; i < liverMarkupsResectionSurfaceNode->GetNumberOfControlPoints(); ++i)
+    {
+        double* point = points->GetPoint(i);
+        point[0] = (*controlpoints)[i]->Position[0];
+        point[1] = (*controlpoints)[i]->Position[1];
+        point[2] = (*controlpoints)[i]->Position[2];
+        points->SetPoint(i, point);
+    }
+
     this->BezierSurfaceSource->SetControlPoints(points);
     this->BezierSurfaceMapper->SetInputConnection(this->BezierSurfaceSource->GetOutputPort());
     this->BezierSurfaceActor->SetMapper(this->BezierSurfaceMapper.GetPointer());
