@@ -65,7 +65,7 @@ protected:
   vtkSlicerResectionSurfaceWidget();
   ~vtkSlicerResectionSurfaceWidget();
 
-  vtkSmartPointer<vtkBezierSurfaceWidget> BezierSurfaceWidget;
+  //vtkSmartPointer<vtkBezierSurfaceWidget> BezierSurfaceWidget;
 
 private:
   vtkSlicerResectionSurfaceWidget(const vtkSlicerResectionSurfaceWidget&) = delete;

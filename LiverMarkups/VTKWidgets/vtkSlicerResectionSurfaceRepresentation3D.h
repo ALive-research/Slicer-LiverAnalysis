@@ -50,6 +50,7 @@
 //------------------------------------------------------------------------------
 class vtkCutter;
 class vtkPlane;
+class vtkBezierSurfaceSource;
 
 //------------------------------------------------------------------------------
 class VTK_SLICER_LIVERMARKUPS_MODULE_VTKWIDGETS_EXPORT vtkSlicerResectionSurfaceRepresentation3D
@@ -83,8 +84,14 @@ protected:
   vtkSmartPointer<vtkSphereSource> MiddlePointSource;
   vtkSmartPointer<vtkPlane> SlicingPlane;
 
+  // Bézier surface elements
+  vtkNew<vtkBezierSurfaceSource> BezierSurfaceSource;
+  vtkNew<vtkPolyDataMapper> BezierSurfaceMapper;
+  vtkNew<vtkActor> BezierSurfaceActor;
+
   void BuildMiddlePoint();
   void BuildSlicingPlane();
+  void BuildBezierSurface();
 
 private:
   vtkSlicerResectionSurfaceRepresentation3D(const vtkSlicerResectionSurfaceRepresentation3D&) = delete;

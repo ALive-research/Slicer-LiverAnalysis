@@ -58,12 +58,12 @@ vtkStandardNewMacro(vtkSlicerResectionSurfaceWidget);
 //------------------------------------------------------------------------------
 vtkSlicerResectionSurfaceWidget::vtkSlicerResectionSurfaceWidget()
 {
-    BezierSurfaceWidget = vtkSmartPointer<vtkBezierSurfaceWidget>::New();
+    /*BezierSurfaceWidget = vtkSmartPointer<vtkBezierSurfaceWidget>::New();
     //BezierSurfaceWidget->SetInteractor(this->GetInteractor());
     //BezierSurfaceWidget->SetCurrentRenderer(this->GetRenderer());
     BezierSurfaceWidget->SetHandleSizeFactor(0.8);
     BezierSurfaceWidget->On();
-    BezierSurfaceWidget->ComputeNormalsOn();
+    BezierSurfaceWidget->ComputeNormalsOn();*/
 }
 
 //------------------------------------------------------------------------------

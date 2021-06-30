@@ -47,6 +47,10 @@
 #include <vtkPlane.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkSphereSource.h>
+#include <vtkRenderer.h>
+
+
+#include "vtkBezierSurfaceSource.h"
 
 
 //------------------------------------------------------------------------------
@@ -202,6 +206,7 @@ void vtkSlicerResectionSurfaceRepresentation3D::UpdateFromMRML(vtkMRMLNode* call
 
  this->BuildMiddlePoint();
  this->BuildSlicingPlane();
+ this->BuildBezierSurface();
 
  vtkMRMLLiverMarkupsResectionSurfaceNode* liverMarkupsResectionSurfaceNode=
    vtkMRMLLiverMarkupsResectionSurfaceNode::SafeDownCast(this->GetMarkupsNode());
@@ -216,6 +221,38 @@ void vtkSlicerResectionSurfaceRepresentation3D::UpdateFromMRML(vtkMRMLNode* call
  this->Cutter->SetInputData(this->TargetOrgan);
 }
 
+//------------------------------------------------------------------------------
+void vtkSlicerResectionSurfaceRepresentation3D::BuildBezierSurface()
+{
+    std::cout << "BuildBezierSurface" << std::endl;
+    vtkMRMLLiverMarkupsResectionSurfaceNode* liverMarkupsResectionSurfaceNode =
+        vtkMRMLLiverMarkupsResectionSurfaceNode::SafeDownCast(this->GetMarkupsNode());
+    if (!liverMarkupsResectionSurfaceNode)
+    {
+        return;
+    }
+    if (liverMarkupsResectionSurfaceNode->GetNumberOfControlPoints() < 2)
+    {
+        return;
+    }
+    std::cout << "Create the BezierSurface" << std::endl;
+    this->BezierSurfaceSource->SetNumberOfControlPoints(
+        liverMarkupsResectionSurfaceNode->GetNumberOfControlPoints() / 4, 
+        liverMarkupsResectionSurfaceNode->GetNumberOfControlPoints() / 4);
+    //this->BezierSurfaceSource->SetNumberOfControlPoints(4, 4);
+    this->BezierSurfaceSource->SetResolution(3, 3);
+    vtkSmartPointer<vtkPoints> points = liverMarkupsResectionSurfaceNode->GetControlPoints();
+    std::cout << "point 0: " << points->GetPoint(0)[0] << " " << points->GetPoint(0)[1] << points->GetPoint(0)[2] << std::endl;
+    this->BezierSurfaceSource->SetControlPoints(points);
+    this->BezierSurfaceMapper->SetInputConnection(this->BezierSurfaceSource->GetOutputPort());
+    this->BezierSurfaceActor->SetMapper(this->BezierSurfaceMapper.GetPointer());
+    //this->BezierSurfaceActor->SetProperty(this->BezierSurfaceProperty.GetPointer()); //Needed?
+
+    this->BezierSurfaceActor->VisibilityOn();
+    this->BezierSurfaceActor->Modified();
+    //this->Renderer->AddActor(this->BezierSurfaceActor.GetPointer());
+    this->Renderer->AddActor(this->BezierSurfaceActor);
+}
 //------------------------------------------------------------------------------
 void vtkSlicerResectionSurfaceRepresentation3D::BuildMiddlePoint()
 {
