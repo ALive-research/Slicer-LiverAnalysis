@@ -42,7 +42,7 @@
 #include "vtkSlicerLiverMarkupsModuleVTKWidgetsExport.h"
 
 // Markups VTKWidgets includes
-#include "vtkSlicerPlaneRepresentation3D.h"
+#include "vtkSlicerMarkupsWidgetRepresentation3D.h"
 
 // VTK includes
 #include <vtkWeakPointer.h>
@@ -53,11 +53,11 @@ class vtkPlane;
 
 //------------------------------------------------------------------------------
 class VTK_SLICER_LIVERMARKUPS_MODULE_VTKWIDGETS_EXPORT vtkSlicerResectionSurfaceRepresentation3D
-: public vtkSlicerPlaneRepresentation3D
+: public vtkSlicerMarkupsWidgetRepresentation3D
 {
 public:
   static vtkSlicerResectionSurfaceRepresentation3D* New();
-  vtkTypeMacro(vtkSlicerResectionSurfaceRepresentation3D, vtkSlicerPlaneRepresentation3D);
+  vtkTypeMacro(vtkSlicerResectionSurfaceRepresentation3D, vtkSlicerMarkupsWidgetRepresentation3D);
   void PrintSelf(ostream& os, vtkIndent indent);
 
   void UpdateFromMRML(vtkMRMLNode* caller, unsigned long event, void* callData=nullptr);

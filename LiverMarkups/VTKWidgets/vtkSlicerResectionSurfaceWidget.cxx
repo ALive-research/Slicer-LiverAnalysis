@@ -46,8 +46,7 @@
 #include <vtkObjectFactory.h>
 
 // Markups VTKWidgets includes
-#include <vtkSlicerLineRepresentation2D.h>
-#include <vtkSlicerLineRepresentation3D.h>
+#include <vtkSlicerResectionSurfaceRepresentation2D.h>
 #include <vtkSlicerResectionSurfaceRepresentation3D.h>
 
 #include "vtkBezierSurfaceWidget.h"
@@ -78,7 +77,7 @@ void vtkSlicerResectionSurfaceWidget::CreateDefaultRepresentation(vtkMRMLMarkups
   vtkSmartPointer<vtkSlicerMarkupsWidgetRepresentation> rep = nullptr;
   if (vtkMRMLSliceNode::SafeDownCast(viewNode))
     {
-    rep = vtkSmartPointer<vtkSlicerLineRepresentation2D>::New();
+    rep = vtkSmartPointer<vtkSlicerResectionSurfaceRepresentation2D>::New();
     }
   else
     {

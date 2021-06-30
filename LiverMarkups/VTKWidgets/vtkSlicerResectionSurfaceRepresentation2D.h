@@ -42,14 +42,14 @@
 #include "vtkSlicerLiverMarkupsModuleVTKWidgetsExport.h"
 
 // Markups VTKWidgets includes
-#include "vtkSlicerPlaneRepresentation2D.h"
+#include "vtkSlicerMarkupsWidgetRepresentation2D.h"
 
 class VTK_SLICER_LIVERMARKUPS_MODULE_VTKWIDGETS_EXPORT vtkSlicerResectionSurfaceRepresentation2D
-: public vtkSlicerPlaneRepresentation2D
+: public vtkSlicerMarkupsWidgetRepresentation2D
 {
 public:
   static vtkSlicerResectionSurfaceRepresentation2D* New();
-  vtkTypeMacro(vtkSlicerResectionSurfaceRepresentation2D, vtkSlicerPlaneRepresentation2D);
+  vtkTypeMacro(vtkSlicerResectionSurfaceRepresentation2D, vtkSlicerMarkupsWidgetRepresentation2D);
   void PrintSelf(ostream& os, vtkIndent indent);
 
 protected:
