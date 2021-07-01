@@ -86,7 +86,6 @@ qSlicerLiverMarkupsModulePrivate::qSlicerLiverMarkupsModulePrivate()
 qSlicerLiverMarkupsModule::qSlicerLiverMarkupsModule(QObject* _parent)
   : Superclass(_parent)
   , d_ptr(new qSlicerLiverMarkupsModulePrivate)
-  , bezierSurfaceNode(nullptr)
 {
 }
 
@@ -165,10 +164,8 @@ void qSlicerLiverMarkupsModule::setup()
  vtkNew<vtkSlicerSlicingContourWidget> slicingContourWidget;
  markupsLogic->RegisterMarkupsNode(slicingContourNode, slicingContourWidget);
 
-
- bezierSurfaceNode = vtkMRMLLiverMarkupsBezierSurfaceNode::New();
- markupsLogic->RegisterMarkupsNode(bezierSurfaceNode,
-                                   vtkSlicerBezierSurfaceWidget::New());
+ vtkNew<vtkSlicerBezierSurfaceWidget> bezierSurfaceWidget;
+ markupsLogic->RegisterMarkupsNode(bezierSurfaceNode, bezierSurfaceWidget);
 
  qSlicerModuleManager* moduleManager = qSlicerCoreApplication::application()->moduleManager();
  if (!moduleManager)

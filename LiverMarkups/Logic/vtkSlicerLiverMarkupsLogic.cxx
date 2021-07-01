@@ -87,6 +87,7 @@ void vtkSlicerLiverMarkupsLogic::RegisterNodes()
   // Nodes
   bezierSurfaceNode = vtkSmartPointer<vtkMRMLLiverMarkupsBezierSurfaceNode>::New();
   slicingContourNode = vtkSmartPointer<vtkMRMLMarkupsSlicingContourNode>::New();
+
   scene->RegisterNodeClass(slicingContourNode);
   scene->RegisterNodeClass(bezierSurfaceNode);
 }
@@ -123,8 +124,6 @@ void vtkSlicerLiverMarkupsLogic::ObserveMRMLScene()
     // got into batch process mode so that an update on the mouse mode tool
     // bar is triggered when leave it
     this->GetMRMLScene()->StartState(vtkMRMLScene::BatchProcessState);
-
-    auto slicingContourNode = vtkSmartPointer<vtkMRMLMarkupsSlicingContourNode>::New();
 
     selectionNode->AddNewPlaceNodeClassNameToList(slicingContourNode->GetClassName(),
                                                   slicingContourNode->GetAddIcon(),
