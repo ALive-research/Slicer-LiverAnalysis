@@ -49,7 +49,7 @@
 #include <vtkSlicerResectionSurfaceRepresentation2D.h>
 #include <vtkSlicerResectionSurfaceRepresentation3D.h>
 
-#include "vtkBezierSurfaceWidget.h"
+//#include "vtkBezierSurfaceWidget.h"
 #include "vtkMRMLLiverMarkupsResectionSurfaceNode.h"
 
 //------------------------------------------------------------------------------
@@ -58,12 +58,7 @@ vtkStandardNewMacro(vtkSlicerResectionSurfaceWidget);
 //------------------------------------------------------------------------------
 vtkSlicerResectionSurfaceWidget::vtkSlicerResectionSurfaceWidget()
 {
-    /*BezierSurfaceWidget = vtkSmartPointer<vtkBezierSurfaceWidget>::New();
-    //BezierSurfaceWidget->SetInteractor(this->GetInteractor());
-    //BezierSurfaceWidget->SetCurrentRenderer(this->GetRenderer());
-    BezierSurfaceWidget->SetHandleSizeFactor(0.8);
-    BezierSurfaceWidget->On();
-    BezierSurfaceWidget->ComputeNormalsOn();*/
+
 }
 
 //------------------------------------------------------------------------------
