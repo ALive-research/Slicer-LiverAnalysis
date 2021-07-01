@@ -1,7 +1,7 @@
 /*=========================================================================
 
   Program: NorMIT-Plan
-  Module: vtkMRMLResectionSurfaceNode.h
+  Module: vtkMRMLBezierSurfaceNode.h
 
   Copyright (c) 2017, The Intervention Centre, Oslo University Hospital
 
@@ -33,8 +33,8 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   =========================================================================*/
 
-#ifndef __vtkMRMLLiverMarkupsResectionSurfaceNode_h
-#define __vtkMRMLLiverMarkupsResectionSurfaceNode_h
+#ifndef __vtkMRMLLiverMarkupsBezierSurfaceNode_h
+#define __vtkMRMLLiverMarkupsBezierSurfaceNode_h
 
 // This module includes.
 #include "vtkSlicerLiverMarkupsModuleMRMLExport.h"
@@ -49,7 +49,7 @@
 #include <vtkCollection.h>
 
 //------------------------------------------------------------------------------
-class vtkMRMLResectionSurfaceDisplayNode;
+class vtkMRMLBezierSurfaceDisplayNode;
 class vtkMRMLModelNode;
 class vtkCollection;
 class vtkPoints;
@@ -64,8 +64,7 @@ class vtkPoints;
  * to other elements in the MRML scene.
  */
 class VTK_SLICER_LIVERMARKUPS_MODULE_MRML_EXPORT
-    //vtkMRMLResectionSurfaceNode: public vtkMRMLModelNode
-    vtkMRMLLiverMarkupsResectionSurfaceNode : public vtkMRMLMarkupsNode
+    vtkMRMLLiverMarkupsBezierSurfaceNode : public vtkMRMLMarkupsNode
 {
 
 public:
@@ -76,10 +75,10 @@ public:
     virtual vtkMRMLNode* CreateNodeInstance() override;
     /// Get node XML tag name (like Volume, Model)
     ///
-    virtual const char* GetNodeTagName() override {return "MarkupResectionSurface";}
+    virtual const char* GetNodeTagName() override {return "MarkupBezierSurface";}
 
     /// Get markup name
-    virtual const char* GetMarkupType()  {return "ResectionSurface";}
+    virtual const char* GetMarkupType()  {return "BezierSurface";}
 
     /// Get markup short name
     virtual const char* GetDefaultNodeNamePrefix()  {return "RS";}
@@ -95,7 +94,7 @@ public:
         unsigned long /*event*/,
         void* /*callData*/) override;
 
-    void InitializeResectionSurface(vtkPoints* curve);
+    void InitializeBezierSurface(vtkPoints* curve);
 
 //  protected:
 //    vtkMRMLLiverMarkupsSlicingContourNode();
@@ -114,12 +113,11 @@ public:
   /**
    * Standard vtk object instantiation method.
    *
-   * @return a pointer to a newly created vtkMRMLResectionSurfaceNode.
+   * @return a pointer to a newly created vtkMRMLBezierSurfaceNode.
    */
-  static vtkMRMLLiverMarkupsResectionSurfaceNode *New();
+  static vtkMRMLLiverMarkupsBezierSurfaceNode *New();
 
-  //vtkTypeMacro(vtkMRMLResectionSurfaceNode, vtkMRMLModelNode);
-  vtkTypeMacro(vtkMRMLLiverMarkupsResectionSurfaceNode, vtkMRMLMarkupsNode);
+  vtkTypeMacro(vtkMRMLLiverMarkupsBezierSurfaceNode, vtkMRMLMarkupsNode);
 
   /**
    * Standard print object information method.
@@ -142,7 +140,7 @@ public:
    *
    * @return string with the tag name of the node.
    */
-//  virtual const char* GetNodeTagName() {return "ResectionSurface";}
+//  virtual const char* GetNodeTagName() {return "BezierSurface";}
 
   /**
    * Get the icon associated to the node.
@@ -156,10 +154,10 @@ public:
    * Get the display node associated
    *
    *
-   * @return pointer to the vtkMRMLResectionSurfaceDisplayNode associated with
+   * @return pointer to the vtkMRMLBezierSurfaceDisplayNode associated with
    * this node.
    */
-  vtkMRMLResectionSurfaceDisplayNode* GetResectionSurfaceDisplayNode();
+  vtkMRMLBezierSurfaceDisplayNode* GetBezierSurfaceDisplayNode();
 
   /**
    * Add target tumor.
@@ -213,11 +211,11 @@ public:
   vtkMRMLModelNode *GetTargetParenchyma() const;
 
  protected:
-  vtkMRMLLiverMarkupsResectionSurfaceNode();
-  ~vtkMRMLLiverMarkupsResectionSurfaceNode();
+  vtkMRMLLiverMarkupsBezierSurfaceNode();
+  ~vtkMRMLLiverMarkupsBezierSurfaceNode();
 
-  vtkMRMLLiverMarkupsResectionSurfaceNode(const vtkMRMLLiverMarkupsResectionSurfaceNode&);
-  void operator=(const vtkMRMLLiverMarkupsResectionSurfaceNode&);
+  vtkMRMLLiverMarkupsBezierSurfaceNode(const vtkMRMLLiverMarkupsBezierSurfaceNode&);
+  void operator=(const vtkMRMLLiverMarkupsBezierSurfaceNode&);
 
   vtkNew<vtkCollection> TargetTumors;
   vtkNew<vtkPoints> ControlPoints;

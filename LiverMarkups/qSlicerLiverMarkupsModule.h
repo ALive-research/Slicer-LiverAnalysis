@@ -47,7 +47,7 @@
 
 class qSlicerLiverMarkupsModulePrivate;
 class vtkMRMLScene;
-class vtkMRMLLiverMarkupsResectionSurfaceNode;
+class vtkMRMLLiverMarkupsBezierSurfaceNode;
 
 class Q_SLICER_QTMODULES_LIVERMARKUPS_EXPORT
 qSlicerLiverMarkupsModule
@@ -92,7 +92,7 @@ protected:
 
 protected:
   QScopedPointer<qSlicerLiverMarkupsModulePrivate> d_ptr;
-  vtkMRMLLiverMarkupsResectionSurfaceNode* resectionSurfaceNode;
+  vtkMRMLLiverMarkupsBezierSurfaceNode* bezierSurfaceNode;
 
 private:
   Q_DECLARE_PRIVATE(qSlicerLiverMarkupsModule);

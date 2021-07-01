@@ -39,7 +39,7 @@
 
 #include "vtkSlicerResectionSurfaceRepresentation3D.h"
 
-#include "vtkMRMLLiverMarkupsResectionSurfaceNode.h"
+#include "vtkMRMLLiverMarkupsBezierSurfaceNode.h"
 
 // VTK includes
 #include <vtkActor.h>
@@ -208,8 +208,8 @@ void vtkSlicerResectionSurfaceRepresentation3D::UpdateFromMRML(vtkMRMLNode* call
  this->BuildSlicingPlane();
  this->BuildBezierSurface();
 
- vtkMRMLLiverMarkupsResectionSurfaceNode* liverMarkupsResectionSurfaceNode=
-   vtkMRMLLiverMarkupsResectionSurfaceNode::SafeDownCast(this->GetMarkupsNode());
+ vtkMRMLLiverMarkupsBezierSurfaceNode* liverMarkupsResectionSurfaceNode=
+   vtkMRMLLiverMarkupsBezierSurfaceNode::SafeDownCast(this->GetMarkupsNode());
 
  if (!liverMarkupsResectionSurfaceNode)
    {
@@ -225,8 +225,8 @@ void vtkSlicerResectionSurfaceRepresentation3D::UpdateFromMRML(vtkMRMLNode* call
 void vtkSlicerResectionSurfaceRepresentation3D::BuildBezierSurface()
 {
     //std::cout << "BuildBezierSurface" << std::endl;
-    vtkMRMLLiverMarkupsResectionSurfaceNode* liverMarkupsResectionSurfaceNode =
-        vtkMRMLLiverMarkupsResectionSurfaceNode::SafeDownCast(this->GetMarkupsNode());
+    vtkMRMLLiverMarkupsBezierSurfaceNode* liverMarkupsResectionSurfaceNode =
+        vtkMRMLLiverMarkupsBezierSurfaceNode::SafeDownCast(this->GetMarkupsNode());
     if (!liverMarkupsResectionSurfaceNode)
     {
         return;

@@ -24,12 +24,8 @@ set(${KIT}_SRCS
   vtkSlicerResectionSurfaceRepresentation2D.cxx
   vtkBezierSurfaceSource.h
   vtkBezierSurfaceSource.cxx
-  vtkSlicerResectionSurfaceWidget.h
-  vtkSlicerResectionSurfaceWidget.cxx
-  vtkBezierSurfaceWidget.h
-  vtkBezierSurfaceWidget.cxx
-#  vtkLineWidget3.h
-#  vtkLineWidget3.cxx
+  vtkSlicerBezierSurfaceWidget.h
+  vtkSlicerBezierSurfaceWidget.cxx
   vtkSlicerShaderHelper.h
   vtkSlicerShaderHelper.cxx
   )

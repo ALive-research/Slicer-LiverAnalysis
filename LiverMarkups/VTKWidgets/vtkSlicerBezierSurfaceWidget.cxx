@@ -37,7 +37,7 @@
 
   ==============================================================================*/
 
-#include "vtkSlicerResectionSurfaceWidget.h"
+#include "vtkSlicerBezierSurfaceWidget.h"
 
 // Liver Markups VTKWidgets include
 //#include "vtkSlicerSlicingContourRepresentation3D.h"
@@ -50,22 +50,22 @@
 #include <vtkSlicerResectionSurfaceRepresentation3D.h>
 
 //#include "vtkBezierSurfaceWidget.h"
-#include "vtkMRMLLiverMarkupsResectionSurfaceNode.h"
+#include "vtkMRMLLiverMarkupsBezierSurfaceNode.h"
 
 //------------------------------------------------------------------------------
-vtkStandardNewMacro(vtkSlicerResectionSurfaceWidget);
+vtkStandardNewMacro(vtkSlicerBezierSurfaceWidget);
 
 //------------------------------------------------------------------------------
-vtkSlicerResectionSurfaceWidget::vtkSlicerResectionSurfaceWidget()
+vtkSlicerBezierSurfaceWidget::vtkSlicerBezierSurfaceWidget()
 {
 
 }
 
 //------------------------------------------------------------------------------
-vtkSlicerResectionSurfaceWidget::~vtkSlicerResectionSurfaceWidget() = default;
+vtkSlicerBezierSurfaceWidget::~vtkSlicerBezierSurfaceWidget() = default;
 
 //------------------------------------------------------------------------------
-void vtkSlicerResectionSurfaceWidget::CreateDefaultRepresentation(vtkMRMLMarkupsDisplayNode* markupsDisplayNode,
+void vtkSlicerBezierSurfaceWidget::CreateDefaultRepresentation(vtkMRMLMarkupsDisplayNode* markupsDisplayNode,
                                                                 vtkMRMLAbstractViewNode* viewNode,
                                                                 vtkRenderer* renderer)
 {
@@ -87,15 +87,15 @@ void vtkSlicerResectionSurfaceWidget::CreateDefaultRepresentation(vtkMRMLMarkups
 }
 
 //------------------------------------------------------------------------------
-vtkSlicerMarkupsWidget* vtkSlicerResectionSurfaceWidget::CreateInstance() const
+vtkSlicerMarkupsWidget* vtkSlicerBezierSurfaceWidget::CreateInstance() const
 {
-  vtkObject* ret = vtkObjectFactory::CreateInstance("vtkSlicerResectionSurfaceWidget");
+  vtkObject* ret = vtkObjectFactory::CreateInstance("vtkSlicerBezierSurfaceWidget");
   if(ret)
     {
-    return static_cast<vtkSlicerResectionSurfaceWidget*>(ret);
+    return static_cast<vtkSlicerBezierSurfaceWidget*>(ret);
     }
 
-  vtkSlicerResectionSurfaceWidget* result = new vtkSlicerResectionSurfaceWidget;
+  vtkSlicerBezierSurfaceWidget* result = new vtkSlicerBezierSurfaceWidget;
 #ifdef VTK_HAS_INITIALIZE_OBJECT_BASE
   result->InitializeObjectBase();
 #endif
@@ -104,15 +104,15 @@ vtkSlicerMarkupsWidget* vtkSlicerResectionSurfaceWidget::CreateInstance() const
 
 
 //-------------------------------------------------------------------------
-void vtkSlicerResectionSurfaceWidget::UpdateFromMRML(vtkMRMLNode* caller, unsigned long event, void* callData/*=nullptr*/)
+void vtkSlicerBezierSurfaceWidget::UpdateFromMRML(vtkMRMLNode* caller, unsigned long event, void* callData/*=nullptr*/)
 {
     if (!this->WidgetRep)
     {
         return;
     }
 
-    vtkMRMLLiverMarkupsResectionSurfaceNode* liverMarkupsResectionSurfaceNode =
-        vtkMRMLLiverMarkupsResectionSurfaceNode::SafeDownCast(caller);
+    vtkMRMLLiverMarkupsBezierSurfaceNode* liverMarkupsResectionSurfaceNode =
+        vtkMRMLLiverMarkupsBezierSurfaceNode::SafeDownCast(caller);
 
     //BezierSurfaceWidget->SetControlPoints(liverMarkupsResectionSurfaceNode->GetControlPoints());
     this->WidgetRep->UpdateFromMRML(caller, event, callData);

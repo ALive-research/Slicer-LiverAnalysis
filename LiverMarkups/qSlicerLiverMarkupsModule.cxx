@@ -39,7 +39,7 @@
 
 #include "qSlicerLiverMarkupsModule.h"
 //#include "MRML/vtkMRMLLiverMarkupsSlicingContourNode.h"
-#include "MRML/vtkMRMLLiverMarkupsResectionSurfaceNode.h"
+#include "MRML/vtkMRMLLiverMarkupsBezierSurfaceNode.h"
 #include "MRML/vtkMRMLMarkupsSlicingContourNode.h"
 
 // Qt includes
@@ -56,20 +56,12 @@
 
 // Liver Markups VTKWidgets includes
 #include <vtkSlicerSlicingContourWidget.h>
-#include <vtkSlicerResectionSurfaceWidget.h>
+#include <vtkSlicerBezierSurfaceWidget.h>
 
 #include <qSlicerModuleManager.h>
 #include <qSlicerCoreApplication.h>
 
-// MRMLDisplayableManager includes
-#include <vtkMRMLThreeDViewDisplayableManagerFactory.h>
-#include <vtkMRMLSliceViewDisplayableManagerFactory.h>
-#include <vtkMRMLResectionDisplayableManager3D.h>
-
-// DisplayableManager initialization
-#include <vtkAutoInit.h>
 #include <vtkMRMLScene.h>
-VTK_MODULE_INIT(vtkSlicerLiverMarkupsModuleMRMLDisplayableManager)
 
 //-----------------------------------------------------------------------------
 /// \ingroup Slicer_QtModules_ExtensionTemplate
@@ -94,7 +86,7 @@ qSlicerLiverMarkupsModulePrivate::qSlicerLiverMarkupsModulePrivate()
 qSlicerLiverMarkupsModule::qSlicerLiverMarkupsModule(QObject* _parent)
   : Superclass(_parent)
   , d_ptr(new qSlicerLiverMarkupsModulePrivate)
-  , resectionSurfaceNode(nullptr)
+  , bezierSurfaceNode(nullptr)
 {
 }
 
@@ -191,9 +183,9 @@ void qSlicerLiverMarkupsModule::setup()
  markupsLogic->RegisterMarkupsNode(slicingContourNode, slicingContourWidget);
 
 
- resectionSurfaceNode = vtkMRMLLiverMarkupsResectionSurfaceNode::New();
- markupsLogic->RegisterMarkupsNode(resectionSurfaceNode,
-                                   vtkSlicerResectionSurfaceWidget::New());
+ bezierSurfaceNode = vtkMRMLLiverMarkupsBezierSurfaceNode::New();
+ markupsLogic->RegisterMarkupsNode(bezierSurfaceNode,
+                                   vtkSlicerBezierSurfaceWidget::New());
 
  qSlicerModuleManager* moduleManager = qSlicerCoreApplication::application()->moduleManager();
  if (!moduleManager)
@@ -233,8 +225,8 @@ QStringList qSlicerLiverMarkupsModule::associatedNodeTypes() const
 void qSlicerLiverMarkupsModule::setMRMLScene(vtkMRMLScene* scene)
 {
   this->Superclass::setMRMLScene(scene);
-  if(resectionSurfaceNode)
-    this->mrmlScene()->AddNode(resectionSurfaceNode);
+  if(bezierSurfaceNode)
+    this->mrmlScene()->AddNode(bezierSurfaceNode);
   vtkSlicerLiverMarkupsLogic* logic =
     vtkSlicerLiverMarkupsLogic::SafeDownCast(this->logic());
   if (!logic)

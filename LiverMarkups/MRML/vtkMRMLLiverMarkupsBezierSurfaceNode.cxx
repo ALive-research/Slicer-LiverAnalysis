@@ -1,7 +1,7 @@
 /*=========================================================================
 
   Program: NorMIT-Plan
-  Module: vtkMRMLResectionSurfaceNode.cxx
+  Module: vtkMRMLBezierSurfaceNode.cxx
 
   Copyright (c) 2017, The Intervention Centre, Oslo University Hospital
 
@@ -34,9 +34,7 @@
   =========================================================================*/
 
 // This module includes
-#include "vtkMRMLLiverMarkupsResectionSurfaceNode.h"
-//#include "vtkMRMLResectionSurfaceDisplayNode.h"
-//#include "ResectionPlanningModuleDefaultValues.h"
+#include "vtkMRMLLiverMarkupsBezierSurfaceNode.h"
 
 // MRML includes
 #include <vtkMRMLModelNode.h>
@@ -52,10 +50,10 @@
 #include <vtkEventBroker.h>
 
 //------------------------------------------------------------------------------
-vtkMRMLNodeNewMacro(vtkMRMLLiverMarkupsResectionSurfaceNode);
+vtkMRMLNodeNewMacro(vtkMRMLLiverMarkupsBezierSurfaceNode);
 
 //------------------------------------------------------------------------------
-vtkMRMLLiverMarkupsResectionSurfaceNode::vtkMRMLLiverMarkupsResectionSurfaceNode()
+vtkMRMLLiverMarkupsBezierSurfaceNode::vtkMRMLLiverMarkupsBezierSurfaceNode()
 //  :ResectionMargin(DEFAULT_RESECTION_MARGIN)
 {
 
@@ -80,32 +78,32 @@ vtkMRMLLiverMarkupsResectionSurfaceNode::vtkMRMLLiverMarkupsResectionSurfaceNode
 }
 
 //------------------------------------------------------------------------------
-vtkMRMLLiverMarkupsResectionSurfaceNode::~vtkMRMLLiverMarkupsResectionSurfaceNode()
+vtkMRMLLiverMarkupsBezierSurfaceNode::~vtkMRMLLiverMarkupsBezierSurfaceNode()
 {
 
 }
 
 //------------------------------------------------------------------------------
-void vtkMRMLLiverMarkupsResectionSurfaceNode::PrintSelf(ostream &vtkNotUsed(os),
+void vtkMRMLLiverMarkupsBezierSurfaceNode::PrintSelf(ostream &vtkNotUsed(os),
                                             vtkIndent vtkNotUsed(nIndent))
 {
 
 }
 
 //------------------------------------------------------------------------------
-vtkMRMLResectionSurfaceDisplayNode*
-vtkMRMLLiverMarkupsResectionSurfaceNode::GetResectionSurfaceDisplayNode()
+vtkMRMLBezierSurfaceDisplayNode*
+vtkMRMLLiverMarkupsBezierSurfaceNode::GetBezierSurfaceDisplayNode()
 {
   vtkMRMLDisplayNode *displayNode = this->GetDisplayNode();
- // if (displayNode && displayNode->IsA("vtkMRMLResectionSurfaceDisplayNode"))
+ // if (displayNode && displayNode->IsA("vtkMRMLBezierSurfaceDisplayNode"))
  //   {
- //   return vtkMRMLResectionSurfaceDisplayNode::SafeDownCast(displayNode);
+ //   return vtkMRMLBezierSurfaceDisplayNode::SafeDownCast(displayNode);
  //   }
   return NULL;
 }
 
 //------------------------------------------------------------------------------
-void vtkMRMLLiverMarkupsResectionSurfaceNode::AddTargetTumor(vtkMRMLModelNode *tumorNode)
+void vtkMRMLLiverMarkupsBezierSurfaceNode::AddTargetTumor(vtkMRMLModelNode *tumorNode)
 {
   if (!tumorNode)
     {
@@ -122,7 +120,7 @@ void vtkMRMLLiverMarkupsResectionSurfaceNode::AddTargetTumor(vtkMRMLModelNode *t
 }
 
 //------------------------------------------------------------------------------
-void vtkMRMLLiverMarkupsResectionSurfaceNode::RemoveTargetTumor(vtkMRMLModelNode *tumorNode)
+void vtkMRMLLiverMarkupsBezierSurfaceNode::RemoveTargetTumor(vtkMRMLModelNode *tumorNode)
 {
   if (!tumorNode)
     {
@@ -139,13 +137,13 @@ void vtkMRMLLiverMarkupsResectionSurfaceNode::RemoveTargetTumor(vtkMRMLModelNode
 }
 
 //------------------------------------------------------------------------------
-int vtkMRMLLiverMarkupsResectionSurfaceNode::GetNumberOfTargetTumors() const
+int vtkMRMLLiverMarkupsBezierSurfaceNode::GetNumberOfTargetTumors() const
 {
   return this->TargetTumors->GetNumberOfItems();
 }
 
 //------------------------------------------------------------------------------
-void vtkMRMLLiverMarkupsResectionSurfaceNode::SetControlPoints(vtkPoints *points)
+void vtkMRMLLiverMarkupsBezierSurfaceNode::SetControlPoints(vtkPoints *points)
 {
   if (!points)
     {
@@ -159,20 +157,20 @@ void vtkMRMLLiverMarkupsResectionSurfaceNode::SetControlPoints(vtkPoints *points
 }
 
 //------------------------------------------------------------------------------
-void vtkMRMLLiverMarkupsResectionSurfaceNode::SetTargetParenchyma(vtkMRMLModelNode *node)
+void vtkMRMLLiverMarkupsBezierSurfaceNode::SetTargetParenchyma(vtkMRMLModelNode *node)
 {
   this->TargetParenchyma = node;
   this->InvokeEvent(vtkCommand::ModifiedEvent);
 }
 
 //------------------------------------------------------------------------------
-vtkMRMLModelNode* vtkMRMLLiverMarkupsResectionSurfaceNode::GetTargetParenchyma() const
+vtkMRMLModelNode* vtkMRMLLiverMarkupsBezierSurfaceNode::GetTargetParenchyma() const
 {
   return this->TargetParenchyma;
 }
 
 //---------------------------------------------------------------------------
-void vtkMRMLLiverMarkupsResectionSurfaceNode::ProcessMRMLEvents(vtkObject* caller,
+void vtkMRMLLiverMarkupsBezierSurfaceNode::ProcessMRMLEvents(vtkObject* caller,
     unsigned long event,
     void* callData)
 {
@@ -213,7 +211,7 @@ void vtkMRMLLiverMarkupsResectionSurfaceNode::ProcessMRMLEvents(vtkObject* calle
             if (points)
             {
                 //std::cout << "init point 0: " << points->GetPoint(0)[0] << " " << points->GetPoint(0)[1] << points->GetPoint(0)[2] << std::endl;
-                this->InitializeResectionSurface(points);
+                this->InitializeBezierSurface(points);
             }
         }
     }*/
@@ -222,9 +220,9 @@ void vtkMRMLLiverMarkupsResectionSurfaceNode::ProcessMRMLEvents(vtkObject* calle
     Superclass::ProcessMRMLEvents(caller, event, callData);
 }
 //------------------------------------------------------------------------------
-void vtkMRMLLiverMarkupsResectionSurfaceNode::InitializeResectionSurface(vtkPoints* curve)
+void vtkMRMLLiverMarkupsBezierSurfaceNode::InitializeBezierSurface(vtkPoints* curve)
 {
-    std::cout << "InitializeResectionSurface" << std::endl;
+    std::cout << "InitializeBezierSurface" << std::endl;
     double point1[3];
     double point2[3];
     double midPoint[3];

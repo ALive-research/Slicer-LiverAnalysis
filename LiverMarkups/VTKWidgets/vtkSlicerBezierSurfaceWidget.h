@@ -36,20 +36,20 @@
   through the ALive project (grant nr. 311393).
 
 ==============================================================================*/
-#ifndef __vtkSlicerResectionSurfaceWidget_h_
-#define __vtkSlicerResectionSurfaceWidget_h_
+#ifndef __vtkSlicerBezierSurfaceWidget_h_
+#define __vtkSlicerBezierSurfaceWidget_h_
 
 #include "vtkSlicerLiverMarkupsModuleVTKWidgetsExport.h"
 
 #include <vtkSlicerMarkupsWidget.h>
 
 
-class VTK_SLICER_LIVERMARKUPS_MODULE_VTKWIDGETS_EXPORT vtkSlicerResectionSurfaceWidget
+class VTK_SLICER_LIVERMARKUPS_MODULE_VTKWIDGETS_EXPORT vtkSlicerBezierSurfaceWidget
 : public vtkSlicerMarkupsWidget
 {
 public:
-  static vtkSlicerResectionSurfaceWidget *New();
-  vtkTypeMacro(vtkSlicerResectionSurfaceWidget, vtkSlicerMarkupsWidget);
+  static vtkSlicerBezierSurfaceWidget *New();
+  vtkTypeMacro(vtkSlicerBezierSurfaceWidget, vtkSlicerMarkupsWidget);
 
   void CreateDefaultRepresentation(vtkMRMLMarkupsDisplayNode* markupsDisplayNode,
                                   vtkMRMLAbstractViewNode* viewNode,
@@ -61,13 +61,13 @@ public:
   virtual void UpdateFromMRML(vtkMRMLNode* caller, unsigned long event, void* callData = nullptr);
 
 protected:
-  vtkSlicerResectionSurfaceWidget();
-  ~vtkSlicerResectionSurfaceWidget();
+  vtkSlicerBezierSurfaceWidget();
+  ~vtkSlicerBezierSurfaceWidget();
 
 
 private:
-  vtkSlicerResectionSurfaceWidget(const vtkSlicerResectionSurfaceWidget&) = delete;
-  void operator=(const vtkSlicerResectionSurfaceWidget) = delete;
+  vtkSlicerBezierSurfaceWidget(const vtkSlicerBezierSurfaceWidget&) = delete;
+  void operator=(const vtkSlicerBezierSurfaceWidget) = delete;
 };
 
-#endif // __vtkSlicerResectionSurfaceWidget_h_
+#endif // __vtkSlicerBezierSurfaceWidget_h_

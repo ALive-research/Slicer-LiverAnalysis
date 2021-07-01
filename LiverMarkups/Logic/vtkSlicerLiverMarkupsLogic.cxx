@@ -39,7 +39,7 @@
 #include "vtkSlicerLiverMarkupsLogic.h"
 
 // Liver Markups MRML includes
-#include "vtkMRMLLiverMarkupsResectionSurfaceNode.h"
+#include "vtkMRMLLiverMarkupsBezierSurfaceNode.h"
 #include "vtkMRMLMarkupsSlicingContourNode.h"
 
 // MRML includes
@@ -60,7 +60,7 @@ vtkStandardNewMacro(vtkSlicerLiverMarkupsLogic);
 
 //---------------------------------------------------------------------------
 vtkSlicerLiverMarkupsLogic::vtkSlicerLiverMarkupsLogic() :
-    resectionSurfaceNode(nullptr)
+    bezierSurfaceNode(nullptr)
     , slicingContourNode(nullptr)
 {
 
@@ -85,10 +85,10 @@ void vtkSlicerLiverMarkupsLogic::RegisterNodes()
   vtkMRMLScene *scene = this->GetMRMLScene();
 
   // Nodes
-  resectionSurfaceNode = vtkSmartPointer<vtkMRMLLiverMarkupsResectionSurfaceNode>::New();
+  bezierSurfaceNode = vtkSmartPointer<vtkMRMLLiverMarkupsBezierSurfaceNode>::New();
   slicingContourNode = vtkSmartPointer<vtkMRMLMarkupsSlicingContourNode>::New();
   scene->RegisterNodeClass(slicingContourNode);
-  scene->RegisterNodeClass(resectionSurfaceNode);
+  scene->RegisterNodeClass(bezierSurfaceNode);
 }
 
 
@@ -130,9 +130,9 @@ void vtkSlicerLiverMarkupsLogic::ObserveMRMLScene()
                                                   slicingContourNode->GetAddIcon(),
                                                   slicingContourNode->GetMarkupType());
 
-    selectionNode->AddNewPlaceNodeClassNameToList(resectionSurfaceNode->GetClassName(),
-                                                  resectionSurfaceNode->GetAddIcon(),
-                                                  resectionSurfaceNode->GetMarkupType());
+    selectionNode->AddNewPlaceNodeClassNameToList(bezierSurfaceNode->GetClassName(),
+                                                  bezierSurfaceNode->GetAddIcon(),
+                                                  bezierSurfaceNode->GetMarkupType());
 
     // trigger an update on the mouse mode toolbar
     this->GetMRMLScene()->EndState(vtkMRMLScene::BatchProcessState);
