@@ -83,10 +83,16 @@ vtkSlicerResectionSurfaceRepresentation3D::vtkSlicerResectionSurfaceRepresentati
 
   this->MiddlePointActor = vtkSmartPointer<vtkActor>::New();
   this->MiddlePointActor->SetMapper(this->MiddlePointMapper);
+
+  this->BezierSurfaceActor->VisibilityOn();
 }
 
 //------------------------------------------------------------------------------
-vtkSlicerResectionSurfaceRepresentation3D::~vtkSlicerResectionSurfaceRepresentation3D() = default;
+vtkSlicerResectionSurfaceRepresentation3D::~vtkSlicerResectionSurfaceRepresentation3D()
+{
+
+    this->Renderer->RemoveActor(this->BezierSurfaceActor);
+}
 
 //------------------------------------------------------------------------------
 void vtkSlicerResectionSurfaceRepresentation3D::PrintSelf(ostream& os, vtkIndent indent)
@@ -224,33 +230,31 @@ void vtkSlicerResectionSurfaceRepresentation3D::UpdateFromMRML(vtkMRMLNode* call
 //------------------------------------------------------------------------------
 void vtkSlicerResectionSurfaceRepresentation3D::BuildBezierSurface()
 {
-    //std::cout << "BuildBezierSurface" << std::endl;
-    vtkMRMLLiverMarkupsBezierSurfaceNode* liverMarkupsResectionSurfaceNode =
+    vtkMRMLLiverMarkupsBezierSurfaceNode* liverMarkupsBezierSurfaceNode =
         vtkMRMLLiverMarkupsBezierSurfaceNode::SafeDownCast(this->GetMarkupsNode());
-    if (!liverMarkupsResectionSurfaceNode)
+    if (!liverMarkupsBezierSurfaceNode)
     {
         return;
     }
-    if (liverMarkupsResectionSurfaceNode->GetNumberOfControlPoints() < 2)
+    int numberOfControlPoints = liverMarkupsBezierSurfaceNode->GetNumberOfControlPoints();
+    if (numberOfControlPoints < 16)
     {
         return;
     }
-    //std::cout << "Create the BezierSurface" << std::endl;
-    this->BezierSurfaceSource->SetNumberOfControlPoints(
-        liverMarkupsResectionSurfaceNode->GetNumberOfControlPoints() / 4, 
-        liverMarkupsResectionSurfaceNode->GetNumberOfControlPoints() / 4);
-    //this->BezierSurfaceSource->SetNumberOfControlPoints(4, 4);
-    this->BezierSurfaceSource->SetResolution(10, 10);
-    vtkSmartPointer<vtkPoints> points = liverMarkupsResectionSurfaceNode->GetControlPoints();
-    vtkMRMLMarkupsNode* markupsNode = this->GetMarkupsNode();
-    std::vector< vtkMRMLMarkupsNode::ControlPoint* > *controlpoints = markupsNode->GetControlPoints();
-    //std::cout << "point 0: " << points->GetPoint(0)[0] << " " << points->GetPoint(0)[1] << points->GetPoint(0)[2] << std::endl;
-    //std::cout << "controlpoint 0: " << (*controlpoints)[0]->Position[0] << " " << (*controlpoints)[0]->Position[1] << (*controlpoints)[0]->Position[2] << std::endl;
+    this->BezierSurfaceSource->SetNumberOfControlPoints(4, 4);
+    this->BezierSurfaceSource->SetResolution(40, 40);
 
-    //Quick hack to convert ControlPoints to vtkPoints
-    for (int i = 0; i < liverMarkupsResectionSurfaceNode->GetNumberOfControlPoints(); ++i)
+    //vtkMRMLLiverMarkupsBezierSurfaceNode and vtkMRMLMarkupsNode got different set of control points
+    //For now just use the points from vtkMRMLMarkupsNode, as the points in vtkMRMLLiverMarkupsBezierSurfaceNode
+    //don't get updated from GUI
+    vtkMRMLMarkupsNode* markupsNode = this->GetMarkupsNode();
+    vtkSmartPointer<vtkPoints> points = liverMarkupsBezierSurfaceNode->GetControlPoints();
+    std::vector< vtkMRMLMarkupsNode::ControlPoint* > *controlpoints = markupsNode->GetControlPoints();
+
+    // Convert ControlPoints to vtkPoints
+    for (int i = 0; i < numberOfControlPoints; ++i)
     {
-        double* point = points->GetPoint(i);
+        double* point = new double[3];
         point[0] = (*controlpoints)[i]->Position[0];
         point[1] = (*controlpoints)[i]->Position[1];
         point[2] = (*controlpoints)[i]->Position[2];
@@ -260,11 +264,8 @@ void vtkSlicerResectionSurfaceRepresentation3D::BuildBezierSurface()
     this->BezierSurfaceSource->SetControlPoints(points);
     this->BezierSurfaceMapper->SetInputConnection(this->BezierSurfaceSource->GetOutputPort());
     this->BezierSurfaceActor->SetMapper(this->BezierSurfaceMapper.GetPointer());
-    //this->BezierSurfaceActor->SetProperty(this->BezierSurfaceProperty.GetPointer()); //Needed?
+    //this->BezierSurfaceActor->SetProperty(this->BezierSurfaceProperty.GetPointer());
 
-    this->BezierSurfaceActor->VisibilityOn();
-    this->BezierSurfaceActor->Modified();
-    //this->Renderer->AddActor(this->BezierSurfaceActor.GetPointer());
     this->Renderer->AddActor(this->BezierSurfaceActor);
 }
 //------------------------------------------------------------------------------

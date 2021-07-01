@@ -182,7 +182,7 @@ void vtkMRMLLiverMarkupsBezierSurfaceNode::ProcessMRMLEvents(vtkObject* caller,
 
     //std::cout << "ProcessMRMLEvents: " << caller->GetClassName() << " " << event << std::endl;
 
-    vtkEventBroker* broker = vtkEventBroker::GetInstance();
+    /*vtkEventBroker* broker = vtkEventBroker::GetInstance();
     if (!broker)
         return;
 
@@ -200,7 +200,7 @@ void vtkMRMLLiverMarkupsBezierSurfaceNode::ProcessMRMLEvents(vtkObject* caller,
                 broker->AddObservation(node, vtkMRMLMarkupsSlicingContourNode::DisplayModifiedEvent, this, this->MRMLCallbackCommand);
         }
     }
-    /*else if (event == vtkMRMLMarkupsSlicingContourNode::DisplayModifiedEvent)
+    else if (event == vtkMRMLMarkupsSlicingContourNode::DisplayModifiedEvent)
     {
         //std::cout << "ProcessMRMLEvents: " << caller->GetClassName() << " " << event << std::endl;
         vtkMRMLMarkupsSlicingContourNode* node = dynamic_cast<vtkMRMLMarkupsSlicingContourNode*>(caller);
@@ -214,8 +214,8 @@ void vtkMRMLLiverMarkupsBezierSurfaceNode::ProcessMRMLEvents(vtkObject* caller,
                 this->InitializeBezierSurface(points);
             }
         }
-    }*/
-
+    }
+    */
 
     Superclass::ProcessMRMLEvents(caller, event, callData);
 }

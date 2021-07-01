@@ -145,23 +145,6 @@ void qSlicerLiverMarkupsModule::setup()
 {
   this->Superclass::setup();
 
-  // Register displayable managers 3D
-  //Not working yet: "Error: vtkMRMLResectionDisplayableManager3D is not a displayable manager. Failed to register"
-  // Use the displayable manager class to make sure the the containing library is loaded
-  //vtkSmartPointer<vtkMRMLResectionDisplayableManager3D> displayableManager3D = vtkSmartPointer<vtkMRMLResectionDisplayableManager3D>::New();
-  //vtkMRMLThreeDViewDisplayableManagerFactory::GetInstance()->GlobalWarningDisplayOn();
-  /*vtkMRMLThreeDViewDisplayableManagerFactory* factory
-      = vtkMRMLThreeDViewDisplayableManagerFactory::GetInstance();
-
-  QStringList displayableManagers;
-  displayableManagers << "vtkMRMLResectionDisplayableManager3D" 
-                      << "vtkMRMLResectionInitializationDisplayableManager3D";
-  foreach(const QString & displayableManager, displayableManagers)
-  {
-      if (!factory->IsDisplayableManagerRegistered(displayableManager.toUtf8()))
-          factory->RegisterDisplayableManager(displayableManager.toUtf8());
-  }*/
-
  vtkSlicerApplicationLogic* appLogic = this->appLogic();
  if (!appLogic)
    {
