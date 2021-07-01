@@ -43,7 +43,6 @@
 
 #include <vtkSlicerMarkupsWidget.h>
 
-class vtkBezierSurfaceWidget;
 
 class VTK_SLICER_LIVERMARKUPS_MODULE_VTKWIDGETS_EXPORT vtkSlicerResectionSurfaceWidget
 : public vtkSlicerMarkupsWidget
@@ -65,7 +64,6 @@ protected:
   vtkSlicerResectionSurfaceWidget();
   ~vtkSlicerResectionSurfaceWidget();
 
-  //vtkSmartPointer<vtkBezierSurfaceWidget> BezierSurfaceWidget;
 
 private:
   vtkSlicerResectionSurfaceWidget(const vtkSlicerResectionSurfaceWidget&) = delete;
