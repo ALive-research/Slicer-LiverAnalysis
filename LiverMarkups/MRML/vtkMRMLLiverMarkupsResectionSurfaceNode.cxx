@@ -202,7 +202,7 @@ void vtkMRMLLiverMarkupsResectionSurfaceNode::ProcessMRMLEvents(vtkObject* calle
                 broker->AddObservation(node, vtkMRMLMarkupsSlicingContourNode::DisplayModifiedEvent, this, this->MRMLCallbackCommand);
         }
     }
-    else if (event == vtkMRMLMarkupsSlicingContourNode::DisplayModifiedEvent)
+    /*else if (event == vtkMRMLMarkupsSlicingContourNode::DisplayModifiedEvent)
     {
         //std::cout << "ProcessMRMLEvents: " << caller->GetClassName() << " " << event << std::endl;
         vtkMRMLMarkupsSlicingContourNode* node = dynamic_cast<vtkMRMLMarkupsSlicingContourNode*>(caller);
@@ -211,9 +211,12 @@ void vtkMRMLLiverMarkupsResectionSurfaceNode::ProcessMRMLEvents(vtkObject* calle
         {
             vtkPoints* points = node->GetCurvePoints();
             if (points)
+            {
+                //std::cout << "init point 0: " << points->GetPoint(0)[0] << " " << points->GetPoint(0)[1] << points->GetPoint(0)[2] << std::endl;
                 this->InitializeResectionSurface(points);
+            }
         }
-    }
+    }*/
 
 
     Superclass::ProcessMRMLEvents(caller, event, callData);
@@ -221,6 +224,7 @@ void vtkMRMLLiverMarkupsResectionSurfaceNode::ProcessMRMLEvents(vtkObject* calle
 //------------------------------------------------------------------------------
 void vtkMRMLLiverMarkupsResectionSurfaceNode::InitializeResectionSurface(vtkPoints* curve)
 {
+    std::cout << "InitializeResectionSurface" << std::endl;
     double point1[3];
     double point2[3];
     double midPoint[3];
